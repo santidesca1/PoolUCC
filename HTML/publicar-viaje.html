@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PoolUCC - Publicar viaje</title>
+  <meta name="description" content="Formulario para ofrecer un viaje en PoolUCC">
+  <meta name="author" content="Nacho">
+</head>
+<body>
+
+  <!-- Feature: Publicación de viaje / Selección de cupos / Configuración de cobro / Aceptación automática -->
+  <header>
+    <button type="button">&larr;</button>
+    <h1>Publicar viaje</h1>
+  </header>
+
+  <main>
+    <form id="form-publicar-viaje" action="#" method="post">
+
+      <fieldset>
+        <legend>Recorrido</legend>
+
+        <label for="salida">Salida</label>
+        <input type="text" id="salida" name="salida" placeholder="Punto de salida" size="30">
+
+        <p>
+          <label for="llegada">Llegada</label>
+          <input type="text" id="llegada" name="llegada" placeholder="Punto de llegada" size="30">
+        </p>
+
+        <p>
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" name="fecha">
+
+          <label for="horario-salida">Horario de salida</label>
+          <input type="time" id="horario-salida" name="horario-salida">
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Lugares disponibles</legend>
+        <label><input type="radio" name="lugares" value="1" checked> 1</label>
+        <label><input type="radio" name="lugares" value="2"> 2</label>
+        <label><input type="radio" name="lugares" value="3"> 3</label>
+        <label><input type="radio" name="lugares" value="4"> 4</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>&iquest;Cobro?</legend>
+        <label for="cobro">Activar cobro</label>
+        <input type="checkbox" id="cobro" name="cobro">
+
+        <p>
+          <label for="cobro-persona">Por persona</label>
+          <input type="number" id="cobro-persona" name="cobro-persona" placeholder="$" min="0">
+        </p>
+
+        <p>
+          <label for="cobro-viaje">Por viaje</label>
+          <input type="number" id="cobro-viaje" name="cobro-viaje" placeholder="$" min="0">
+        </p>
+
+        <!-- Aceptar automáticamente va debajo de ¿Cobro?, dentro del mismo grupo -->
+        <p>
+          <label for="aceptar-auto">Aceptar autom&aacute;ticamente</label>
+          <input type="checkbox" id="aceptar-auto" name="aceptar-auto">
+        </p>
+      </fieldset>
+
+      <p>
+        <input type="submit" value="Publicar viaje">
+      </p>
+    </form>
+  </main>
+
+  <footer>
+    <nav>
+      <a href="#">Inicio</a>
+      <a href="#">Mis viajes</a>
+      <a href="#">Perfil</a>
+    </nav>
+  </footer>
+
+</body>
+</html>
