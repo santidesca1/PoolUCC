@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PoolUCC - Compartí tu viaje universitario. Buscá y ofrecé viajes compartidos en tu campus.">
+  <meta name="author" content="Nacho Albizuri">
+  <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
+  <title>Buscar viaje - PoolUCC</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main>
+    <header class="hero">
+      <div class="hero-fila">
+        <p class="logo">Pool<span>UCC</span></p>
+        <a class="avatar" href="perfil.html" title="Ir a mi perfil">NA</a>
+      </div>
+      <p class="hero-fecha">Martes, 24 de octubre</p>
+      <h1>Hola, Nacho</h1>
+    </header>
+
+    <section class="contenido dos-columnas">
+
+      <div class="columna">
+        <!-- Al enviar el formulario, el navegador va a resultados.html -->
+        <form class="tarjeta" action="resultados.html" method="get">
+          <div class="campo">
+            <label for="desde">Desde</label>
+            <input type="text" id="desde" name="desde" list="lugares" value="Campus Norte" placeholder="¿Desde dónde salís?" required>
+          </div>
+
+          <div class="campo">
+            <label for="hasta">Hasta</label>
+            <input type="text" id="hasta" name="hasta" list="lugares" value="Plaza España" placeholder="¿A dónde vas?" required>
+          </div>
+
+          <div class="fila">
+            <div class="campo">
+              <label for="hora">Salida</label>
+              <input type="time" id="hora" name="hora" value="08:00">
+            </div>
+            <div class="campo">
+              <label for="plazas">Plazas</label>
+              <select id="plazas" name="plazas">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>Filtrar viajes</legend>
+            <div class="opciones">
+              <label><input type="radio" name="filtro" value="Hoy" checked> Hoy</label>
+              <label><input type="radio" name="filtro" value="Mañana"> Mañana</label>
+              <label><input type="radio" name="filtro" value="Mi grado"> Mi grado</label>
+              <label><input type="radio" name="filtro" value="Recurrentes"> Recurrentes</label>
+            </div>
+          </fieldset>
+
+          <button class="boton" type="submit">Buscar</button>
+        </form>
+
+        <!-- Lugares sugeridos para los campos de texto (atributo list) -->
+        <datalist id="lugares">
+          <option value="Campus Norte">
+          <option value="Plaza España">
+          <option value="Estación Sur">
+          <option value="Residencia Oeste">
+        </datalist>
+      </div>
+
+      <div class="columna">
+        <a class="tarjeta tarjeta-enlace tarjeta-acento" href="publicar.html">
+          <h2>¿Manejás vos?</h2>
+          <p class="texto-suave">Publicá tu ruta en un minuto</p>
+        </a>
+        <div class="mapa mapa-solo-escritorio">Mapa · tu ubicación</div>
+      </div>
+
+    </section>
+  </main>
+
+  <nav class="menu">
+    <a class="activo" href="index.html">Buscar</a>
+    <a href="mis-viajes.html">Ofrezco</a>
+    <a href="perfil.html">Perfil</a>
+  </nav>
+
+  <footer>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,472 @@
+/* ==========================================================================
+   PoolUCC - Hoja de estilo externa
+
+   Se escribe "mobile first": primero los estilos del celular y, al final,
+   una media query que reacomoda todo para pantallas grandes.
+
+    1. Variables
+    2. Reset
+    3. Base
+    4. Menú de navegación
+    5. Cabeceras
+    6. Contenido y tarjetas
+    7. Viajes (recorrido, avatar, etiquetas)
+    8. Formularios y botones
+    9. Mapa
+   10. Pantallas puntuales (chat, pestañas, listas, confirmación)
+   11. Pie de página y utilidades
+   12. Pantallas grandes (media query)
+   ========================================================================== */
+
+
+/* ---------- 1. VARIABLES ----------
+   Se definen una sola vez y se usan con var(--nombre). Si cambia un color
+   de la marca, se cambia acá y se actualiza en todo el sitio. */
+:root {
+  /* Colores de la marca */
+  --color-primario: #66CCFF;          /* celeste: botones y acentos */
+  --color-primario-hover: #99DEFF;
+  --color-primario-fuerte: #146F9E;   /* celeste oscuro: links y textos */
+  --color-secundario: #D2EFFF;        /* celeste "lavado": fondos suaves */
+  --color-terciario: #112A46;         /* azul oscuro: títulos, menú, tinta */
+  --color-terciario-claro: #2A4E74;
+
+  /* Acento: solo para ahorro, recompensas y estrellas (nunca en botones) */
+  --color-acento: #FFC24D;
+  --color-acento-oscuro: #8A5700;
+  --color-acento-fondo: #FFF1D9;
+
+  /* Neutros y estados */
+  --color-fondo: #F1F8FC;
+  --color-blanco: #FFFFFF;
+  --color-borde: #CDDCE5;
+  --color-texto: #2E4152;
+  --color-texto-suave: #4F6B7D;
+  --color-exito: #14703F;
+  --color-exito-fondo: #DEF7EA;
+  --color-error: #B3272C;
+}
+
+
+/* ---------- 2. RESET ----------
+   Saca los márgenes que trae el navegador y hace que el ancho incluya el
+   padding y el borde (box-sizing: border-box). */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img, svg { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; }
+ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
+fieldset { border: 0; }
+legend { padding: 0; }
+
+
+/* ---------- 3. BASE ---------- */
+body {
+  font-family: "Public Sans", Arial, sans-serif;
+  line-height: 1.5;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  max-width: 30rem;         /* en el celular: una columna de hasta 480px */
+  margin: 0 auto;
+  padding-bottom: 5rem;     /* lugar para el menú fijo de abajo */
+}
+
+h1 { font-size: 1.5rem; line-height: 1.2; color: var(--color-terciario); }
+h2 { font-size: 1.125rem; color: var(--color-terciario); }
+h3 { font-size: 1rem; color: var(--color-terciario); }
+
+.texto-suave { font-size: 0.875rem; color: var(--color-texto-suave); }
+
+
+/* ---------- 4. MENÚ DE NAVEGACIÓN ----------
+   En el celular queda fijo abajo; en pantallas grandes pasa a ser lateral. */
+.menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 30rem;
+  margin: 0 auto;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background-color: var(--color-terciario);
+}
+
+.menu a {
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+  border-radius: 999px;
+  transition: background-color 0.2s;
+}
+
+.menu a:hover { background-color: var(--color-terciario-claro); }
+
+.menu a.activo {
+  background-color: var(--color-primario);
+  color: var(--color-terciario);
+}
+
+
+/* ---------- 5. CABECERAS ---------- */
+/* Cabecera azul (inicio, perfil, reservado) */
+.hero {
+  padding: 1.5rem 1rem;
+  background-color: var(--color-terciario);
+  color: var(--color-blanco);
+  border-radius: 0 0 1.5rem 1.5rem;
+}
+
+.hero h1 { color: var(--color-blanco); font-size: 1.75rem; }
+
+.hero-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.hero-fecha { color: var(--color-secundario); font-size: 0.875rem; }
+.hero .etiquetas { margin-top: 1rem; }
+.hero-centrado { text-align: center; padding: 2.5rem 1rem; }
+.hero-centrado p { color: var(--color-secundario); }
+
+/* Logo hecho con texto: "Pool" + "UCC" en otro color */
+.logo { font-size: 1.25rem; font-weight: 700; }
+.logo span { color: var(--color-primario); }
+
+/* Barra blanca con botón "Volver" (resto de las pantallas) */
+.barra {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-blanco);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.barra h1 { font-size: 1.125rem; }
+.barra div { flex: 1; }
+.barra p { font-size: 0.875rem; color: var(--color-texto-suave); }
+
+.volver { font-weight: 700; color: var(--color-primario-fuerte); }
+.volver:hover { text-decoration: underline; }
+
+
+/* ---------- 6. CONTENIDO Y TARJETAS ---------- */
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Grupo de elementos apilados dentro de una columna */
+.columna {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background-color: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: 1rem;
+}
+
+/* Tarjetas que son un link entero */
+.tarjeta-enlace { transition: border-color 0.2s; }
+.tarjeta-enlace:hover { border-color: var(--color-primario); }
+
+.tarjeta-acento { background-color: var(--color-secundario); border-color: var(--color-secundario); }
+.tarjeta-oscura { background-color: var(--color-terciario); border-color: var(--color-terciario); color: var(--color-blanco); }
+.tarjeta-completa { opacity: 0.6; }   /* viaje sin lugares */
+
+.tarjeta-fila {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* ---------- 7. VIAJES ---------- */
+.viaje-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.viaje-conductor { flex: 1; }
+.viaje-conductor p { font-size: 0.875rem; color: var(--color-texto-suave); }
+
+.precio {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-terciario);
+  background-color: var(--color-fondo);
+  border-radius: 0.5rem;
+}
+
+/* Recorrido origen -> destino. El punto se agrega con ::before */
+.recorrido { display: flex; flex-direction: column; gap: 0.5rem; }
+.recorrido li { display: flex; gap: 0.5rem; }
+.recorrido li::before { content: "●"; color: var(--color-primario-fuerte); }
+.recorrido li:first-child::before { color: var(--color-terciario); }
+.recorrido span { flex: 1; font-weight: 600; color: var(--color-terciario); }
+.recorrido time { font-weight: 700; color: var(--color-texto-suave); }
+
+.plazas { font-size: 0.875rem; font-weight: 700; color: var(--color-terciario); }
+.plazas-completo { color: var(--color-error); }
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  font-weight: 700;
+  color: var(--color-terciario);
+  background-color: var(--color-primario);
+  border-radius: 50%;
+}
+
+.avatar-grande { width: 4rem; height: 4rem; font-size: 1.25rem; }
+
+/* Etiquetas redondeadas (verificado, estado, preferencias) */
+.etiquetas { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.etiqueta {
+  display: inline-block;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0E4E6E;
+  background-color: var(--color-secundario);
+  border-radius: 999px;
+}
+
+.etiqueta-verde { color: var(--color-exito); background-color: var(--color-exito-fondo); }
+.etiqueta-amarilla { color: var(--color-acento-oscuro); background-color: var(--color-acento-fondo); }
+.etiqueta-gris { color: var(--color-texto); background-color: #E2EDF3; }
+.etiqueta-blanca { color: var(--color-terciario); background-color: var(--color-blanco); }
+
+
+/* ---------- 8. FORMULARIOS Y BOTONES ---------- */
+.campo { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.campo label,
+legend {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-texto-suave);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 0.75rem;
+  color: var(--color-terciario);
+  background-color: var(--color-blanco);
+  border: 2px solid var(--color-borde);
+  border-radius: 0.75rem;
+}
+
+.campo textarea { resize: vertical; }
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: var(--color-primario);
+  outline: 3px solid var(--color-secundario);
+}
+
+.fila { display: flex; gap: 0.75rem; }
+.fila .campo { flex: 1; }
+
+/* Grupos de radios y checkboxes */
+.opciones { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 0.5rem; }
+.opciones label { display: flex; align-items: center; gap: 0.375rem; cursor: pointer; }
+.opciones-columna { flex-direction: column; }
+.estrellas { color: var(--color-acento-oscuro); letter-spacing: 0.1em; }
+
+.ayuda { font-size: 0.8125rem; color: var(--color-texto-suave); }
+
+/* Botones: sirven para <button> y para <a> */
+.boton {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-terciario);
+  background-color: var(--color-primario);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.boton:hover { background-color: var(--color-primario-hover); }
+
+.boton-oscuro { color: var(--color-blanco); background-color: var(--color-terciario); }
+.boton-oscuro:hover { background-color: var(--color-terciario-claro); }
+
+.boton-borde { background-color: var(--color-blanco); border-color: var(--color-borde); }
+.boton-borde:hover { background-color: var(--color-fondo); }
+
+.boton-chico { display: inline-block; width: auto; padding: 0.5rem 1rem; font-size: 0.875rem; }
+
+
+/* ---------- 9. MAPA ----------
+   Por ahora es un recuadro; más adelante se puede reemplazar por un
+   <iframe> de Google Maps. */
+.mapa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  padding: 1rem;
+  text-align: center;
+  color: #0E4E6E;
+  background-color: var(--color-secundario);
+  border: 1px dashed var(--color-primario-fuerte);
+  border-radius: 1rem;
+}
+
+.mapa-solo-escritorio { display: none; }   /* en el celular no se muestra */
+
+
+/* ---------- 10. PANTALLAS PUNTUALES ---------- */
+/* Confirmación (reservado) */
+.marca-exito {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-terciario);
+  background-color: var(--color-primario);
+  border-radius: 50%;
+}
+
+/* Chat */
+.chat { display: flex; flex-direction: column; gap: 0.75rem; }
+.chat-dia { align-self: center; }
+
+.mensaje {
+  max-width: 80%;
+  padding: 0.625rem 0.875rem;
+  border-radius: 1rem;
+}
+
+.mensaje-recibido { align-self: flex-start; background-color: var(--color-blanco); border: 1px solid var(--color-borde); }
+.mensaje-enviado { align-self: flex-end; color: var(--color-terciario); background-color: var(--color-primario); }
+
+/* Pestañas (próximos / realizados) */
+.pestanas { display: flex; gap: 1.5rem; border-bottom: 1px solid var(--color-borde); }
+
+.pestanas a {
+  padding: 0.625rem 0;
+  font-weight: 700;
+  color: var(--color-texto-suave);
+  border-bottom: 3px solid transparent;
+}
+
+.pestanas a:hover { color: var(--color-terciario); }
+.pestanas a.activa { color: var(--color-terciario); border-bottom-color: var(--color-primario); }
+
+/* Filas "dato - valor" (perfil) */
+.datos li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-fondo);
+}
+
+.datos li:last-child { border-bottom: 0; }
+.datos span:last-child { color: var(--color-texto-suave); text-align: right; }
+
+/* Números destacados (ahorro, estadísticas) */
+.cifra { display: block; font-size: 1.75rem; font-weight: 700; color: var(--color-terciario); }
+.cifra-blanca { color: var(--color-blanco); }
+.cifra-acento { color: var(--color-acento); }
+.cifra-ahorro { color: var(--color-acento-oscuro); }
+.estadisticas { flex-direction: row; justify-content: space-around; text-align: center; }
+
+
+/* ---------- 11. PIE DE PÁGINA Y UTILIDADES ---------- */
+footer {
+  padding: 1rem;
+  font-size: 0.8125rem;
+  text-align: center;
+  color: var(--color-texto-suave);
+}
+
+.texto-centrado { text-align: center; }
+
+/* Oculto a la vista, pero lo leen los lectores de pantalla */
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+
+/* ---------- 12. PANTALLAS GRANDES ----------
+   Desde 900px de ancho: el menú pasa a un costado, el contenido se ordena
+   en dos columnas (grid) y aparece el mapa en las pantallas de búsqueda. */
+@media (min-width: 900px) {
+  body {
+    max-width: none;
+    padding: 0 0 0 14rem;    /* deja lugar al menú lateral */
+  }
+
+  .menu {
+    top: 0;
+    right: auto;
+    width: 14rem;
+    max-width: none;
+    margin: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .menu a { flex: none; padding: 0.75rem 1rem; text-align: left; }
+
+  main { max-width: 64rem; margin: 0 auto; }
+  main.estrecho { max-width: 34rem; }
+
+  .dos-columnas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .mapa-solo-escritorio { display: flex; }
+}

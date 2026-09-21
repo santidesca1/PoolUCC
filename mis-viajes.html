@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tus próximos viajes como conductor.">
+  <meta name="author" content="Nacho Albizuri">
+  <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
+  <title>Mis viajes - PoolUCC</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="estrecho">
+    <header class="barra">
+      <div>
+        <h1>Mis viajes</h1>
+      </div>
+      <a class="boton boton-borde boton-chico" href="publicar.html">+ Publicar viaje</a>
+    </header>
+
+    <section class="contenido">
+      <div class="pestanas">
+        <a class="activa" href="mis-viajes.html">Próximos (2)</a>
+        <a href="mis-viajes-realizados.html">Realizados (1)</a>
+      </div>
+
+      <article class="tarjeta">
+        <div class="viaje-cabecera">
+          <p class="viaje-conductor"><strong>Viernes · 14:00</strong></p>
+          <span class="etiqueta etiqueta-verde">Confirmado</span>
+        </div>
+        <ul class="recorrido">
+          <li><span>Campus Norte</span></li>
+          <li><span>Residencia Oeste</span></li>
+        </ul>
+        <div class="viaje-cabecera">
+          <p class="viaje-conductor plazas plazas-completo">Completo</p>
+          <a class="boton boton-borde boton-chico" href="chat.html">Chat</a>
+        </div>
+      </article>
+
+      <article class="tarjeta">
+        <div class="viaje-cabecera">
+          <p class="viaje-conductor"><strong>Lunes · 8:15</strong></p>
+          <span class="etiqueta etiqueta-amarilla">Por confirmar</span>
+        </div>
+        <ul class="recorrido">
+          <li><span>Campus Norte</span></li>
+          <li><span>Plaza España</span></li>
+        </ul>
+        <div class="viaje-cabecera">
+          <p class="viaje-conductor plazas">3 plazas libres</p>
+          <a class="boton boton-oscuro boton-chico" href="solicitudes.html">Solicitudes</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <nav class="menu">
+    <a href="index.html">Buscar</a>
+    <a class="activo" href="mis-viajes.html">Ofrezco</a>
+    <a href="perfil.html">Perfil</a>
+  </nav>
+
+  <footer>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+  </footer>
+
+</body>
+</html>

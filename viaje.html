@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Detalle de un viaje compartido: recorrido, conductor y precio.">
+  <meta name="author" content="Nacho Albizuri">
+  <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
+  <title>Detalle del viaje - PoolUCC</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main>
+    <header class="barra">
+      <a class="volver" href="resultados.html">← Volver a resultados</a>
+      <div>
+        <h1>Detalle del viaje</h1>
+      </div>
+    </header>
+
+    <section class="contenido dos-columnas">
+
+      <div class="mapa">Mapa · Campus Norte → Plaza España</div>
+
+      <div class="columna">
+        <div class="tarjeta tarjeta-fila">
+          <h2>8:15 · Campus</h2>
+          <p class="precio">$2.500</p>
+        </div>
+
+        <section class="tarjeta">
+          <h2>Recorrido</h2>
+          <ul class="recorrido">
+            <li><span>Campus Norte</span> <time datetime="08:15">8:15</time></li>
+            <li><span>Plaza España</span> <time datetime="08:40">8:40</time></li>
+          </ul>
+          <p class="texto-suave">Pasa por la parada del colectivo</p>
+        </section>
+
+        <section class="tarjeta">
+          <div class="viaje-cabecera">
+            <span class="avatar avatar-grande">MR</span>
+            <div class="viaje-conductor">
+              <h2>Marta Ruiz</h2>
+              <p>★ 4,9 · Ingeniería Informática</p>
+            </div>
+          </div>
+          <ul class="etiquetas">
+            <li class="etiqueta etiqueta-verde">✓ Verificado</li>
+            <li class="etiqueta etiqueta-gris">Fiat Cronos · gris</li>
+            <li class="etiqueta">Mismo grado</li>
+          </ul>
+          <a class="boton boton-borde boton-chico" href="chat.html">Escribirle a Marta</a>
+        </section>
+
+        <div class="tarjeta tarjeta-fila">
+          <p class="plazas">2 plazas libres</p>
+          <p class="texto-suave">Efectivo o transferencia</p>
+        </div>
+
+        <ul class="etiquetas">
+          <li class="etiqueta etiqueta-gris">Sin fumar</li>
+          <li class="etiqueta etiqueta-gris">Música suave</li>
+          <li class="etiqueta etiqueta-gris">Mochila chica</li>
+        </ul>
+
+        <a class="boton" href="reservado.html">Reservar plaza</a>
+      </div>
+
+    </section>
+  </main>
+
+  <nav class="menu">
+    <a class="activo" href="index.html">Buscar</a>
+    <a href="mis-viajes.html">Ofrezco</a>
+    <a href="perfil.html">Perfil</a>
+  </nav>
+
+  <footer>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+  </footer>
+
+</body>
+</html>

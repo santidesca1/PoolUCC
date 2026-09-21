@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tu perfil de PoolUCC: verificación, pagos y preferencias.">
+  <meta name="author" content="Nacho Albizuri">
+  <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
+  <title>Mi perfil - PoolUCC</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="estrecho">
+    <header class="hero">
+      <div class="hero-fila">
+        <p class="logo">Pool<span>UCC</span></p>
+        <p class="hero-fecha">Perfil</p>
+      </div>
+      <div class="viaje-cabecera">
+        <span class="avatar avatar-grande">NA</span>
+        <div>
+          <h1>Nacho Albizuri</h1>
+          <p class="hero-fecha">Ingeniería Informática · 3.º</p>
+        </div>
+      </div>
+      <ul class="etiquetas">
+        <li class="etiqueta etiqueta-verde">✓ Verificado</li>
+        <li class="etiqueta etiqueta-blanca">★ 4,8</li>
+      </ul>
+    </header>
+
+    <section class="contenido">
+      <fieldset>
+        <legend>Ver perfil como</legend>
+        <div class="opciones">
+          <label><input type="radio" name="rol" value="pasajero" checked> Pasajero</label>
+          <label><input type="radio" name="rol" value="conductor"> Conductor</label>
+        </div>
+      </fieldset>
+
+      <!-- El dorado (acento) se usa solo para el ahorro -->
+      <div class="tarjeta tarjeta-acento">
+        <p class="texto-suave">Este mes</p>
+        <p class="cifra cifra-ahorro">$42.500</p>
+        <p class="texto-suave">ahorrados en 14 viajes</p>
+      </div>
+
+      <ul class="tarjeta datos">
+        <li><span>Verificación</span> <span>Email · DNI</span></li>
+        <li><span>Pagos</span> <span>Efectivo</span></li>
+        <li><span>Mi auto</span> <span>Sin agregar</span></li>
+        <li><span>Preferencias de viaje</span> <span>3 activas</span></li>
+      </ul>
+
+      <div class="tarjeta">
+        <label><input type="checkbox" name="notificaciones" checked> Notificaciones (avisos de salida y mensajes)</label>
+      </div>
+
+      <a class="boton boton-borde" href="index.html">Cerrar sesión</a>
+    </section>
+  </main>
+
+  <nav class="menu">
+    <a href="index.html">Buscar</a>
+    <a href="mis-viajes.html">Ofrezco</a>
+    <a class="activo" href="perfil.html">Perfil</a>
+  </nav>
+
+  <footer>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+  </footer>
+
+</body>
+</html>

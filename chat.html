@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chat con el conductor del viaje.">
+  <meta name="author" content="Nacho Albizuri">
+  <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
+  <title>Chat con Marta Ruiz - PoolUCC</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="estrecho">
+    <header class="barra">
+      <a class="volver" href="reservado.html">← Volver al viaje</a>
+      <div>
+        <h1>Marta Ruiz</h1>
+        <p>Campus Norte → Plaza España · 8:15</p>
+      </div>
+      <span class="avatar">MR</span>
+    </header>
+
+    <section class="contenido">
+      <div class="chat">
+        <span class="etiqueta etiqueta-gris chat-dia">Hoy</span>
+        <p class="mensaje mensaje-recibido">¡Hola! Salgo a las 8:15 de la puerta B del estacionamiento.</p>
+        <p class="mensaje mensaje-enviado">Perfecto, a las 8:10 estoy ahí.</p>
+        <p class="mensaje mensaje-recibido">Genial. Si llegás antes, avisame por acá.</p>
+      </div>
+
+      <form class="fila" action="chat.html" method="get">
+        <div class="campo">
+          <label class="oculto" for="mensaje">Mensaje</label>
+          <input type="text" id="mensaje" name="mensaje" placeholder="Escribí un mensaje" maxlength="300" required>
+        </div>
+        <button class="boton boton-chico" type="submit">Enviar</button>
+      </form>
+    </section>
+  </main>
+
+  <nav class="menu">
+    <a class="activo" href="index.html">Buscar</a>
+    <a href="mis-viajes.html">Ofrezco</a>
+    <a href="perfil.html">Perfil</a>
+  </nav>
+
+  <footer>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+  </footer>
+
+</body>
+</html>

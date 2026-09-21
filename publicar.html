@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Publicá tu viaje: ruta, horario, lugares y cobro.">
+  <meta name="author" content="Nacho Albizuri">
+  <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
+  <title>Publicar viaje - PoolUCC</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="estrecho">
+    <header class="barra">
+      <a class="volver" href="mis-viajes.html">← Volver a mis viajes</a>
+      <div>
+        <h1>Publicar viaje</h1>
+      </div>
+    </header>
+
+    <form class="contenido" action="mis-viajes.html" method="get">
+
+      <fieldset class="tarjeta">
+        <legend>Ruta</legend>
+
+        <div class="campo">
+          <label for="desde">Salida</label>
+          <input type="text" id="desde" name="desde" list="lugares" value="Campus Norte" placeholder="Punto de salida" required>
+        </div>
+
+        <div class="campo">
+          <label for="hasta">Llegada</label>
+          <input type="text" id="hasta" name="hasta" list="lugares" value="Residencia Oeste" placeholder="Punto de llegada" required>
+        </div>
+
+        <div class="opciones">
+          <label><input type="radio" name="modo" value="dia" checked> Un día</label>
+          <label><input type="radio" name="modo" value="semana"> Cada semana</label>
+        </div>
+
+        <div class="fila">
+          <div class="campo">
+            <label for="fecha">Fecha (un día)</label>
+            <input type="date" id="fecha" name="fecha" value="2026-10-30">
+          </div>
+          <div class="campo">
+            <label for="dia">Día (semanal)</label>
+            <select id="dia" name="dia">
+              <option value="Lunes">Lunes</option>
+              <option value="Martes">Martes</option>
+              <option value="Miércoles">Miércoles</option>
+              <option value="Jueves">Jueves</option>
+              <option value="Viernes" selected>Viernes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="hora">Horario</label>
+          <input type="time" id="hora" name="hora" value="14:00" required>
+        </div>
+      </fieldset>
+
+      <!-- Lugares sugeridos para los campos de texto (atributo list) -->
+      <datalist id="lugares">
+        <option value="Campus Norte">
+        <option value="Plaza España">
+        <option value="Estación Sur">
+        <option value="Residencia Oeste">
+      </datalist>
+
+      <fieldset class="tarjeta">
+        <legend>Lugares disponibles</legend>
+        <div class="opciones">
+          <label><input type="radio" name="plazas" value="1"> 1</label>
+          <label><input type="radio" name="plazas" value="2" checked> 2</label>
+          <label><input type="radio" name="plazas" value="3"> 3</label>
+          <label><input type="radio" name="plazas" value="4"> 4</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="tarjeta">
+        <legend>Cobro</legend>
+        <div class="opciones">
+          <label><input type="radio" name="cobro" value="persona" checked> Por persona</label>
+          <label><input type="radio" name="cobro" value="viaje"> Por viaje</label>
+        </div>
+        <div class="campo">
+          <label for="precio">Precio ($)</label>
+          <input type="number" id="precio" name="precio" value="2500" min="0" max="50000" step="500" required>
+          <small class="ayuda">Solo para cubrir gastos</small>
+        </div>
+      </fieldset>
+
+      <fieldset class="tarjeta">
+        <legend>Preferencias</legend>
+        <div class="opciones opciones-columna">
+          <label><input type="checkbox" name="autoaceptar" checked> Aceptar automáticamente (solo compañeros verificados)</label>
+          <label><input type="checkbox" name="sinFumar" checked> Sin fumar en el auto</label>
+        </div>
+      </fieldset>
+
+      <button class="boton" type="submit">Publicar viaje</button>
+    </form>
+  </main>
+
+  <nav class="menu">
+    <a href="index.html">Buscar</a>
+    <a class="activo" href="mis-viajes.html">Ofrezco</a>
+    <a href="perfil.html">Perfil</a>
+  </nav>
+
+  <footer>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+  </footer>
+
+</body>
+</html>

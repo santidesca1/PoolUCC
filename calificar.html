@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calificá tu viaje compartido.">
+  <meta name="author" content="Nacho Albizuri">
+  <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
+  <title>Calificar viaje - PoolUCC</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="estrecho">
+    <header class="barra">
+      <a class="volver" href="reservado.html">← Volver al viaje</a>
+      <div>
+        <h1>Calificar viaje</h1>
+      </div>
+    </header>
+
+    <!-- Al enviar, vuelve al inicio. "required" obliga a elegir un puntaje -->
+    <form class="contenido" action="index.html" method="get">
+      <div class="tarjeta">
+        <span class="avatar avatar-grande">MR</span>
+        <h2>Campus Norte → Plaza España</h2>
+        <p class="texto-suave">Viaje con Marta Ruiz</p>
+
+        <fieldset>
+          <legend>Puntaje del viaje</legend>
+          <div class="opciones opciones-columna">
+            <label><input type="radio" name="puntaje" value="5" required> <span class="estrellas">★★★★★</span> Excelente</label>
+            <label><input type="radio" name="puntaje" value="4"> <span class="estrellas">★★★★</span> Muy bueno</label>
+            <label><input type="radio" name="puntaje" value="3"> <span class="estrellas">★★★</span> Bueno</label>
+            <label><input type="radio" name="puntaje" value="2"> <span class="estrellas">★★</span> Regular</label>
+            <label><input type="radio" name="puntaje" value="1"> <span class="estrellas">★</span> Malo</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="campo">
+        <label for="comentario">Comentarios</label>
+        <textarea id="comentario" name="comentario" rows="3" maxlength="280" placeholder="¿Cómo fue el viaje?"></textarea>
+      </div>
+
+      <button class="boton" type="submit">Enviar calificación</button>
+      <a class="boton boton-borde" href="reservado.html">Volver</a>
+    </form>
+  </main>
+
+  <nav class="menu">
+    <a class="activo" href="index.html">Buscar</a>
+    <a href="mis-viajes.html">Ofrezco</a>
+    <a href="perfil.html">Perfil</a>
+  </nav>
+
+  <footer>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Solicitudes de compañeros para tu viaje.">
+  <meta name="author" content="Nacho Albizuri">
+  <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
+  <title>Solicitudes - PoolUCC</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="estrecho">
+    <header class="barra">
+      <a class="volver" href="mis-viajes.html">← Volver a mis viajes</a>
+      <div>
+        <h1>Solicitudes</h1>
+        <p>Campus Norte → Plaza España</p>
+      </div>
+    </header>
+
+    <!-- "required" en cada grupo de radios: no se puede confirmar sin responder todas -->
+    <form class="contenido" action="mis-viajes.html" method="get">
+
+      <article class="tarjeta">
+        <div class="viaje-cabecera">
+          <span class="avatar">SM</span>
+          <div class="viaje-conductor">
+            <h2>Sofía Martín</h2>
+            <p>★ 4,6 · Ingeniería Informática · 2.º</p>
+          </div>
+          <span class="etiqueta">1 plaza</span>
+        </div>
+        <div class="opciones">
+          <label><input type="radio" name="sofia" value="rechazar" required> Rechazar</label>
+          <label><input type="radio" name="sofia" value="aceptar"> Aceptar</label>
+        </div>
+      </article>
+
+      <article class="tarjeta">
+        <div class="viaje-cabecera">
+          <span class="avatar">DS</span>
+          <div class="viaje-conductor">
+            <h2>Diego Salas</h2>
+            <p>★ 4,9 · Derecho · 1.º</p>
+          </div>
+          <span class="etiqueta">1 plaza</span>
+        </div>
+        <div class="opciones">
+          <label><input type="radio" name="diego" value="rechazar" required> Rechazar</label>
+          <label><input type="radio" name="diego" value="aceptar"> Aceptar</label>
+        </div>
+      </article>
+
+      <p class="tarjeta tarjeta-fila">
+        <span class="texto-suave">Lugares disponibles</span>
+        <strong>3</strong>
+      </p>
+
+      <button class="boton boton-oscuro" type="submit">Confirmar viaje</button>
+      <p class="texto-suave texto-centrado">Respondé todas las solicitudes para confirmar</p>
+    </form>
+  </main>
+
+  <nav class="menu">
+    <a href="index.html">Buscar</a>
+    <a class="activo" href="mis-viajes.html">Ofrezco</a>
+    <a href="perfil.html">Perfil</a>
+  </nav>
+
+  <footer>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+  </footer>
+
+</body>
+</html>
