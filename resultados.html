@@ -10,6 +10,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/resultados.js" defer></script>
 </head>
 <body>
 
@@ -25,61 +27,10 @@
     <section class="contenido dos-columnas">
 
       <div class="columna">
-        <h2>3 viajes</h2>
+        <h2 id="contador">3 viajes</h2>
+        <div class="columna" id="lista"></div>
 
-        <!-- Por ahora las tarjetas llevan al mismo detalle de ejemplo (viaje.html) -->
-        <article>
-          <a class="tarjeta tarjeta-enlace" href="viaje.html">
-            <div class="viaje-cabecera">
-              <span class="avatar">MR</span>
-              <div class="viaje-conductor">
-                <h2>Marta Ruiz</h2>
-                <p>★ 4,9 <span class="etiqueta">Mismo grado</span></p>
-              </div>
-              <p class="precio">$2.500</p>
-            </div>
-            <ul class="recorrido">
-              <li><span>Campus Norte</span> <time datetime="08:15">8:15</time></li>
-              <li><span>Plaza España</span> <time datetime="08:40">8:40</time></li>
-            </ul>
-            <p class="plazas">2 plazas libres</p>
-          </a>
-        </article>
 
-        <article>
-          <a class="tarjeta tarjeta-enlace" href="viaje.html">
-            <div class="viaje-cabecera">
-              <span class="avatar">JO</span>
-              <div class="viaje-conductor">
-                <h2>Javier Ortiz</h2>
-                <p>★ 4,7</p>
-              </div>
-              <p class="precio">$2.000</p>
-            </div>
-            <ul class="recorrido">
-              <li><span>Campus Norte</span> <time datetime="08:30">8:30</time></li>
-              <li><span>Estación Sur</span> <time datetime="09:00">9:00</time></li>
-            </ul>
-            <p class="plazas">2 plazas libres</p>
-          </a>
-        </article>
-
-        <!-- Viaje completo: no es un link, no se puede reservar -->
-        <article class="tarjeta tarjeta-completa">
-          <div class="viaje-cabecera">
-            <span class="avatar">LP</span>
-            <div class="viaje-conductor">
-              <h2>Lucía Prat</h2>
-              <p>★ 5,0 <span class="etiqueta">Recurrente</span></p>
-            </div>
-            <p class="precio">$3.000</p>
-          </div>
-          <ul class="recorrido">
-            <li><span>Residencia Oeste</span> <time datetime="08:45">8:45</time></li>
-            <li><span>Campus Norte</span> <time datetime="09:10">9:10</time></li>
-          </ul>
-          <p class="plazas plazas-completo">Completo</p>
-        </article>
       </div>
 
       <div class="mapa mapa-solo-escritorio">Mapa · un punto por cada viaje</div>
