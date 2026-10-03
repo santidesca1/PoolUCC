@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <main class="estrecho">
+  <main>
     <header class="barra">
       <div>
         <h1>Mis viajes</h1>
@@ -21,47 +21,54 @@
       <a class="boton boton-borde boton-chico" href="publicar.html">+ Publicar viaje</a>
     </header>
 
-    <section class="contenido">
-      <div class="pestanas">
-        <a class="activa" href="mis-viajes.html">Próximos (2)</a>
-        <a href="mis-viajes-realizados.html">Realizados (1)</a>
+    <section class="contenido dos-columnas">
+
+      <div class="columna">
+        <div class="pestanas">
+          <a class="activa" href="mis-viajes.html">Próximos (2)</a>
+          <a href="mis-viajes-realizados.html">Realizados (1)</a>
+        </div>
+
+        <article class="tarjeta">
+          <div class="viaje-cabecera">
+            <p class="viaje-conductor"><strong>Viernes · 14:00</strong></p>
+            <span class="etiqueta etiqueta-verde">Confirmado</span>
+          </div>
+          <ul class="recorrido">
+            <li><span>Campus Norte</span></li>
+            <li><span>Residencia Oeste</span></li>
+          </ul>
+          <div class="viaje-cabecera">
+            <p class="viaje-conductor plazas plazas-completo">Completo</p>
+            <a class="boton boton-borde boton-chico" href="chat.html">Chat</a>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="viaje-cabecera">
+            <p class="viaje-conductor"><strong>Lunes · 8:15</strong></p>
+            <span class="etiqueta etiqueta-amarilla">Por confirmar</span>
+          </div>
+          <ul class="recorrido">
+            <li><span>Campus Norte</span></li>
+            <li><span>Plaza España</span></li>
+          </ul>
+          <div class="viaje-cabecera">
+            <p class="viaje-conductor plazas">3 plazas libres</p>
+            <a class="boton boton-oscuro boton-chico" href="solicitudes.html">Solicitudes</a>
+          </div>
+        </article>
       </div>
 
-      <article class="tarjeta">
-        <div class="viaje-cabecera">
-          <p class="viaje-conductor"><strong>Viernes · 14:00</strong></p>
-          <span class="etiqueta etiqueta-verde">Confirmado</span>
-        </div>
-        <ul class="recorrido">
-          <li><span>Campus Norte</span></li>
-          <li><span>Residencia Oeste</span></li>
-        </ul>
-        <div class="viaje-cabecera">
-          <p class="viaje-conductor plazas plazas-completo">Completo</p>
-          <a class="boton boton-borde boton-chico" href="chat.html">Chat</a>
-        </div>
-      </article>
+      <div class="mapa mapa-solo-escritorio">Mapa · tus rutas como conductor</div>
 
-      <article class="tarjeta">
-        <div class="viaje-cabecera">
-          <p class="viaje-conductor"><strong>Lunes · 8:15</strong></p>
-          <span class="etiqueta etiqueta-amarilla">Por confirmar</span>
-        </div>
-        <ul class="recorrido">
-          <li><span>Campus Norte</span></li>
-          <li><span>Plaza España</span></li>
-        </ul>
-        <div class="viaje-cabecera">
-          <p class="viaje-conductor plazas">3 plazas libres</p>
-          <a class="boton boton-oscuro boton-chico" href="solicitudes.html">Solicitudes</a>
-        </div>
-      </article>
     </section>
   </main>
 
   <nav class="menu">
+    <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a href="index.html">Buscar</a>
-    <a class="activo" href="mis-viajes.html">Ofrezco</a>
+    <a class="activo" href="mis-viajes.html">Ofrecer</a>
     <a href="perfil.html">Perfil</a>
   </nav>
 

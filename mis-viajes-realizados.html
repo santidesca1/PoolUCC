@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <main class="estrecho">
+  <main>
     <header class="barra">
       <div>
         <h1>Mis viajes</h1>
@@ -21,44 +21,51 @@
       <a class="boton boton-borde boton-chico" href="publicar.html">+ Publicar viaje</a>
     </header>
 
-    <section class="contenido">
-      <div class="pestanas">
-        <a href="mis-viajes.html">Próximos (2)</a>
-        <a class="activa" href="mis-viajes-realizados.html">Realizados (1)</a>
+    <section class="contenido dos-columnas">
+
+      <div class="columna">
+        <div class="pestanas">
+          <a href="mis-viajes.html">Próximos (2)</a>
+          <a class="activa" href="mis-viajes-realizados.html">Realizados (1)</a>
+        </div>
+
+        <article class="tarjeta">
+          <div class="viaje-cabecera">
+            <p class="viaje-conductor"><strong>Viernes pasado</strong></p>
+            <span class="etiqueta etiqueta-gris">Realizado</span>
+          </div>
+          <ul class="recorrido">
+            <li><span>Campus Norte</span></li>
+            <li><span>Estación Sur</span></li>
+          </ul>
+          <div class="viaje-cabecera">
+            <p class="viaje-conductor plazas">1 plaza libre</p>
+            <p class="texto-suave">2 pasajeros</p>
+          </div>
+        </article>
+
+        <!-- Estadísticas: el dorado (acento) se usa solo para lo que se ahorró o ganó -->
+        <div class="tarjeta tarjeta-oscura estadisticas">
+          <div>
+            <p>Viajes totales</p>
+            <p class="cifra cifra-blanca">1</p>
+          </div>
+          <div>
+            <p>Total generado</p>
+            <p class="cifra cifra-acento">$4.000</p>
+          </div>
+        </div>
       </div>
 
-      <article class="tarjeta">
-        <div class="viaje-cabecera">
-          <p class="viaje-conductor"><strong>Viernes pasado</strong></p>
-          <span class="etiqueta etiqueta-gris">Realizado</span>
-        </div>
-        <ul class="recorrido">
-          <li><span>Campus Norte</span></li>
-          <li><span>Estación Sur</span></li>
-        </ul>
-        <div class="viaje-cabecera">
-          <p class="viaje-conductor plazas">1 plaza libre</p>
-          <p class="texto-suave">2 pasajeros</p>
-        </div>
-      </article>
+      <div class="mapa mapa-solo-escritorio">Mapa · tus rutas como conductor</div>
 
-      <!-- Estadísticas: el dorado (acento) se usa solo para lo que se ahorró o ganó -->
-      <div class="tarjeta tarjeta-oscura estadisticas">
-        <div>
-          <p>Viajes totales</p>
-          <p class="cifra cifra-blanca">1</p>
-        </div>
-        <div>
-          <p>Total generado</p>
-          <p class="cifra cifra-acento">$4.000</p>
-        </div>
-      </div>
     </section>
   </main>
 
   <nav class="menu">
+    <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a href="index.html">Buscar</a>
-    <a class="activo" href="mis-viajes.html">Ofrezco</a>
+    <a class="activo" href="mis-viajes.html">Ofrecer</a>
     <a href="perfil.html">Perfil</a>
   </nav>
 
