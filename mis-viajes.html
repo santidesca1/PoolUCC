@@ -10,6 +10,9 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
+  <script src="JS/mis-viajes.js" defer></script>
 </head>
 <body>
 
@@ -25,39 +28,12 @@
 
       <div class="columna">
         <div class="pestanas">
-          <a class="activa" href="mis-viajes.html">Próximos (2)</a>
+          <a class="activa" id="pestanaProximos" href="mis-viajes.html">Próximos</a>
           <a href="mis-viajes-realizados.html">Realizados (1)</a>
         </div>
 
-        <article class="tarjeta">
-          <div class="viaje-cabecera">
-            <p class="viaje-conductor"><strong>Viernes · 14:00</strong></p>
-            <span class="etiqueta etiqueta-verde">Confirmado</span>
-          </div>
-          <ul class="recorrido">
-            <li><span>Campus Norte</span></li>
-            <li><span>Residencia Oeste</span></li>
-          </ul>
-          <div class="viaje-cabecera">
-            <p class="viaje-conductor plazas plazas-completo">Completo</p>
-            <a class="boton boton-borde boton-chico" href="chat.html">Chat</a>
-          </div>
-        </article>
-
-        <article class="tarjeta">
-          <div class="viaje-cabecera">
-            <p class="viaje-conductor"><strong>Lunes · 8:15</strong></p>
-            <span class="etiqueta etiqueta-amarilla">Por confirmar</span>
-          </div>
-          <ul class="recorrido">
-            <li><span>Campus Norte</span></li>
-            <li><span>Plaza España</span></li>
-          </ul>
-          <div class="viaje-cabecera">
-            <p class="viaje-conductor plazas">3 plazas libres</p>
-            <a class="boton boton-oscuro boton-chico" href="solicitudes.html">Solicitudes</a>
-          </div>
-        </article>
+        <!-- mis-viajes.js dibuja acá los viajes que publicó el usuario -->
+        <div class="columna" id="lista"></div>
       </div>
 
       <div class="mapa mapa-solo-escritorio">Mapa · tus rutas como conductor</div>

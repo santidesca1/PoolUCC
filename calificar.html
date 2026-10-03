@@ -10,23 +10,26 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
+  <script src="JS/calificar.js" defer></script>
 </head>
 <body>
 
   <main class="estrecho">
     <header class="barra">
-      <a class="volver" href="reservado.html">← Volver al viaje</a>
+      <a class="volver" id="volver" href="reservado.html">← Volver al viaje</a>
       <div>
         <h1>Calificar viaje</h1>
       </div>
     </header>
 
-    <!-- Al enviar, vuelve al inicio. "required" obliga a elegir un puntaje -->
-    <form class="contenido" action="index.html" method="get">
+    <!-- "required" obliga a elegir un puntaje. calificar() lo guarda y vuelve al inicio -->
+    <form class="contenido" action="index.html" method="get" onsubmit="return calificar()">
       <div class="tarjeta">
-        <span class="avatar avatar-grande">MR</span>
-        <h2>Campus Norte → Plaza España</h2>
-        <p class="texto-suave">Viaje con Marta Ruiz</p>
+        <span class="avatar avatar-grande" id="iniciales">MR</span>
+        <h2 id="ruta">Campus Norte → Plaza España</h2>
+        <p class="texto-suave" id="conductor">Viaje con Marta Ruiz</p>
 
         <fieldset>
           <legend>Puntaje del viaje</legend>
@@ -45,8 +48,10 @@
         <textarea id="comentario" name="comentario" rows="3" maxlength="280" placeholder="¿Cómo fue el viaje?"></textarea>
       </div>
 
-      <button class="boton" type="submit">Enviar calificación</button>
-      <a class="boton boton-borde" href="reservado.html">Volver</a>
+      <p class="mensaje-error" id="error"></p>
+
+      <button class="boton" id="botonEnviar" type="submit">Enviar calificación</button>
+      <a class="boton boton-borde" id="volverAbajo" href="reservado.html">Volver</a>
     </form>
   </main>
 

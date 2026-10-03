@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
   <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
   <script src="JS/resultados.js" defer></script>
 </head>
 <body>
@@ -20,17 +21,61 @@
       <a class="volver" href="index.html">← Volver a buscar</a>
       <div>
         <h1>Viajes disponibles</h1>
-        <p>Hoy · desde las 8:00</p>
+        <p id="resumen">Todos los viajes</p>
       </div>
     </header>
 
     <section class="contenido dos-columnas">
 
       <div class="columna">
-        <h2 id="contador">3 viajes</h2>
+        <!-- Cada cambio en los filtros vuelve a dibujar la lista (mostrarViajes) -->
+        <form class="tarjeta" onsubmit="return false">
+          <div class="campo">
+            <label for="filtroTexto">Destino</label>
+            <input type="text" id="filtroTexto" list="lugares" placeholder="Ej: Plaza España" oninput="mostrarViajes()">
+          </div>
+
+          <div class="fila">
+            <div class="campo">
+              <label for="precioMaximo">Precio máximo</label>
+              <input type="number" id="precioMaximo" min="0" step="500" placeholder="Sin límite" oninput="mostrarViajes()">
+            </div>
+            <div class="campo">
+              <label for="tipo">Mostrar</label>
+              <select id="tipo" onchange="mostrarViajes()">
+                <option value="Todos">Todos</option>
+                <option value="Hoy">Hoy</option>
+                <option value="Mañana">Mañana</option>
+                <option value="Mi grado">Mi grado</option>
+                <option value="Recurrentes">Recurrentes</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label for="orden">Ordenar por</label>
+            <select id="orden" onchange="mostrarViajes()">
+              <option value="horario">Horario de salida</option>
+              <option value="precioMenor">Precio: de menor a mayor</option>
+              <option value="precioMayor">Precio: de mayor a menor</option>
+              <option value="puntaje">Mejor puntaje</option>
+            </select>
+          </div>
+
+          <div class="opciones">
+            <label><input type="checkbox" id="soloConLugares" onchange="mostrarViajes()"> <span id="textoLugares">Solo con lugares</span></label>
+          </div>
+        </form>
+
+        <datalist id="lugares">
+          <option value="Campus Norte">
+          <option value="Plaza España">
+          <option value="Estación Sur">
+          <option value="Residencia Oeste">
+        </datalist>
+
+        <h2 id="contador">Viajes</h2>
         <div class="columna" id="lista"></div>
-
-
       </div>
 
       <div class="mapa mapa-solo-escritorio">Mapa · un punto por cada viaje</div>
