@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
   <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
+  <script src="JS/viaje.js" defer></script>
 </head>
 <body>
 
@@ -26,49 +28,53 @@
 
       <div class="mapa" id="mapa">Mapa · Campus Norte → Plaza España</div>
 
-      <div class="columna">
+      <!-- viaje.js completa estos datos con el viaje que viene en la dirección (?id=) -->
+      <div class="columna" id="detalle">
         <div class="tarjeta tarjeta-fila">
-          <h2>8:15 · Campus</h2>
-          <p class="precio">$2.500</p>
+          <h2 id="titulo">8:15 · Plaza España</h2>
+          <p class="precio" id="precio">$2.500</p>
         </div>
 
         <section class="tarjeta">
           <h2>Recorrido</h2>
           <ul class="recorrido">
-            <li><span>Campus Norte</span> <time datetime="08:15">8:15</time></li>
-            <li><span>Plaza España</span> <time datetime="08:40">8:40</time></li>
+            <li><span id="desde">Campus Norte</span> <time id="salida">08:15</time></li>
+            <li><span id="hasta">Plaza España</span> <time id="llegada">08:40</time></li>
           </ul>
-          <p class="texto-suave">Pasa por la parada del colectivo</p>
+          <p class="texto-suave" id="dia">Hoy</p>
         </section>
 
         <section class="tarjeta">
           <div class="viaje-cabecera">
-            <span class="avatar avatar-grande">MR</span>
+            <span class="avatar avatar-grande" id="iniciales">MR</span>
             <div class="viaje-conductor">
-              <h2>Marta Ruiz</h2>
-              <p>★ 4,9 · Ingeniería Informática</p>
+              <h2 id="conductor">Marta Ruiz</h2>
+              <p id="puntaje">★ 4,9 · Ingeniería Informática</p>
             </div>
           </div>
-          <ul class="etiquetas">
+          <ul class="etiquetas" id="etiquetas">
             <li class="etiqueta etiqueta-verde">✓ Verificado</li>
-            <li class="etiqueta etiqueta-gris">Fiat Cronos · gris</li>
-            <li class="etiqueta">Mismo grado</li>
           </ul>
-          <a class="boton boton-borde boton-chico" href="chat.html">Escribirle a Marta</a>
+          <a class="boton boton-borde boton-chico" id="linkChat" href="chat.html">Escribirle</a>
         </section>
 
-        <div class="tarjeta tarjeta-fila">
-          <p class="plazas">2 plazas libres</p>
-          <p class="texto-suave">Efectivo o transferencia</p>
+        <ul class="etiquetas" id="preferencias"></ul>
+
+        <div class="tarjeta">
+          <div class="fila">
+            <div class="campo">
+              <label for="cantidad">Plazas a reservar</label>
+              <select id="cantidad" onchange="calcularTotal()"></select>
+            </div>
+            <div class="campo">
+              <p class="ayuda">Total</p>
+              <p class="cifra" id="total">$2.500</p>
+            </div>
+          </div>
+          <p class="texto-suave" id="plazasLibres">2 plazas libres · Efectivo o transferencia</p>
+          <p class="mensaje-error" id="error"></p>
+          <button class="boton" id="botonReservar" type="button" onclick="reservar()">Reservar plaza</button>
         </div>
-
-        <ul class="etiquetas">
-          <li class="etiqueta etiqueta-gris">Sin fumar</li>
-          <li class="etiqueta etiqueta-gris">Música suave</li>
-          <li class="etiqueta etiqueta-gris">Mochila chica</li>
-        </ul>
-
-        <a class="boton" href="reservado.html">Reservar plaza</a>
       </div>
 
     </section>

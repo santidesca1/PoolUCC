@@ -314,6 +314,9 @@ legend {
 
 .ayuda { font-size: 0.8125rem; color: var(--color-texto-suave); }
 
+/* Mensajes que escribe JavaScript cuando algo del formulario está mal */
+.mensaje-error { font-size: 0.875rem; font-weight: 700; color: var(--color-error); }
+
 /* Botones: sirven para <button> y para <a> */
 .boton {
   display: block;
@@ -338,6 +341,13 @@ legend {
 .boton-borde:hover { background-color: var(--color-fondo); }
 
 .boton-chico { display: inline-block; width: auto; padding: 0.5rem 1rem; font-size: 0.875rem; }
+
+/* Acciones que borran algo (cancelar reserva, eliminar viaje) */
+.boton-peligro { color: var(--color-error); background-color: var(--color-blanco); border-color: var(--color-error); }
+.boton-peligro:hover { background-color: #FBE9EA; }
+
+/* Botón que JavaScript desactiva (por ejemplo, un viaje completo) */
+.boton:disabled { opacity: 0.5; cursor: not-allowed; }
 
 
 /* ---------- 9. MAPA ----------
@@ -481,6 +491,7 @@ footer {
 
   /* El logo ya está en la barra superior: no hace falta repetirlo */
   .hero .logo { display: none; }
+  .hero .logo-login { display: block; }   /* el login no tiene barra superior */
 
   main { max-width: 64rem; margin: 0 auto; }
   main.estrecho { max-width: 34rem; }
