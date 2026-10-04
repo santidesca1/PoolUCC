@@ -3,7 +3,7 @@
 
 // Si cambiamos los datos de ejemplo (datos.js), subimos este número para que
 // los navegadores que ya tenían datos viejos guardados los vuelvan a cargar.
-const VERSION_DATOS = "2";
+const VERSION_DATOS = "3";
 if (localStorage.getItem("versionDatos") !== VERSION_DATOS) {
   localStorage.removeItem("viajes");
   localStorage.removeItem("reservas");
