@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Publicá tu viaje: ruta, horario, lugares y cobro.">
-  <meta name="author" content="Nacho Albizuri">
+  <meta name="author" content="Nacho Albizuri, Santiago Descalzo">
   <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
   <title>Publicar viaje - PoolUCC</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -32,26 +32,36 @@
 
         <div class="campo">
           <label for="desde">Salida</label>
-          <input type="text" id="desde" name="desde" list="lugares" value="Campus Norte" placeholder="Punto de salida" required>
+          <div class="campo-con-boton">
+            <input type="text" id="desde" name="desde" list="salidas" placeholder="Tu barrio o una sede" required>
+            <button class="boton boton-borde boton-chico" type="button" onclick="usarMiUbicacion()" title="Usar mi ubicación actual">Mi ubicación</button>
+          </div>
+          <small class="ayuda" id="estadoUbicacion"></small>
         </div>
 
+        <!-- La llegada siempre es una sede de la UCC -->
         <div class="campo">
-          <label for="hasta">Llegada</label>
-          <input type="text" id="hasta" name="hasta" list="lugares" value="Residencia Oeste" placeholder="Punto de llegada" required>
+          <label for="hasta">Llegada (sede)</label>
+          <select id="hasta" name="hasta">
+            <option value="Campus UCC">Campus UCC</option>
+            <option value="Sede Centro (Obispo Trejo)">Sede Centro (Obispo Trejo)</option>
+            <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+          </select>
         </div>
 
+        <!-- Según el radio elegido, cambiarModo() muestra la fecha o el día de la semana -->
         <div class="opciones">
-          <label><input type="radio" name="modo" value="dia" checked> Un día</label>
-          <label><input type="radio" name="modo" value="semana"> Cada semana</label>
+          <label><input type="radio" name="modo" value="dia" checked onchange="cambiarModo(this.value)"> Un día</label>
+          <label><input type="radio" name="modo" value="semana" onchange="cambiarModo(this.value)"> Cada semana</label>
         </div>
 
         <div class="fila">
-          <div class="campo">
-            <label for="fecha">Fecha (un día)</label>
+          <div class="campo" id="campoFecha">
+            <label for="fecha">Fecha</label>
             <input type="date" id="fecha" name="fecha" value="2026-10-30">
           </div>
-          <div class="campo">
-            <label for="dia">Día (semanal)</label>
+          <div class="campo" id="campoDia">
+            <label for="dia">Todos los</label>
             <select id="dia" name="dia">
               <option value="Lunes">Lunes</option>
               <option value="Martes">Martes</option>
@@ -68,12 +78,18 @@
         </div>
       </fieldset>
 
-      <!-- Lugares sugeridos para los campos de texto (atributo list) -->
-      <datalist id="lugares">
-        <option value="Campus Norte">
-        <option value="Plaza España">
-        <option value="Estación Sur">
-        <option value="Residencia Oeste">
+      <!-- Salidas sugeridas para el campo "Salida" (atributo list): sedes y barrios -->
+      <datalist id="salidas">
+        <option value="Campus UCC">
+        <option value="Sede Centro (Obispo Trejo)">
+        <option value="Ciencias de la Salud">
+        <option value="Nueva Córdoba">
+        <option value="Güemes">
+        <option value="Barrio Jardín">
+        <option value="General Paz">
+        <option value="Alta Córdoba">
+        <option value="Villa Cabrera">
+        <option value="Cerro de las Rosas">
       </datalist>
 
       <fieldset class="tarjeta">
@@ -113,15 +129,26 @@
     </form>
   </main>
 
+  <!-- Ventana de avisos y confirmaciones (la manejan avisar() y confirmar() de comun.js) -->
+  <dialog class="dialogo" id="dialogo" onclose="alCerrarDialogo()">
+    <h2 id="dialogoTitulo">Aviso</h2>
+    <p class="texto-suave" id="dialogoTexto"></p>
+    <div class="dialogo-botones">
+      <button class="boton boton-borde boton-chico" id="dialogoCancelar" type="button" onclick="cerrarDialogo(false)">Cancelar</button>
+      <button class="boton boton-chico" id="dialogoAceptar" type="button" onclick="cerrarDialogo(true)">Aceptar</button>
+    </div>
+  </dialog>
+
   <nav class="menu">
     <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a href="index.html">Buscar</a>
     <a class="activo" href="mis-viajes.html">Ofrecer</a>
-    <a href="perfil.html">Perfil</a>
+    <a class="menu-perfil" href="perfil.html">Perfil</a>
+    <a class="menu-usuario" href="perfil.html" title="Mi perfil"><span class="avatar avatar-chico" id="menuIniciales"></span> <span id="menuNombre">Mi perfil</span></a>
   </nav>
 
   <footer>
-    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri y Santiago Descalzo · 2026</p>
   </footer>
 
 </body>

@@ -8,17 +8,57 @@ const guardada = localStorage.getItem("busqueda");
 const busqueda = guardada === null ? null : JSON.parse(guardada);
 const plazasBuscadas = busqueda === null ? 1 : busqueda.plazas;
 
+// Desde dónde sale el usuario (su ubicación o un lugar conocido); null si no se sabe
+const origen = busqueda === null ? null : coordenadasDeSalida(busqueda.desde);
+
+/**
+ * Km entre la salida del usuario y la salida del viaje.
+ * Si alguna de las dos no se conoce, devuelve Infinity (queda al final al ordenar).
+ * @method distanciaDe
+ * @param {Object} v - Viaje
+ * @return {number} Distancia en km
+ */
+function distanciaDe(v) {
+  if (origen === null || v.lat === null) {
+    return Infinity;
+  }
+  return distanciaKm(origen, v);
+}
+
+/**
+ * Abre o cierra los filtros (en el celular arrancan cerrados).
+ * @method alternarFiltros
+ */
+function alternarFiltros() {
+  const filtros = document.getElementById("filtros");
+  filtros.classList.toggle("abierto");
+  document.getElementById("botonFiltros").textContent =
+    filtros.classList.contains("abierto") ? "Cerrar filtros" : "Filtros y orden";
+}
+
 /**
  * Completa los filtros con lo que el usuario buscó en el inicio.
  * @method cargarBusqueda
  */
 function cargarBusqueda() {
+  if (origen !== null) {
+    document.getElementById("mapa").src = urlMapa(origen.lat, origen.lon);
+  }
+
+  // Sin un punto de salida conocido no se puede ordenar por cercanía
+  if (origen === null) {
+    const opcion = document.getElementById("opcionCercania");
+    opcion.disabled = true;
+    opcion.textContent = "Más cerca de mí (indicá desde dónde salís)";
+    document.getElementById("orden").value = "horario";
+  }
+
   if (busqueda === null) {
     return;
   }
   document.getElementById("resumen").textContent =
     busqueda.desde + " → " + busqueda.hasta + " · " + busqueda.plazas + (busqueda.plazas === 1 ? " plaza" : " plazas");
-  document.getElementById("filtroTexto").value = busqueda.hasta;
+  document.getElementById("filtroSede").value = busqueda.hasta;
   document.getElementById("tipo").value = busqueda.filtro;
   document.getElementById("soloConLugares").checked = true;
   document.getElementById("textoLugares").textContent = "Solo con " + busqueda.plazas + (busqueda.plazas === 1 ? " lugar libre" : " lugares libres");
@@ -51,7 +91,7 @@ function cumpleTipo(v, tipo) {
  * @method mostrarViajes
  */
 function mostrarViajes() {
-  const texto = document.getElementById("filtroTexto").value.trim().toLowerCase();
+  const sede = document.getElementById("filtroSede").value;
   const precioMaximo = parseFloat(document.getElementById("precioMaximo").value);
   const tipo = document.getElementById("tipo").value;
   const orden = document.getElementById("orden").value;
@@ -60,7 +100,9 @@ function mostrarViajes() {
   // Los viajes que publicó el usuario no aparecen: no puede reservar su propio viaje
   let resultado = obtenerViajes().filter(v => !v.mio);
 
-  resultado = resultado.filter(v => v.hasta.toLowerCase().indexOf(texto) !== -1);
+  if (sede !== "Todas") {
+    resultado = resultado.filter(v => v.hasta === sede);
+  }
   if (!isNaN(precioMaximo)) {
     resultado = resultado.filter(v => v.precio <= precioMaximo);
   }
@@ -69,7 +111,9 @@ function mostrarViajes() {
     resultado = resultado.filter(v => v.plazas >= plazasBuscadas);
   }
 
-  if (orden === "precioMenor") {
+  if (orden === "cercania") {
+    resultado.sort((a, b) => distanciaDe(a) - distanciaDe(b));
+  } else if (orden === "precioMenor") {
     resultado.sort((a, b) => a.precio - b.precio);
   } else if (orden === "precioMayor") {
     resultado.sort((a, b) => b.precio - a.precio);
@@ -84,14 +128,14 @@ function mostrarViajes() {
     lista.innerHTML = `
       <div class="tarjeta texto-centrado">
         <h2>No encontramos viajes</h2>
-        <p class="texto-suave">Probá con otro destino, otro día o sacá algún filtro.</p>
+        <p class="texto-suave">Probá con otra sede, otro día o sacá algún filtro.</p>
       </div>`;
     return;
   }
 
   let html = "";
   for (let i = 0; i < resultado.length; i++) {
-    html += tarjetaViaje(resultado[i]);
+    html += tarjetaViaje(resultado[i], distanciaDe(resultado[i]));
   }
   lista.innerHTML = html;
   contador.textContent = resultado.length + (resultado.length === 1 ? " viaje" : " viajes");

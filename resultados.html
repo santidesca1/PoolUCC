@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Viajes compartidos disponibles para tu búsqueda.">
-  <meta name="author" content="Nacho Albizuri">
+  <meta name="author" content="Nacho Albizuri, Santiago Descalzo">
   <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
   <title>Viajes disponibles - PoolUCC</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -28,11 +28,22 @@
     <section class="contenido dos-columnas">
 
       <div class="columna">
+        <div class="fila-titulo">
+          <h2 id="contador">Viajes</h2>
+          <!-- Solo en el celular: abre y cierra los filtros (alternarFiltros) -->
+          <button class="boton boton-borde boton-chico boton-filtros" id="botonFiltros" type="button" onclick="alternarFiltros()">Filtros y orden</button>
+        </div>
+
         <!-- Cada cambio en los filtros vuelve a dibujar la lista (mostrarViajes) -->
-        <form class="tarjeta" onsubmit="return false">
+        <form class="tarjeta filtros" id="filtros" onsubmit="return false">
           <div class="campo">
-            <label for="filtroTexto">Destino</label>
-            <input type="text" id="filtroTexto" list="lugares" placeholder="Ej: Plaza España" oninput="mostrarViajes()">
+            <label for="filtroSede">Sede de llegada</label>
+            <select id="filtroSede" onchange="mostrarViajes()">
+              <option value="Todas">Todas las sedes</option>
+              <option value="Campus UCC">Campus UCC</option>
+              <option value="Sede Centro (Obispo Trejo)">Sede Centro (Obispo Trejo)</option>
+              <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+            </select>
           </div>
 
           <div class="fila">
@@ -55,6 +66,7 @@
           <div class="campo">
             <label for="orden">Ordenar por</label>
             <select id="orden" onchange="mostrarViajes()">
+              <option value="cercania" id="opcionCercania">Más cerca de mí</option>
               <option value="horario">Horario de salida</option>
               <option value="precioMenor">Precio: de menor a mayor</option>
               <option value="precioMayor">Precio: de mayor a menor</option>
@@ -67,18 +79,11 @@
           </div>
         </form>
 
-        <datalist id="lugares">
-          <option value="Campus Norte">
-          <option value="Plaza España">
-          <option value="Estación Sur">
-          <option value="Residencia Oeste">
-        </datalist>
-
-        <h2 id="contador">Viajes</h2>
         <div class="columna" id="lista"></div>
       </div>
 
-      <div class="mapa mapa-solo-escritorio">Mapa · un punto por cada viaje</div>
+      <!-- resultados.js centra el mapa en el lugar desde donde sale el usuario -->
+      <iframe class="mapa mapa-iframe mapa-solo-escritorio mapa-alto" id="mapa" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2600%2C-31.4950%2C-64.1500%2C-31.3650&layer=mapnik" title="Mapa de la zona" loading="lazy"></iframe>
 
     </section>
   </main>
@@ -87,11 +92,12 @@
     <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a class="activo" href="index.html">Buscar</a>
     <a href="mis-viajes.html">Ofrecer</a>
-    <a href="perfil.html">Perfil</a>
+    <a class="menu-perfil" href="perfil.html">Perfil</a>
+    <a class="menu-usuario" href="perfil.html" title="Mi perfil"><span class="avatar avatar-chico" id="menuIniciales"></span> <span id="menuNombre">Mi perfil</span></a>
   </nav>
 
   <footer>
-    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri y Santiago Descalzo · 2026</p>
   </footer>
 
 </body>

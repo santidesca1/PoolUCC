@@ -48,7 +48,10 @@ function mostrarMensajes() {
     const clase = m.enviado ? "mensaje mensaje-enviado" : "mensaje mensaje-recibido";
     html += `<p class="${clase}">${m.texto}</p>`;
   });
-  document.getElementById("chat").innerHTML = html;
+  const chat = document.getElementById("chat");
+  chat.innerHTML = html;
+  // Baja hasta el último mensaje (como en cualquier app de mensajes)
+  chat.scrollTop = chat.scrollHeight;
 }
 
 /**

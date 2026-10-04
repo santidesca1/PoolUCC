@@ -16,17 +16,23 @@ function mostrarDetalle() {
         <a class="boton" href="resultados.html">Ver otros viajes</a>
       </div>`;
     document.getElementById("mapa").textContent = "Mapa";
+    document.querySelector(".barra-reservar").style.display = "none";
     return;
   }
 
-  document.getElementById("mapa").textContent = "Mapa · " + viaje.desde + " → " + viaje.hasta;
-  document.getElementById("titulo").textContent = viaje.salida + " · " + viaje.hasta;
+  // Si conocemos dónde sale el viaje, cambiamos el recuadro por un mapa real con el punto
+  const mapa = document.getElementById("mapa");
+  if (viaje.lat !== null) {
+    mapa.outerHTML = `<iframe class="mapa mapa-iframe mapa-alto" src="${urlMapa(viaje.lat, viaje.lon)}" title="Mapa del punto de salida" loading="lazy"></iframe>`;
+  } else {
+    mapa.textContent = "Mapa · " + viaje.desde + " → " + viaje.hasta;
+  }
+  document.getElementById("titulo").textContent = viaje.dia + " · sale " + viaje.salida;
   document.getElementById("precio").textContent = formatearPrecio(viaje.precio);
   document.getElementById("desde").textContent = viaje.desde;
   document.getElementById("salida").textContent = viaje.salida;
   document.getElementById("hasta").textContent = viaje.hasta;
   document.getElementById("llegada").textContent = viaje.llegada;
-  document.getElementById("dia").textContent = viaje.dia;
   document.getElementById("iniciales").textContent = viaje.iniciales;
   document.getElementById("conductor").textContent = viaje.conductor;
   document.getElementById("puntaje").textContent = "★ " + formatearPuntaje(viaje.puntaje) + " · " + viaje.carrera;
@@ -66,6 +72,7 @@ function mostrarDetalle() {
  */
 function revisarSiSePuedeReservar() {
   const boton = document.getElementById("botonReservar");
+  const botonBarra = document.getElementById("botonBarra");
   const error = document.getElementById("error");
   const yaReservado = obtenerReservas().find(r => r.idViaje === viaje.id);
 
@@ -85,6 +92,12 @@ function revisarSiSePuedeReservar() {
   } else if (viaje.plazas === 0) {
     boton.disabled = true;
   }
+
+  // El botón de la barra de abajo (celular) queda igual que el de la tarjeta
+  botonBarra.disabled = boton.disabled;
+  if (boton.disabled) {
+    botonBarra.textContent = yaReservado !== undefined ? "Ya reservado" : "No disponible";
+  }
 }
 
 /**
@@ -95,6 +108,7 @@ function calcularTotal() {
   const cantidad = parseInt(document.getElementById("cantidad").value);
   const total = isNaN(cantidad) ? viaje.precio : viaje.precio * cantidad;
   document.getElementById("total").textContent = formatearPrecio(total);
+  document.getElementById("totalBarra").textContent = formatearPrecio(total);
 }
 
 /**
@@ -102,6 +116,9 @@ function calcularTotal() {
  * @method reservar
  */
 function reservar() {
+  if (document.getElementById("botonReservar").disabled) {
+    return;
+  }
   const cantidad = parseInt(document.getElementById("cantidad").value);
 
   const reservas = obtenerReservas();

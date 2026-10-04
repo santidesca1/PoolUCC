@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Detalle de un viaje compartido: recorrido, conductor y precio.">
-  <meta name="author" content="Nacho Albizuri">
+  <meta name="author" content="Nacho Albizuri, Santiago Descalzo">
   <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
   <title>Detalle del viaje - PoolUCC</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -14,7 +14,7 @@
   <script src="JS/comun.js" defer></script>
   <script src="JS/viaje.js" defer></script>
 </head>
-<body>
+<body class="con-barra-reservar">
 
   <main>
     <header class="barra">
@@ -26,22 +26,17 @@
 
     <section class="contenido dos-columnas">
 
-      <div class="mapa" id="mapa">Mapa · Campus Norte → Plaza España</div>
+      <div class="mapa mapa-alto" id="mapa">Mapa · Nueva Córdoba → Campus UCC</div>
 
       <!-- viaje.js completa estos datos con el viaje que viene en la dirección (?id=) -->
       <div class="columna" id="detalle">
-        <div class="tarjeta tarjeta-fila">
-          <h2 id="titulo">8:15 · Plaza España</h2>
-          <p class="precio" id="precio">$2.500</p>
-        </div>
-
         <section class="tarjeta">
-          <h2>Recorrido</h2>
+          <h2 id="titulo">Hoy · sale 07:40</h2>
           <ul class="recorrido">
-            <li><span id="desde">Campus Norte</span> <time id="salida">08:15</time></li>
-            <li><span id="hasta">Plaza España</span> <time id="llegada">08:40</time></li>
+            <li><span id="desde">Nueva Córdoba</span> <time id="salida">07:40</time></li>
+            <li><span id="hasta">Campus UCC</span> <time id="llegada">08:10</time></li>
           </ul>
-          <p class="texto-suave" id="dia">Hoy</p>
+          <ul class="etiquetas" id="preferencias"></ul>
         </section>
 
         <section class="tarjeta">
@@ -55,12 +50,14 @@
           <ul class="etiquetas" id="etiquetas">
             <li class="etiqueta etiqueta-verde">✓ Verificado</li>
           </ul>
-          <a class="boton boton-borde boton-chico" id="linkChat" href="chat.html">Escribirle</a>
+          <a class="boton boton-borde boton-chico boton-ajustado" id="linkChat" href="chat.html">Escribirle</a>
         </section>
 
-        <ul class="etiquetas" id="preferencias"></ul>
-
         <div class="tarjeta">
+          <div class="fila-titulo">
+            <h2>Tu reserva</h2>
+            <p class="precio"><span id="precio">$2.500</span> <small class="ayuda">por plaza</small></p>
+          </div>
           <div class="fila">
             <div class="campo">
               <label for="cantidad">Plazas a reservar</label>
@@ -80,15 +77,25 @@
     </section>
   </main>
 
+  <!-- Solo en el celular: total y botón siempre a mano, fijos abajo -->
+  <div class="barra-reservar">
+    <div>
+      <p class="ayuda">Total</p>
+      <p class="cifra" id="totalBarra">$2.500</p>
+    </div>
+    <button class="boton boton-chico" id="botonBarra" type="button" onclick="reservar()">Reservar plaza</button>
+  </div>
+
   <nav class="menu">
     <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a class="activo" href="index.html">Buscar</a>
     <a href="mis-viajes.html">Ofrecer</a>
-    <a href="perfil.html">Perfil</a>
+    <a class="menu-perfil" href="perfil.html">Perfil</a>
+    <a class="menu-usuario" href="perfil.html" title="Mi perfil"><span class="avatar avatar-chico" id="menuIniciales"></span> <span id="menuNombre">Mi perfil</span></a>
   </nav>
 
   <footer>
-    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri y Santiago Descalzo · 2026</p>
   </footer>
 
 </body>
