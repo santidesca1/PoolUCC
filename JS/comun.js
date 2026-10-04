@@ -1,6 +1,17 @@
 // Funciones que usan todas las páginas.
 // No tenemos base de datos: guardamos todo en localStorage como texto JSON.
 
+// Si cambiamos los datos de ejemplo (datos.js), subimos este número para que
+// los navegadores que ya tenían datos viejos guardados los vuelvan a cargar.
+const VERSION_DATOS = "2";
+if (localStorage.getItem("versionDatos") !== VERSION_DATOS) {
+  localStorage.removeItem("viajes");
+  localStorage.removeItem("reservas");
+  localStorage.removeItem("busqueda");
+  localStorage.removeItem("chats");
+  localStorage.setItem("versionDatos", VERSION_DATOS);
+}
+
 /**
  * Devuelve la lista de viajes. La primera vez copia los de datos.js.
  * @method obtenerViajes
@@ -96,6 +107,97 @@ function formatearPuntaje(puntaje) {
 }
 
 /**
+ * Busca las coordenadas de un lugar conocido (sede o barrio) por su nombre.
+ * @method buscarLugar
+ * @param {string} nombre - Nombre escrito por el usuario
+ * @return {Object} El lugar { nombre, lat, lon }, o undefined si no lo conocemos
+ */
+function buscarLugar(nombre) {
+  const buscado = nombre.trim().toLowerCase();
+  return lugares.find(l => l.nombre.toLowerCase() === buscado);
+}
+
+/**
+ * Devuelve las coordenadas desde donde sale el usuario: su ubicación actual
+ * (si la compartió) o el lugar conocido que escribió.
+ * @method coordenadasDeSalida
+ * @param {string} desde - Lo que dice el campo "Desde"
+ * @return {Object} { lat, lon }, o null si no se sabe
+ */
+function coordenadasDeSalida(desde) {
+  if (desde === MI_UBICACION) {
+    const guardada = localStorage.getItem("ubicacion");
+    return guardada === null ? null : JSON.parse(guardada);
+  }
+  const lugar = buscarLugar(desde);
+  return lugar === undefined ? null : { lat: lugar.lat, lon: lugar.lon };
+}
+
+/**
+ * Distancia aproximada en kilómetros entre dos puntos.
+ * Para distancias cortas (una ciudad) alcanza con tratar el mapa como plano:
+ * un grado de latitud son unos 111 km y uno de longitud, 111 km × cos(latitud).
+ * @method distanciaKm
+ * @param {Object} a - Punto { lat, lon }
+ * @param {Object} b - Punto { lat, lon }
+ * @return {number} Distancia en km
+ */
+function distanciaKm(a, b) {
+  const x = (b.lon - a.lon) * 111 * Math.cos(a.lat * Math.PI / 180);
+  const y = (b.lat - a.lat) * 111;
+  return Math.sqrt(x * x + y * y);
+}
+
+/**
+ * Arma la dirección de un mapa de OpenStreetMap centrado en un punto, con marcador.
+ * @method urlMapa
+ * @param {number} lat - Latitud
+ * @param {number} lon - Longitud
+ * @return {string} Dirección para el src del iframe
+ */
+function urlMapa(lat, lon) {
+  // toFixed(4) para que no queden números como -31.418499999999998
+  const caja = (lon - 0.015).toFixed(4) + "," + (lat - 0.01).toFixed(4) + "," +
+               (lon + 0.015).toFixed(4) + "," + (lat + 0.01).toFixed(4);
+  return "https://www.openstreetmap.org/export/embed.html?bbox=" + caja + "&layer=mapnik&marker=" + lat + "," + lon;
+}
+
+/**
+ * Pide al navegador la ubicación del usuario (el navegador le pregunta si da permiso).
+ * Si la obtiene: la guarda, completa el campo "desde" y centra el mapa (si hay).
+ * @method usarMiUbicacion
+ */
+function usarMiUbicacion() {
+  const estado = document.getElementById("estadoUbicacion");
+  if (!navigator.geolocation) {
+    estado.textContent = "Tu navegador no permite compartir la ubicación.";
+    return;
+  }
+  estado.textContent = "Buscando tu ubicación...";
+
+  // getCurrentPosition recibe dos callbacks: uno si sale bien y otro si falla
+  navigator.geolocation.getCurrentPosition(
+    posicion => {
+      const ubicacion = {
+        lat: posicion.coords.latitude,
+        lon: posicion.coords.longitude
+      };
+      localStorage.setItem("ubicacion", JSON.stringify(ubicacion));
+      document.getElementById("desde").value = MI_UBICACION;
+      estado.textContent = "Listo: salís desde donde estás ahora.";
+
+      const mapa = document.getElementById("mapa");
+      if (mapa !== null) {
+        mapa.src = urlMapa(ubicacion.lat, ubicacion.lon);
+      }
+    },
+    () => {
+      estado.textContent = "No pudimos obtener tu ubicación. Revisá que hayas dado permiso, o escribí desde dónde salís.";
+    }
+  );
+}
+
+/**
  * Lee el id que viene en la dirección (por ejemplo viaje.html?id=3).
  * @method leerIdDeLaUrl
  * @return {number} El id, o NaN si no hay
@@ -121,10 +223,15 @@ function limpiarTexto(texto) {
  * Si el viaje está completo no es un link, porque no se puede reservar.
  * @method tarjetaViaje
  * @param {Object} v - Viaje
+ * @param {number} distancia - Km desde la salida del usuario (opcional)
  * @return {string} HTML de la tarjeta
  */
-function tarjetaViaje(v) {
+function tarjetaViaje(v, distancia) {
   const completo = v.plazas === 0;
+  // Si sabemos desde dónde sale el usuario, mostramos qué tan lejos queda la salida
+  const textoDistancia = distancia === undefined || distancia === Infinity
+    ? ""
+    : ` · a ${distancia.toFixed(1).replace(".", ",")} km de vos`;
   const clasePlazas = completo ? "plazas plazas-completo" : "plazas";
   const textoPlazas = completo ? "Completo" : v.plazas + (v.plazas === 1 ? " plaza libre" : " plazas libres");
   const etiqueta = v.etiqueta ? ` <span class="etiqueta">${v.etiqueta}</span>` : "";
@@ -142,7 +249,7 @@ function tarjetaViaje(v) {
       <li><span>${v.desde}</span> <time datetime="${v.salida}">${v.salida}</time></li>
       <li><span>${v.hasta}</span> <time datetime="${v.llegada}">${v.llegada}</time></li>
     </ul>
-    <p class="${clasePlazas}">${v.dia} · ${textoPlazas}</p>`;
+    <p class="${clasePlazas}">${v.dia} · ${textoPlazas}${textoDistancia}</p>`;
 
   if (completo) {
     return `<article class="tarjeta tarjeta-completa">${interior}</article>`;

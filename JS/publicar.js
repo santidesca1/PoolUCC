@@ -29,7 +29,7 @@ function publicar() {
   const error = document.getElementById("error");
 
   if (desde.toLowerCase() === hasta.toLowerCase()) {
-    error.textContent = "La salida y la llegada no pueden ser el mismo lugar.";
+    error.textContent = "La salida y la llegada no pueden ser la misma sede.";
     return false;
   }
   if (isNaN(precio) || precio <= 0) {
@@ -64,6 +64,12 @@ function publicar() {
     preferencias.push("Sin fumar");
   }
 
+  // Coordenadas de la salida: la ubicación del usuario o un lugar conocido.
+  // Si escribió algo que no conocemos (una calle), quedan en null.
+  const punto = coordenadasDeSalida(desde);
+  // Para los pasajeros, "Mi ubicación actual" no tendría sentido: lo nombramos distinto
+  const textoSalida = desde === MI_UBICACION ? "Ubicación del conductor" : limpiarTexto(desde);
+
   // El id nuevo es el más grande que exista + 1
   const viajes = obtenerViajes();
   let idMaximo = 0;
@@ -82,8 +88,10 @@ function publicar() {
     puntaje: 0,
     etiqueta: "",
     precio: precio,
-    desde: limpiarTexto(desde),
-    hasta: limpiarTexto(hasta),
+    desde: textoSalida,
+    hasta: hasta,
+    lat: punto === null ? null : punto.lat,
+    lon: punto === null ? null : punto.lon,
     dia: dia,
     salida: hora,
     llegada: "",

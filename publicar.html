@@ -32,12 +32,19 @@
 
         <div class="campo">
           <label for="desde">Salida</label>
-          <input type="text" id="desde" name="desde" list="lugares" value="Campus Norte" placeholder="Punto de salida" required>
+          <input type="text" id="desde" name="desde" list="salidas" placeholder="Tu barrio o una sede" required>
+          <button class="boton boton-borde boton-chico" type="button" onclick="usarMiUbicacion()">Usar mi ubicación</button>
+          <small class="ayuda" id="estadoUbicacion"></small>
         </div>
 
+        <!-- La llegada siempre es una sede de la UCC -->
         <div class="campo">
-          <label for="hasta">Llegada</label>
-          <input type="text" id="hasta" name="hasta" list="lugares" value="Residencia Oeste" placeholder="Punto de llegada" required>
+          <label for="hasta">Llegada (sede)</label>
+          <select id="hasta" name="hasta">
+            <option value="Campus UCC">Campus UCC</option>
+            <option value="Sede Centro (Obispo Trejo)">Sede Centro (Obispo Trejo)</option>
+            <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+          </select>
         </div>
 
         <div class="opciones">
@@ -68,12 +75,18 @@
         </div>
       </fieldset>
 
-      <!-- Lugares sugeridos para los campos de texto (atributo list) -->
-      <datalist id="lugares">
-        <option value="Campus Norte">
-        <option value="Plaza España">
-        <option value="Estación Sur">
-        <option value="Residencia Oeste">
+      <!-- Salidas sugeridas para el campo "Salida" (atributo list): sedes y barrios -->
+      <datalist id="salidas">
+        <option value="Campus UCC">
+        <option value="Sede Centro (Obispo Trejo)">
+        <option value="Ciencias de la Salud">
+        <option value="Nueva Córdoba">
+        <option value="Güemes">
+        <option value="Barrio Jardín">
+        <option value="General Paz">
+        <option value="Alta Córdoba">
+        <option value="Villa Cabrera">
+        <option value="Cerro de las Rosas">
       </datalist>
 
       <fieldset class="tarjeta">
