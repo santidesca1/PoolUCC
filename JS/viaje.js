@@ -19,7 +19,13 @@ function mostrarDetalle() {
     return;
   }
 
-  document.getElementById("mapa").textContent = "Mapa · " + viaje.desde + " → " + viaje.hasta;
+  // Si conocemos dónde sale el viaje, cambiamos el recuadro por un mapa real con el punto
+  const mapa = document.getElementById("mapa");
+  if (viaje.lat !== null) {
+    mapa.outerHTML = `<iframe class="mapa mapa-iframe" src="${urlMapa(viaje.lat, viaje.lon)}" title="Mapa del punto de salida" loading="lazy"></iframe>`;
+  } else {
+    mapa.textContent = "Mapa · " + viaje.desde + " → " + viaje.hasta;
+  }
   document.getElementById("titulo").textContent = viaje.salida + " · " + viaje.hasta;
   document.getElementById("precio").textContent = formatearPrecio(viaje.precio);
   document.getElementById("desde").textContent = viaje.desde;

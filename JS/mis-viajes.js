@@ -29,7 +29,7 @@ function tarjetaMiViaje(v) {
         ${estado}
       </div>
       <ul class="recorrido">
-        <li><span>${v.desde}</span></li>
+        <li><span>${v.desde === "Ubicación del conductor" ? "Tu ubicación" : v.desde}</span></li>
         <li><span>${v.hasta}</span></li>
       </ul>
       <p class="texto-suave">${formatearPrecio(v.precio)} por persona</p>
