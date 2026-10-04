@@ -15,6 +15,52 @@ function contarAceptadas() {
 }
 
 /**
+ * Arma la tarjeta de un pasajero que solicitó un lugar.
+ * @method tarjetaSolicitante
+ * @param {Object} s - Solicitante (nombre, iniciales, puntaje, carrera, curso, plazas)
+ * @param {number} indice - Posición en la lista, para darle un name único al grupo de radios
+ * @return {string} HTML de la tarjeta
+ */
+function tarjetaSolicitante(s, indice){
+  const nombreGrupo = "solicitante" + indice;
+  return `
+    <article class="tarjeta">
+      <div class="viaje-cabecera">
+        <span class="avatar">${s.iniciales}</span>
+        <div class="viaje-conductor">
+          <h2>${s.nombre}</h2>
+          <p>★ ${formatearPuntaje(s.puntaje)} · ${s.carrera} · ${s.curso}</p>
+        </div>
+        <span class="etiqueta">${s.plazas === 1 ? "1 plaza" : s.plazas + " plazas"}</span>
+      </div>
+      <div class="opciones">
+        <label><input type="radio" name="${nombreGrupo}" value="rechazar" required> Rechazar</label>
+        <label><input type="radio" name="${nombreGrupo}" value="aceptar"> Aceptar</label>
+      </div>
+    </article>`;
+}
+/**
+ * Dibuja la lista de solicitantes del viaje, o un aviso si no hay ninguno.
+ * @method mostrarSolicitudes
+ */
+function mostrarSolicitudes() {
+  const solicitantes = viaje.solicitantes || [];
+  if (solicitantes.length === 0) {
+    document.getElementById("listaSolicitudes").innerHTML = `
+      <div class="tarjeta texto-centrado">
+        <h2>No tenés solicitudes pendientes</h2>
+      </div>`;
+    return;
+  }
+
+  let html = "";
+  solicitantes.forEach((s, indice) => {
+    html += tarjetaSolicitante(s, indice);
+  });
+  document.getElementById("listaSolicitudes").innerHTML = html;
+}
+
+/**
  * Muestra cuántos lugares quedan libres según las solicitudes aceptadas.
  * @method actualizarLugares
  */
@@ -52,5 +98,6 @@ function confirmarSolicitudes() {
 
 if (viaje !== undefined) {
   document.getElementById("ruta").textContent = viaje.desde + " → " + viaje.hasta + " · " + viaje.dia + " " + viaje.salida;
+  mostrarSolicitudes();
   actualizarLugares();
 }
