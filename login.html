@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ingresá a PoolUCC con tu correo institucional de la UCC.">
+  <meta name="author" content="Nacho Albizuri">
+  <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
+  <title>Ingresar - PoolUCC</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
+  <script src="JS/login.js" defer></script>
+</head>
+<body>
+
+  <main class="estrecho">
+    <header class="hero hero-centrado">
+      <p class="logo logo-login">Pool<span>UCC</span></p>
+      <h1>Viajá con tus compañeros</h1>
+      <p>Solo para estudiantes con correo de la UCC</p>
+    </header>
+
+    <form class="contenido" onsubmit="return ingresar()">
+      <div class="tarjeta">
+        <div class="campo">
+          <label for="nombre">Nombre y apellido</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Ej: Nacho Albizuri" maxlength="40" required>
+        </div>
+
+        <div class="campo">
+          <label for="email">Correo institucional</label>
+          <input type="email" id="email" name="email" placeholder="tunombre@ucc.edu.ar" required>
+          <small class="ayuda">Tiene que terminar en @ucc.edu.ar</small>
+        </div>
+
+        <div class="campo">
+          <label for="carrera">Carrera</label>
+          <select id="carrera" name="carrera">
+            <option value="Ingeniería Informática">Ingeniería Informática</option>
+            <option value="Abogacía">Abogacía</option>
+            <option value="Arquitectura">Arquitectura</option>
+            <option value="Ciencias Económicas">Ciencias Económicas</option>
+            <option value="Medicina">Medicina</option>
+            <option value="Psicología">Psicología</option>
+          </select>
+        </div>
+
+        <p class="mensaje-error" id="error"></p>
+
+        <button class="boton" type="submit">Ingresar</button>
+      </div>
+    </form>
+  </main>
+
+  <footer>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+  </footer>
+
+</body>
+</html>

@@ -10,6 +10,9 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
+  <script src="JS/solicitudes.js" defer></script>
 </head>
 <body>
 
@@ -18,12 +21,13 @@
       <a class="volver" href="mis-viajes.html">← Volver a mis viajes</a>
       <div>
         <h1>Solicitudes</h1>
-        <p>Campus Norte → Plaza España</p>
+        <p id="ruta">Campus Norte → Plaza España</p>
       </div>
     </header>
 
-    <!-- "required" en cada grupo de radios: no se puede confirmar sin responder todas -->
-    <form class="contenido" action="mis-viajes.html" method="get">
+    <!-- "required" en cada grupo de radios: no se puede confirmar sin responder todas.
+         Cada cambio recalcula los lugares (onchange) y al confirmar se guardan. -->
+    <form class="contenido" action="mis-viajes.html" method="get" onchange="actualizarLugares()" onsubmit="return confirmarSolicitudes()">
 
       <article class="tarjeta">
         <div class="viaje-cabecera">
@@ -57,8 +61,10 @@
 
       <p class="tarjeta tarjeta-fila">
         <span class="texto-suave">Lugares disponibles</span>
-        <strong>3</strong>
+        <strong id="lugares">3</strong>
       </p>
+
+      <p class="mensaje-error" id="error"></p>
 
       <button class="boton boton-oscuro" type="submit">Confirmar viaje</button>
       <p class="texto-suave texto-centrado">Respondé todas las solicitudes para confirmar</p>
@@ -66,8 +72,9 @@
   </main>
 
   <nav class="menu">
+    <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a href="index.html">Buscar</a>
-    <a class="activo" href="mis-viajes.html">Ofrezco</a>
+    <a class="activo" href="mis-viajes.html">Ofrecer</a>
     <a href="perfil.html">Perfil</a>
   </nav>
 

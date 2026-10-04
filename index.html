@@ -10,6 +10,9 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
+  <script src="JS/index.js" defer></script>
 </head>
 <body>
 
@@ -17,17 +20,17 @@
     <header class="hero">
       <div class="hero-fila">
         <p class="logo">Pool<span>UCC</span></p>
-        <a class="avatar" href="perfil.html" title="Ir a mi perfil">NA</a>
+        <a class="avatar" id="avatar" href="perfil.html" title="Ir a mi perfil">NA</a>
       </div>
-      <p class="hero-fecha">Martes, 24 de octubre</p>
-      <h1>Hola, Nacho</h1>
+      <p class="hero-fecha" id="fecha">Martes, 24 de octubre</p>
+      <h1 id="saludo">Hola, Nacho</h1>
     </header>
 
     <section class="contenido dos-columnas">
 
       <div class="columna">
-        <!-- Al enviar el formulario, el navegador va a resultados.html -->
-        <form class="tarjeta" action="resultados.html" method="get">
+        <!-- buscar() valida y guarda la búsqueda; si está todo bien, va a resultados.html -->
+        <form class="tarjeta" action="resultados.html" method="get" onsubmit="return buscar()">
           <div class="campo">
             <label for="desde">Desde</label>
             <input type="text" id="desde" name="desde" list="lugares" value="Campus Norte" placeholder="¿Desde dónde salís?" required>
@@ -64,6 +67,8 @@
             </div>
           </fieldset>
 
+          <p class="mensaje-error" id="error"></p>
+
           <button class="boton" type="submit">Buscar</button>
         </form>
 
@@ -77,19 +82,23 @@
       </div>
 
       <div class="columna">
+        <!-- Si el usuario tiene una reserva, index.js la muestra acá -->
+        <div id="proximo"></div>
+
         <a class="tarjeta tarjeta-enlace tarjeta-acento" href="publicar.html">
           <h2>¿Manejás vos?</h2>
           <p class="texto-suave">Publicá tu ruta en un minuto</p>
         </a>
-        <div class="mapa mapa-solo-escritorio">Mapa · tu ubicación</div>
+        <iframe class="mapa mapa-iframe mapa-solo-escritorio" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2100%2C-31.4450%2C-64.1650%2C-31.3950&layer=mapnik" title="Mapa de tu ubicación" loading="lazy"></iframe>
       </div>
 
     </section>
   </main>
 
   <nav class="menu">
+    <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a class="activo" href="index.html">Buscar</a>
-    <a href="mis-viajes.html">Ofrezco</a>
+    <a href="mis-viajes.html">Ofrecer</a>
     <a href="perfil.html">Perfil</a>
   </nav>
 

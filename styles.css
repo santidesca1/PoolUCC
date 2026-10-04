@@ -116,6 +116,12 @@ h3 { font-size: 1rem; color: var(--color-terciario); }
   color: var(--color-terciario);
 }
 
+/* Logo dentro del menú: solo se ve en pantallas grandes (ver media query) */
+.menu-logo {
+  display: none;
+  color: var(--color-blanco);
+}
+
 
 /* ---------- 5. CABECERAS ---------- */
 /* Cabecera azul (inicio, perfil, reservado) */
@@ -308,6 +314,9 @@ legend {
 
 .ayuda { font-size: 0.8125rem; color: var(--color-texto-suave); }
 
+/* Mensajes que escribe JavaScript cuando algo del formulario está mal */
+.mensaje-error { font-size: 0.875rem; font-weight: 700; color: var(--color-error); }
+
 /* Botones: sirven para <button> y para <a> */
 .boton {
   display: block;
@@ -333,10 +342,17 @@ legend {
 
 .boton-chico { display: inline-block; width: auto; padding: 0.5rem 1rem; font-size: 0.875rem; }
 
+/* Acciones que borran algo (cancelar reserva, eliminar viaje) */
+.boton-peligro { color: var(--color-error); background-color: var(--color-blanco); border-color: var(--color-error); }
+.boton-peligro:hover { background-color: #FBE9EA; }
+
+/* Botón que JavaScript desactiva (por ejemplo, un viaje completo) */
+.boton:disabled { opacity: 0.5; cursor: not-allowed; }
+
 
 /* ---------- 9. MAPA ----------
-   Por ahora es un recuadro; más adelante se puede reemplazar por un
-   <iframe> de Google Maps. */
+   Placeholder de texto para las pantallas de viaje/resultados. La búsqueda
+   (index.html) usa, en cambio, un <iframe> real de OpenStreetMap. */
 .mapa {
   display: flex;
   align-items: center;
@@ -348,6 +364,16 @@ legend {
   background-color: var(--color-secundario);
   border: 1px dashed var(--color-primario-fuerte);
   border-radius: 1rem;
+}
+
+/* Mapa real (iframe de OpenStreetMap): mismo tamaño que el placeholder,
+   pero sin el centrado de texto ni el borde punteado */
+.mapa-iframe {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--color-borde);
+  overflow: hidden;
 }
 
 .mapa-solo-escritorio { display: none; }   /* en el celular no se muestra */
@@ -436,27 +462,36 @@ footer {
 
 
 /* ---------- 12. PANTALLAS GRANDES ----------
-   Desde 900px de ancho: el menú pasa a un costado, el contenido se ordena
-   en dos columnas (grid) y aparece el mapa en las pantallas de búsqueda. */
+   Desde 900px de ancho: el menú pasa a una barra fija arriba (con el logo a
+   la izquierda), el contenido se ordena en dos columnas (grid) y aparece el
+   mapa en la pantalla de búsqueda. */
 @media (min-width: 900px) {
   body {
     max-width: none;
-    padding: 0 0 0 14rem;    /* deja lugar al menú lateral */
+    padding: 4.5rem 0 0;    /* deja lugar a la barra superior fija */
   }
 
   .menu {
     top: 0;
-    right: auto;
-    width: 14rem;
+    bottom: auto;
+    left: 0;
+    right: 0;
     max-width: none;
     margin: 0;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
-    padding: 1.5rem 1rem;
+    padding: 0.75rem 2rem;
   }
 
-  .menu a { flex: none; padding: 0.75rem 1rem; text-align: left; }
+  .menu-logo { display: block; margin-right: 1.5rem; }
+
+  .menu a { flex: none; padding: 0.5rem 1rem; }
+
+  /* El logo ya está en la barra superior: no hace falta repetirlo */
+  .hero .logo { display: none; }
+  .hero .logo-login { display: block; }   /* el login no tiene barra superior */
 
   main { max-width: 64rem; margin: 0 auto; }
   main.estrecho { max-width: 34rem; }
@@ -469,4 +504,5 @@ footer {
   }
 
   .mapa-solo-escritorio { display: flex; }
+  .mapa-iframe.mapa-solo-escritorio { display: block; }
 }

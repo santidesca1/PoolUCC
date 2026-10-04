@@ -10,6 +10,9 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
+  <script src="JS/publicar.js" defer></script>
 </head>
 <body>
 
@@ -21,7 +24,8 @@
       </div>
     </header>
 
-    <form class="contenido" action="mis-viajes.html" method="get">
+    <!-- publicar() valida los datos y guarda el viaje nuevo en localStorage -->
+    <form class="contenido" action="mis-viajes.html" method="get" onsubmit="return publicar()">
 
       <fieldset class="tarjeta">
         <legend>Ruta</legend>
@@ -103,13 +107,16 @@
         </div>
       </fieldset>
 
+      <p class="mensaje-error" id="error"></p>
+
       <button class="boton" type="submit">Publicar viaje</button>
     </form>
   </main>
 
   <nav class="menu">
+    <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a href="index.html">Buscar</a>
-    <a class="activo" href="mis-viajes.html">Ofrezco</a>
+    <a class="activo" href="mis-viajes.html">Ofrecer</a>
     <a href="perfil.html">Perfil</a>
   </nav>
 
