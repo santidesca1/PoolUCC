@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Tus viajes realizados como conductor.">
-  <meta name="author" content="Nacho Albizuri">
+  <meta name="author" content="Nacho Albizuri, Santiago Descalzo">
   <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
   <title>Viajes realizados - PoolUCC</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
 </head>
 <body>
 
@@ -35,8 +37,8 @@
             <span class="etiqueta etiqueta-gris">Realizado</span>
           </div>
           <ul class="recorrido">
-            <li><span>Campus Norte</span></li>
-            <li><span>Estación Sur</span></li>
+            <li><span>Barrio Jardín</span></li>
+            <li><span>Campus UCC</span></li>
           </ul>
           <div class="viaje-cabecera">
             <p class="viaje-conductor plazas">1 plaza libre</p>
@@ -57,7 +59,8 @@
         </div>
       </div>
 
-      <div class="mapa mapa-solo-escritorio">Mapa · tus rutas como conductor</div>
+      <!-- Mapa del Campus UCC, a donde fue el viaje realizado -->
+      <iframe class="mapa mapa-iframe mapa-solo-escritorio mapa-alto" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2587%2C-31.4966%2C-64.2287%2C-31.4766&layer=mapnik&marker=-31.4866%2C-64.2437" title="Mapa del Campus UCC" loading="lazy"></iframe>
 
     </section>
   </main>
@@ -66,11 +69,12 @@
     <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a href="index.html">Buscar</a>
     <a class="activo" href="mis-viajes.html">Ofrecer</a>
-    <a href="perfil.html">Perfil</a>
+    <a class="menu-perfil" href="perfil.html">Perfil</a>
+    <a class="menu-usuario" href="perfil.html" title="Mi perfil"><span class="avatar avatar-chico" id="menuIniciales"></span> <span id="menuNombre">Mi perfil</span></a>
   </nav>
 
   <footer>
-    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri y Santiago Descalzo · 2026</p>
   </footer>
 
 </body>

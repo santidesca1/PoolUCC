@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Tu viaje compartido quedó reservado.">
-  <meta name="author" content="Nacho Albizuri">
+  <meta name="author" content="Nacho Albizuri, Santiago Descalzo">
   <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
   <title>Viaje reservado - PoolUCC</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -20,7 +20,7 @@
     <header class="hero hero-centrado">
       <div class="marca-exito">✓</div>
       <h1>Viaje reservado</h1>
-      <p id="ruta">Campus Norte → Plaza España · 8:15</p>
+      <p id="ruta">Nueva Córdoba → Campus UCC · 8:15</p>
     </header>
 
     <!-- reservado.js completa estos datos con la reserva del viaje (?id=) -->
@@ -47,15 +47,26 @@
     </section>
   </main>
 
+  <!-- Ventana de avisos y confirmaciones (la manejan avisar() y confirmar() de comun.js) -->
+  <dialog class="dialogo" id="dialogo" onclose="alCerrarDialogo()">
+    <h2 id="dialogoTitulo">Aviso</h2>
+    <p class="texto-suave" id="dialogoTexto"></p>
+    <div class="dialogo-botones">
+      <button class="boton boton-borde boton-chico" id="dialogoCancelar" type="button" onclick="cerrarDialogo(false)">Cancelar</button>
+      <button class="boton boton-chico" id="dialogoAceptar" type="button" onclick="cerrarDialogo(true)">Aceptar</button>
+    </div>
+  </dialog>
+
   <nav class="menu">
     <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a class="activo" href="index.html">Buscar</a>
     <a href="mis-viajes.html">Ofrecer</a>
-    <a href="perfil.html">Perfil</a>
+    <a class="menu-perfil" href="perfil.html">Perfil</a>
+    <a class="menu-usuario" href="perfil.html" title="Mi perfil"><span class="avatar avatar-chico" id="menuIniciales"></span> <span id="menuNombre">Mi perfil</span></a>
   </nav>
 
   <footer>
-    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri y Santiago Descalzo · 2026</p>
   </footer>
 
 </body>

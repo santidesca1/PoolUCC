@@ -3,6 +3,10 @@
 Carpooling para estudiantes de la UCC. Entrás con tu correo institucional, buscás un
 viaje hacia la facu o publicás el tuyo para compartir los lugares libres del auto.
 
+Todos los viajes **llegan a una sede**: Campus UCC, Sede Centro (Obispo Trejo) o
+Ciencias de la Salud. La salida puede ser otra sede, un barrio o tu **ubicación actual**
+(el navegador te pide permiso), y los resultados se ordenan por cercanía.
+
 Hecho con **HTML, CSS y JavaScript**, con lo visto en clase. No tiene base de datos:
 los viajes de ejemplo están en `JS/datos.js` y todo lo que hace el usuario (reservas,
 viajes publicados, chats) se guarda en el navegador con `localStorage`.
@@ -17,14 +21,16 @@ Para volver a empezar de cero: **Perfil → Reiniciar demo**.
 
 ### Recorrido para probar
 
-1. **Buscar**: Campus Norte → Plaza España. Si ponés el mismo lugar en los dos campos, avisa.
-2. **Resultados**: probá el filtro de destino, el precio máximo, "Mostrar" y "Ordenar por".
+1. **Buscar**: tocá "Usar mi ubicación" (el mapa se centra en vos) o escribí un barrio,
+   por ejemplo Nueva Córdoba, y elegí la sede Campus UCC. Si salís y llegás a la misma sede, avisa.
+2. **Resultados**: vienen ordenados por "Más cerca de mí" y cada tarjeta dice a cuántos km
+   sale. Probá la sede, el precio máximo, "Mostrar" y "Ordenar por".
    Si no hay viajes, aparece "No encontramos viajes".
 3. **Detalle**: elegí cuántas plazas y mirá el total. Al reservar, el viaje pierde esas plazas.
 4. **Reservado**: desde acá podés escribirle al conductor (responde solo a los 2 segundos),
    calificar el viaje o cancelar la reserva (las plazas vuelven al viaje).
-5. **Ofrecer**: publicá un viaje (prueba poner precio 0 o el mismo lugar), aceptá
-   solicitudes y eliminá viajes.
+5. **Ofrecer**: publicá un viaje (salida con tu ubicación o un barrio, llegada a una sede;
+   probá poner precio 0 o la misma sede), aceptá solicitudes y eliminá viajes.
 6. **Perfil**: muestra cuántos viajes reservaste y publicaste, y cuánto pagaste.
 
 ## Pantallas
@@ -59,7 +65,9 @@ PoolUCC/
 
 Cada página carga `datos.js`, `comun.js` y su propio archivo, con `defer`.
 En `localStorage` se guardan estas claves: `usuario`, `viajes`, `reservas`,
-`busqueda` y `chats`, siempre como texto con `JSON.stringify` / `JSON.parse`.
+`busqueda`, `chats` y `ubicacion`, siempre como texto con `JSON.stringify` / `JSON.parse`.
+Si se cambian los datos de ejemplo, hay que subir `VERSION_DATOS` en `comun.js` para
+que los navegadores que ya tenían datos guardados los vuelvan a cargar.
 
 ## Qué de la materia se usa
 
@@ -69,12 +77,16 @@ En `localStorage` se guardan estas claves: `usuario`, `viajes`, `reservas`,
 |------|-------|
 | Etiquetas semánticas (header, main, nav, section, article, footer) | todas las páginas |
 | Formularios: input, select, textarea, radio, checkbox, datalist, fieldset/legend, label for | `login`, `index`, `resultados`, `publicar`, `calificar`, `solicitudes`, `chat` |
-| `<iframe>` (mapa de OpenStreetMap) | `index` |
+| `<iframe>` (mapa de OpenStreetMap) | `index`, `resultados`, `viaje`, `mis-viajes` |
+| `<dialog>` (ventana de aviso / confirmación) | `reservado`, `mis-viajes`, `publicar`, `solicitudes`, `calificar`, `perfil` |
 | Hoja de estilo externa, selectores por etiqueta, clase y descendiente | `styles.css` |
-| Variables (`:root` y `var()`) | colores de la marca |
-| Modelo de cajas, `box-sizing`, unidades `rem` | `styles.css` |
-| Pseudo-clases (`:hover`, `:focus`, `:disabled`, `:first-child`) y `::before` | botones, menú, recorrido |
-| `transition`, `position: fixed` | botones, menú |
+| Variables (`:root` y `var()`) | colores de la marca y sombras |
+| Modelo de cajas, `box-sizing`, unidades `rem` y `vh`, `calc()` | `styles.css` |
+| Fondos con gradiente (`linear-gradient`) y colores `rgba` | cabeceras azules, sombras, fondo del diálogo |
+| Pseudo-clases (`:hover`, `:focus`, `:active`, `:disabled`, `:focus-within`) y pseudo-elementos (`::before`, `::backdrop`) | botones, tarjetas, estrellas, recorrido, diálogo |
+| `transition` y `transform` (`translateY`, `scale`) | tarjetas que "suben", botones que se "hunden", estrellas |
+| `position: fixed` | menú y barra de "Reservar" en el celular |
+| `float` | títulos de los grupos en Publicar |
 | Flexbox | casi todos los componentes |
 | Grid y media query (`min-width: 900px`) | dos columnas y barra superior en escritorio |
 
@@ -94,6 +106,11 @@ En `localStorage` se guardan estas claves: `usuario`, `viajes`, `reservas`,
 | `localStorage` (`setItem`, `getItem`, `removeItem`) y JSON | `comun.js` |
 | `Intl.NumberFormat` (precio como `$2.500`) | `comun.js` |
 | Callbacks: `setTimeout` | respuesta automática del chat |
+| Callbacks propios: `avisar()` y `confirmar()` reciben la función a ejecutar después | todas las confirmaciones |
+| Mostrar / ocultar con `style.display` | fecha o día en Publicar, vista pasajero/conductor en Perfil |
+| Cambiar clases con `classList` (`add`, `remove`, `toggle`) | estrellas de Calificar, filtros de Resultados en el celular |
+| `Math.cos`, `Math.sqrt`, `Math.PI` | distancia en km para ordenar por cercanía (`comun.js`) |
+| Geolocalización del navegador (`navigator.geolocation`, con callbacks) — no está en las filminas | botón "Usar mi ubicación" |
 | Documentación con JSDoc | todas las funciones |
 
 ## Casos borde que contempla
@@ -121,4 +138,10 @@ En `localStorage` se guardan estas claves: `usuario`, `viajes`, `reservas`,
 
 - Los datos viven en el navegador de cada uno: si abrís la página en otra compu, empieza de cero.
 - El login no tiene contraseña ni verifica que el correo exista; solo revisa el dominio.
-- El chat responde siempre lo mismo y los mapas de viaje/resultados son recuadros.
+- El chat responde siempre lo mismo.
+- Los mapas muestran un solo punto (OpenStreetMap embebido no permite dibujar rutas).
+- La ubicación se usa como coordenadas: no se muestra el nombre de la calle (eso necesita
+  un servicio externo). Si la salida se escribe a mano y no es un barrio conocido, ese viaje
+  no tiene distancia y queda al final al ordenar por cercanía.
+- Las coordenadas de sedes y barrios son aproximadas.
+- Solo se cargan viajes de ida a la facu (la llegada siempre es una sede).

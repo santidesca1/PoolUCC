@@ -42,6 +42,26 @@ function mostrarProximoViaje() {
 }
 
 /**
+ * Si el usuario ya había buscado, vuelve a completar el formulario.
+ * Si salía desde su ubicación, centra el mapa ahí.
+ * @method cargarUltimaBusqueda
+ */
+function cargarUltimaBusqueda() {
+  const guardada = localStorage.getItem("busqueda");
+  if (guardada === null) {
+    return;
+  }
+  const busqueda = JSON.parse(guardada);
+  document.getElementById("desde").value = busqueda.desde;
+  document.getElementById("hasta").value = busqueda.hasta;
+
+  const punto = coordenadasDeSalida(busqueda.desde);
+  if (punto !== null) {
+    document.getElementById("mapa").src = urlMapa(punto.lat, punto.lon);
+  }
+}
+
+/**
  * Valida el formulario de búsqueda y la guarda para resultados.html.
  * @method buscar
  * @return {boolean} true si se puede buscar, false si hay un error
@@ -52,7 +72,7 @@ function buscar() {
   const error = document.getElementById("error");
 
   if (desde.toLowerCase() === hasta.toLowerCase()) {
-    error.textContent = "El origen y el destino no pueden ser el mismo lugar.";
+    error.textContent = "Ya estás en esa sede: elegí otra sede de llegada.";
     return false;
   }
 
@@ -68,3 +88,4 @@ function buscar() {
 
 mostrarSaludo();
 mostrarProximoViaje();
+cargarUltimaBusqueda();

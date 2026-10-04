@@ -91,13 +91,18 @@ function confirmarSolicitudes() {
   viaje.solicitudes = 0;
   guardarViajes(viajes);
 
-  alert(aceptadas === 0 ? "Rechazaste las solicitudes." : "Aceptaste " + aceptadas + (aceptadas === 1 ? " pasajero." : " pasajeros."));
-  window.location.href = "mis-viajes.html";
+  const texto = aceptadas === 0
+    ? "Rechazaste las solicitudes."
+    : "Aceptaste " + aceptadas + (aceptadas === 1 ? " pasajero" : " pasajeros") + ". Les avisamos que tienen lugar.";
+  avisar("Solicitudes respondidas", texto, () => {
+    window.location.href = "mis-viajes.html";
+  });
   return false;
 }
 
 if (viaje !== undefined) {
-  document.getElementById("ruta").textContent = viaje.desde + " → " + viaje.hasta + " · " + viaje.dia + " " + viaje.salida;
+  document.getElementById("ruta").textContent = viaje.dia + " " + viaje.salida + " · a " + viaje.hasta;
   mostrarSolicitudes();
   actualizarLugares();
+  
 }

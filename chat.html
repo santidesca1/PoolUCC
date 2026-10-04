@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Chat con el conductor del viaje.">
-  <meta name="author" content="Nacho Albizuri">
+  <meta name="author" content="Nacho Albizuri, Santiago Descalzo">
   <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
   <title>Chat con Marta Ruiz - PoolUCC</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -21,24 +21,26 @@
       <a class="volver" id="volver" href="reservado.html">← Volver al viaje</a>
       <div>
         <h1 id="conductor">Marta Ruiz</h1>
-        <p id="ruta">Campus Norte → Plaza España · 8:15</p>
+        <p id="ruta">Nueva Córdoba → Campus UCC · 8:15</p>
       </div>
       <span class="avatar" id="iniciales">MR</span>
     </header>
 
     <section class="contenido">
-      <!-- chat.js dibuja acá los mensajes guardados -->
-      <div class="chat" id="chat">
-        <span class="etiqueta etiqueta-gris chat-dia">Hoy</span>
-      </div>
-
-      <form class="fila" action="chat.html" method="get" onsubmit="return enviarMensaje()">
-        <div class="campo">
-          <label class="oculto" for="mensaje">Mensaje</label>
-          <input type="text" id="mensaje" name="mensaje" placeholder="Escribí un mensaje" maxlength="300" required>
+      <div class="tarjeta chat-caja">
+        <!-- chat.js dibuja acá los mensajes guardados -->
+        <div class="chat" id="chat">
+          <span class="etiqueta etiqueta-gris chat-dia">Hoy</span>
         </div>
-        <button class="boton boton-chico" type="submit">Enviar</button>
-      </form>
+
+        <form class="fila chat-escribir" action="chat.html" method="get" onsubmit="return enviarMensaje()">
+          <div class="campo">
+            <label class="oculto" for="mensaje">Mensaje</label>
+            <input type="text" id="mensaje" name="mensaje" placeholder="Escribí un mensaje" maxlength="300" required>
+          </div>
+          <button class="boton boton-chico" type="submit">Enviar</button>
+        </form>
+      </div>
     </section>
   </main>
 
@@ -46,11 +48,12 @@
     <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a class="activo" href="index.html">Buscar</a>
     <a href="mis-viajes.html">Ofrecer</a>
-    <a href="perfil.html">Perfil</a>
+    <a class="menu-perfil" href="perfil.html">Perfil</a>
+    <a class="menu-usuario" href="perfil.html" title="Mi perfil"><span class="avatar avatar-chico" id="menuIniciales"></span> <span id="menuNombre">Mi perfil</span></a>
   </nav>
 
   <footer>
-    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri y Santiago Descalzo · 2026</p>
   </footer>
 
 </body>
