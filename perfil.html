@@ -10,6 +10,9 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
+  <script src="JS/perfil.js" defer></script>
 </head>
 <body>
 
@@ -20,10 +23,10 @@
         <p class="hero-fecha">Perfil</p>
       </div>
       <div class="viaje-cabecera">
-        <span class="avatar avatar-grande">NA</span>
+        <span class="avatar avatar-grande" id="iniciales">NA</span>
         <div>
-          <h1>Nacho Albizuri</h1>
-          <p class="hero-fecha">Ingeniería Informática · 3.º</p>
+          <h1 id="nombre">Nacho Albizuri</h1>
+          <p class="hero-fecha" id="carrera">Ingeniería Informática</p>
         </div>
       </div>
       <ul class="etiquetas">
@@ -41,15 +44,27 @@
         </div>
       </fieldset>
 
-      <!-- El dorado (acento) se usa solo para el ahorro -->
+      <!-- perfil.js calcula estos números a partir de las reservas y los viajes publicados -->
+      <div class="tarjeta tarjeta-oscura estadisticas">
+        <div>
+          <p>Viajes reservados</p>
+          <p class="cifra cifra-blanca" id="cantidadReservas">0</p>
+        </div>
+        <div>
+          <p>Viajes publicados</p>
+          <p class="cifra cifra-blanca" id="cantidadPublicados">0</p>
+        </div>
+      </div>
+
       <div class="tarjeta tarjeta-acento">
-        <p class="texto-suave">Este mes</p>
-        <p class="cifra cifra-ahorro">$42.500</p>
-        <p class="texto-suave">ahorrados en 14 viajes</p>
+        <p class="texto-suave">Pagaste en total</p>
+        <p class="cifra" id="totalPagado">$0</p>
+        <p class="texto-suave">compartiendo el viaje con compañeros</p>
       </div>
 
       <ul class="tarjeta datos">
-        <li><span>Verificación</span> <span>Email · DNI</span></li>
+        <li><span>Correo</span> <span id="email">nacho@ucc.edu.ar</span></li>
+        <li><span>Verificación</span> <span>Email UCC</span></li>
         <li><span>Pagos</span> <span>Efectivo</span></li>
         <li><span>Mi auto</span> <span>Sin agregar</span></li>
         <li><span>Preferencias de viaje</span> <span>3 activas</span></li>
@@ -59,13 +74,15 @@
         <label><input type="checkbox" name="notificaciones" checked> Notificaciones (avisos de salida y mensajes)</label>
       </div>
 
-      <a class="boton boton-borde" href="index.html">Cerrar sesión</a>
+      <button class="boton boton-borde" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
+      <button class="boton boton-peligro" type="button" onclick="reiniciarDemo()">Reiniciar demo (borra todos los datos)</button>
     </section>
   </main>
 
   <nav class="menu">
+    <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a href="index.html">Buscar</a>
-    <a href="mis-viajes.html">Ofrezco</a>
+    <a href="mis-viajes.html">Ofrecer</a>
     <a class="activo" href="perfil.html">Perfil</a>
   </nav>
 

@@ -10,28 +10,29 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="JS/datos.js" defer></script>
+  <script src="JS/comun.js" defer></script>
+  <script src="JS/chat.js" defer></script>
 </head>
 <body>
 
   <main class="estrecho">
     <header class="barra">
-      <a class="volver" href="reservado.html">← Volver al viaje</a>
+      <a class="volver" id="volver" href="reservado.html">← Volver al viaje</a>
       <div>
-        <h1>Marta Ruiz</h1>
-        <p>Campus Norte → Plaza España · 8:15</p>
+        <h1 id="conductor">Marta Ruiz</h1>
+        <p id="ruta">Campus Norte → Plaza España · 8:15</p>
       </div>
-      <span class="avatar">MR</span>
+      <span class="avatar" id="iniciales">MR</span>
     </header>
 
     <section class="contenido">
-      <div class="chat">
+      <!-- chat.js dibuja acá los mensajes guardados -->
+      <div class="chat" id="chat">
         <span class="etiqueta etiqueta-gris chat-dia">Hoy</span>
-        <p class="mensaje mensaje-recibido">¡Hola! Salgo a las 8:15 de la puerta B del estacionamiento.</p>
-        <p class="mensaje mensaje-enviado">Perfecto, a las 8:10 estoy ahí.</p>
-        <p class="mensaje mensaje-recibido">Genial. Si llegás antes, avisame por acá.</p>
       </div>
 
-      <form class="fila" action="chat.html" method="get">
+      <form class="fila" action="chat.html" method="get" onsubmit="return enviarMensaje()">
         <div class="campo">
           <label class="oculto" for="mensaje">Mensaje</label>
           <input type="text" id="mensaje" name="mensaje" placeholder="Escribí un mensaje" maxlength="300" required>
@@ -42,8 +43,9 @@
   </main>
 
   <nav class="menu">
+    <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a class="activo" href="index.html">Buscar</a>
-    <a href="mis-viajes.html">Ofrezco</a>
+    <a href="mis-viajes.html">Ofrecer</a>
     <a href="perfil.html">Perfil</a>
   </nav>
 
