@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Calificá tu viaje compartido.">
-  <meta name="author" content="Nacho Albizuri">
+  <meta name="author" content="Nacho Albizuri, Santiago Descalzo">
   <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
   <title>Calificar viaje - PoolUCC</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -26,44 +26,57 @@
 
     <!-- "required" obliga a elegir un puntaje. calificar() lo guarda y vuelve al inicio -->
     <form class="contenido" action="index.html" method="get" onsubmit="return calificar()">
-      <div class="tarjeta">
+      <div class="tarjeta tarjeta-centrada">
         <span class="avatar avatar-grande" id="iniciales">MR</span>
         <h2 id="ruta">Nueva Córdoba → Campus UCC</h2>
         <p class="texto-suave" id="conductor">Viaje con Marta Ruiz</p>
 
+        <!-- Cada estrella es un radio escondido (clase "oculto") dentro de su label.
+             Al elegir una, pintarEstrellas() pinta esa y las anteriores. -->
         <fieldset>
-          <legend>Puntaje del viaje</legend>
-          <div class="opciones opciones-columna">
-            <label><input type="radio" name="puntaje" value="5" required> <span class="estrellas">★★★★★</span> Excelente</label>
-            <label><input type="radio" name="puntaje" value="4"> <span class="estrellas">★★★★</span> Muy bueno</label>
-            <label><input type="radio" name="puntaje" value="3"> <span class="estrellas">★★★</span> Bueno</label>
-            <label><input type="radio" name="puntaje" value="2"> <span class="estrellas">★★</span> Regular</label>
-            <label><input type="radio" name="puntaje" value="1"> <span class="estrellas">★</span> Malo</label>
+          <legend class="oculto">Puntaje del viaje</legend>
+          <div class="estrellas-elegir">
+            <label class="estrella" title="Malo"><input class="oculto" type="radio" name="puntaje" value="1" required onchange="pintarEstrellas(1)">★</label>
+            <label class="estrella" title="Regular"><input class="oculto" type="radio" name="puntaje" value="2" onchange="pintarEstrellas(2)">★</label>
+            <label class="estrella" title="Bueno"><input class="oculto" type="radio" name="puntaje" value="3" onchange="pintarEstrellas(3)">★</label>
+            <label class="estrella" title="Muy bueno"><input class="oculto" type="radio" name="puntaje" value="4" onchange="pintarEstrellas(4)">★</label>
+            <label class="estrella" title="Excelente"><input class="oculto" type="radio" name="puntaje" value="5" onchange="pintarEstrellas(5)">★</label>
           </div>
         </fieldset>
+        <p class="texto-suave" id="textoPuntaje">Tocá una estrella para calificar</p>
       </div>
 
       <div class="campo">
-        <label for="comentario">Comentarios</label>
+        <label for="comentario">Comentarios (opcional)</label>
         <textarea id="comentario" name="comentario" rows="3" maxlength="280" placeholder="¿Cómo fue el viaje?"></textarea>
       </div>
 
       <p class="mensaje-error" id="error"></p>
 
       <button class="boton" id="botonEnviar" type="submit">Enviar calificación</button>
-      <a class="boton boton-borde" id="volverAbajo" href="reservado.html">Volver</a>
     </form>
   </main>
+
+  <!-- Ventana de avisos y confirmaciones (la manejan avisar() y confirmar() de comun.js) -->
+  <dialog class="dialogo" id="dialogo" onclose="alCerrarDialogo()">
+    <h2 id="dialogoTitulo">Aviso</h2>
+    <p class="texto-suave" id="dialogoTexto"></p>
+    <div class="dialogo-botones">
+      <button class="boton boton-borde boton-chico" id="dialogoCancelar" type="button" onclick="cerrarDialogo(false)">Cancelar</button>
+      <button class="boton boton-chico" id="dialogoAceptar" type="button" onclick="cerrarDialogo(true)">Aceptar</button>
+    </div>
+  </dialog>
 
   <nav class="menu">
     <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a class="activo" href="index.html">Buscar</a>
     <a href="mis-viajes.html">Ofrecer</a>
-    <a href="perfil.html">Perfil</a>
+    <a class="menu-perfil" href="perfil.html">Perfil</a>
+    <a class="menu-usuario" href="perfil.html" title="Mi perfil"><span class="avatar avatar-chico" id="menuIniciales"></span> <span id="menuNombre">Mi perfil</span></a>
   </nav>
 
   <footer>
-    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri y Santiago Descalzo · 2026</p>
   </footer>
 
 </body>

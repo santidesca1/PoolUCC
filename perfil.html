@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Tu perfil de PoolUCC: verificación, pagos y preferencias.">
-  <meta name="author" content="Nacho Albizuri">
+  <meta name="author" content="Nacho Albizuri, Santiago Descalzo">
   <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
   <title>Mi perfil - PoolUCC</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -31,42 +31,64 @@
       </div>
       <ul class="etiquetas">
         <li class="etiqueta etiqueta-verde">✓ Verificado</li>
-        <li class="etiqueta etiqueta-blanca">★ 4,8</li>
+        <li class="etiqueta etiqueta-blanca">Estudiante UCC</li>
       </ul>
     </header>
 
     <section class="contenido">
+      <!-- cambiarVista() muestra los datos de pasajero o los de conductor -->
       <fieldset>
         <legend>Ver perfil como</legend>
         <div class="opciones">
-          <label><input type="radio" name="rol" value="pasajero" checked> Pasajero</label>
-          <label><input type="radio" name="rol" value="conductor"> Conductor</label>
+          <label><input type="radio" name="rol" value="pasajero" checked onchange="cambiarVista(this.value)"> Pasajero</label>
+          <label><input type="radio" name="rol" value="conductor" onchange="cambiarVista(this.value)"> Conductor</label>
         </div>
       </fieldset>
 
       <!-- perfil.js calcula estos números a partir de las reservas y los viajes publicados -->
-      <div class="tarjeta tarjeta-oscura estadisticas">
-        <div>
-          <p>Viajes reservados</p>
-          <p class="cifra cifra-blanca" id="cantidadReservas">0</p>
+      <div class="columna" id="vistaPasajero">
+        <div class="tarjeta tarjeta-oscura estadisticas">
+          <div>
+            <p>Viajes reservados</p>
+            <p class="cifra cifra-blanca" id="cantidadReservas">0</p>
+          </div>
+          <div>
+            <p>Viajes realizados</p>
+            <p class="cifra cifra-blanca" id="cantidadRealizados">0</p>
+          </div>
         </div>
-        <div>
-          <p>Viajes publicados</p>
-          <p class="cifra cifra-blanca" id="cantidadPublicados">0</p>
+
+        <div class="tarjeta tarjeta-acento">
+          <p class="texto-suave">Pagaste en total</p>
+          <p class="cifra" id="totalPagado">$0</p>
+          <p class="texto-suave">compartiendo el viaje con compañeros</p>
         </div>
       </div>
 
-      <div class="tarjeta tarjeta-acento">
-        <p class="texto-suave">Pagaste en total</p>
-        <p class="cifra" id="totalPagado">$0</p>
-        <p class="texto-suave">compartiendo el viaje con compañeros</p>
+      <div class="columna vista-conductor" id="vistaConductor">
+        <div class="tarjeta tarjeta-oscura estadisticas">
+          <div>
+            <p>Viajes publicados</p>
+            <p class="cifra cifra-blanca" id="cantidadPublicados">0</p>
+          </div>
+          <div>
+            <p>Lugares libres</p>
+            <p class="cifra cifra-blanca" id="lugaresOfrecidos">0</p>
+          </div>
+        </div>
+
+        <ul class="tarjeta datos">
+          <li><span>Mi auto</span> <span>Sin agregar</span></li>
+          <li><span>Cobro</span> <span>Efectivo o transferencia</span></li>
+        </ul>
+
+        <a class="boton boton-borde" href="publicar.html">+ Publicar un viaje</a>
       </div>
 
       <ul class="tarjeta datos">
         <li><span>Correo</span> <span id="email">nacho@ucc.edu.ar</span></li>
         <li><span>Verificación</span> <span>Email UCC</span></li>
         <li><span>Pagos</span> <span>Efectivo</span></li>
-        <li><span>Mi auto</span> <span>Sin agregar</span></li>
         <li><span>Preferencias de viaje</span> <span>3 activas</span></li>
       </ul>
 
@@ -79,15 +101,26 @@
     </section>
   </main>
 
+  <!-- Ventana de avisos y confirmaciones (la manejan avisar() y confirmar() de comun.js) -->
+  <dialog class="dialogo" id="dialogo" onclose="alCerrarDialogo()">
+    <h2 id="dialogoTitulo">Aviso</h2>
+    <p class="texto-suave" id="dialogoTexto"></p>
+    <div class="dialogo-botones">
+      <button class="boton boton-borde boton-chico" id="dialogoCancelar" type="button" onclick="cerrarDialogo(false)">Cancelar</button>
+      <button class="boton boton-chico" id="dialogoAceptar" type="button" onclick="cerrarDialogo(true)">Aceptar</button>
+    </div>
+  </dialog>
+
   <nav class="menu">
     <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a href="index.html">Buscar</a>
     <a href="mis-viajes.html">Ofrecer</a>
-    <a class="activo" href="perfil.html">Perfil</a>
+    <a class="activo menu-perfil" href="perfil.html">Perfil</a>
+    <a class="menu-usuario activo" href="perfil.html" title="Mi perfil"><span class="avatar avatar-chico" id="menuIniciales"></span> <span id="menuNombre">Mi perfil</span></a>
   </nav>
 
   <footer>
-    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri y Santiago Descalzo · 2026</p>
   </footer>
 
 </body>
