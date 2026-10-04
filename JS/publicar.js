@@ -1,6 +1,21 @@
 exigirSesion();
 
 /**
+ * Muestra la fecha (viaje de un día) o el día de la semana (viaje semanal).
+ * @method cambiarModo
+ * @param {string} modo - "dia" o "semana"
+ */
+function cambiarModo(modo) {
+  if (modo === "dia") {
+    document.getElementById("campoFecha").style.display = "flex";
+    document.getElementById("campoDia").style.display = "none";
+  } else {
+    document.getElementById("campoFecha").style.display = "none";
+    document.getElementById("campoDia").style.display = "flex";
+  }
+}
+
+/**
  * Devuelve el valor del radio elegido de un grupo.
  * @method valorElegido
  * @param {string} nombre - Atributo name del grupo de radios
@@ -102,7 +117,10 @@ function publicar() {
   });
   guardarViajes(viajes);
 
-  alert("¡Listo! Tu viaje ya aparece para tus compañeros.");
-  window.location.href = "mis-viajes.html";
+  avisar("¡Viaje publicado!", "Tus compañeros ya lo pueden ver y reservar.", () => {
+    window.location.href = "mis-viajes.html";
+  });
   return false;
 }
+
+cambiarModo(valorElegido("modo"));

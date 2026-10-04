@@ -26,10 +26,25 @@ function distanciaDe(v) {
 }
 
 /**
+ * Abre o cierra los filtros (en el celular arrancan cerrados).
+ * @method alternarFiltros
+ */
+function alternarFiltros() {
+  const filtros = document.getElementById("filtros");
+  filtros.classList.toggle("abierto");
+  document.getElementById("botonFiltros").textContent =
+    filtros.classList.contains("abierto") ? "Cerrar filtros" : "Filtros y orden";
+}
+
+/**
  * Completa los filtros con lo que el usuario buscó en el inicio.
  * @method cargarBusqueda
  */
 function cargarBusqueda() {
+  if (origen !== null) {
+    document.getElementById("mapa").src = urlMapa(origen.lat, origen.lon);
+  }
+
   // Sin un punto de salida conocido no se puede ordenar por cercanía
   if (origen === null) {
     const opcion = document.getElementById("opcionCercania");

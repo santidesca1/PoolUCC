@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Tus próximos viajes como conductor.">
-  <meta name="author" content="Nacho Albizuri">
+  <meta name="author" content="Nacho Albizuri, Santiago Descalzo">
   <meta name="keywords" content="carpooling, viajes compartidos, universidad, UCC, campus">
   <title>Mis viajes - PoolUCC</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -36,20 +36,32 @@
         <div class="columna" id="lista"></div>
       </div>
 
-      <div class="mapa mapa-solo-escritorio">Mapa · tus rutas como conductor</div>
+      <!-- mis-viajes.js centra el mapa en la salida de tu primer viaje -->
+      <iframe class="mapa mapa-iframe mapa-solo-escritorio mapa-alto" id="mapa" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2600%2C-31.4950%2C-64.1500%2C-31.3650&layer=mapnik" title="Mapa de tus viajes" loading="lazy"></iframe>
 
     </section>
   </main>
+
+  <!-- Ventana de avisos y confirmaciones (la manejan avisar() y confirmar() de comun.js) -->
+  <dialog class="dialogo" id="dialogo" onclose="alCerrarDialogo()">
+    <h2 id="dialogoTitulo">Aviso</h2>
+    <p class="texto-suave" id="dialogoTexto"></p>
+    <div class="dialogo-botones">
+      <button class="boton boton-borde boton-chico" id="dialogoCancelar" type="button" onclick="cerrarDialogo(false)">Cancelar</button>
+      <button class="boton boton-chico" id="dialogoAceptar" type="button" onclick="cerrarDialogo(true)">Aceptar</button>
+    </div>
+  </dialog>
 
   <nav class="menu">
     <p class="logo menu-logo">Pool<span>UCC</span></p>
     <a href="index.html">Buscar</a>
     <a class="activo" href="mis-viajes.html">Ofrecer</a>
-    <a href="perfil.html">Perfil</a>
+    <a class="menu-perfil" href="perfil.html">Perfil</a>
+    <a class="menu-usuario" href="perfil.html" title="Mi perfil"><span class="avatar avatar-chico" id="menuIniciales"></span> <span id="menuNombre">Mi perfil</span></a>
   </nav>
 
   <footer>
-    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri · 2026</p>
+    <p>PoolUCC · Taller de Desarrollo Web — UCC · Nacho Albizuri y Santiago Descalzo · 2026</p>
   </footer>
 
 </body>

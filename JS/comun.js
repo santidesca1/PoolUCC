@@ -229,9 +229,12 @@ function limpiarTexto(texto) {
 function tarjetaViaje(v, distancia) {
   const completo = v.plazas === 0;
   // Si sabemos desde dónde sale el usuario, mostramos qué tan lejos queda la salida
-  const textoDistancia = distancia === undefined || distancia === Infinity
-    ? ""
-    : ` · a ${distancia.toFixed(1).replace(".", ",")} km de vos`;
+  let textoDistancia = "";
+  if (distancia !== undefined && distancia !== Infinity) {
+    textoDistancia = distancia < 0.3
+      ? " · sale de tu zona"
+      : ` · a ${distancia.toFixed(1).replace(".", ",")} km de vos`;
+  }
   const clasePlazas = completo ? "plazas plazas-completo" : "plazas";
   const textoPlazas = completo ? "Completo" : v.plazas + (v.plazas === 1 ? " plaza libre" : " plazas libres");
   const etiqueta = v.etiqueta ? ` <span class="etiqueta">${v.etiqueta}</span>` : "";
@@ -256,3 +259,104 @@ function tarjetaViaje(v, distancia) {
   }
   return `<article><a class="tarjeta tarjeta-enlace" href="viaje.html?id=${v.id}">${interior}</a></article>`;
 }
+
+/* ---------- Ventana de aviso / confirmación ----------
+   Cada página que la usa tiene en su HTML un <dialog id="dialogo">.
+   Reemplaza a alert() y confirm(), que se ven distintos en cada navegador. */
+
+let accionDelDialogo = null;   // función a ejecutar según lo que elija el usuario
+let dialogoEsAviso = false;    // un aviso ejecuta la acción al cerrarse de cualquier forma
+
+/**
+ * Completa y abre la ventana.
+ * @method abrirDialogo
+ * @param {string} titulo - Título de la ventana
+ * @param {string} texto - Mensaje
+ * @param {string} textoBoton - Texto del botón principal
+ * @param {boolean} esAviso - true: un solo botón; false: también "Cancelar"
+ * @param {Function} accion - Qué hacer después (puede no haber)
+ */
+function abrirDialogo(titulo, texto, textoBoton, esAviso, accion) {
+  document.getElementById("dialogoTitulo").textContent = titulo;
+  document.getElementById("dialogoTexto").textContent = texto;
+
+  const aceptar = document.getElementById("dialogoAceptar");
+  aceptar.textContent = textoBoton;
+  // Si se confirma algo que borra datos, el botón va en rojo
+  aceptar.className = esAviso ? "boton boton-chico" : "boton boton-peligro boton-chico";
+  document.getElementById("dialogoCancelar").style.display = esAviso ? "none" : "inline-block";
+
+  accionDelDialogo = accion;
+  dialogoEsAviso = esAviso;
+  document.getElementById("dialogo").showModal();
+}
+
+/**
+ * Muestra un aviso con un solo botón. Al cerrarlo se ejecuta "despues".
+ * @method avisar
+ * @param {string} titulo - Título
+ * @param {string} texto - Mensaje
+ * @param {Function} despues - Qué hacer al cerrar (opcional)
+ */
+function avisar(titulo, texto, despues) {
+  abrirDialogo(titulo, texto, "Entendido", true, despues);
+}
+
+/**
+ * Pide confirmación antes de algo que no se puede deshacer.
+ * @method confirmar
+ * @param {string} titulo - Título
+ * @param {string} texto - Mensaje
+ * @param {string} textoBoton - Texto del botón que confirma (ej: "Sí, cancelar")
+ * @param {Function} siAcepta - Qué hacer si el usuario confirma
+ */
+function confirmar(titulo, texto, textoBoton, siAcepta) {
+  abrirDialogo(titulo, texto, textoBoton, false, siAcepta);
+}
+
+/**
+ * Se llama desde los botones del diálogo.
+ * @method cerrarDialogo
+ * @param {boolean} acepto - true si tocó el botón principal
+ */
+function cerrarDialogo(acepto) {
+  const accion = accionDelDialogo;
+  accionDelDialogo = null;   // así no se ejecuta dos veces
+  document.getElementById("dialogo").close();
+  if (accion && (dialogoEsAviso || acepto)) {
+    accion();
+  }
+}
+
+/**
+ * Evento onclose del diálogo. Sirve para cuando el usuario cierra un aviso
+ * con la tecla Esc en vez de tocar el botón: igual hay que seguir.
+ * @method alCerrarDialogo
+ */
+function alCerrarDialogo() {
+  // Si ya se abrió otro aviso (por ejemplo, después de confirmar), este cierre es viejo
+  if (document.getElementById("dialogo").open) {
+    return;
+  }
+  const accion = accionDelDialogo;
+  accionDelDialogo = null;
+  if (accion && dialogoEsAviso) {
+    accion();
+  }
+}
+
+/**
+ * Pone las iniciales y el nombre del usuario en la barra de navegación (escritorio).
+ * @method mostrarUsuarioEnMenu
+ */
+function mostrarUsuarioEnMenu() {
+  const usuario = obtenerUsuario();
+  const iniciales = document.getElementById("menuIniciales");
+  if (usuario === null || iniciales === null) {
+    return;
+  }
+  iniciales.textContent = usuario.iniciales;
+  document.getElementById("menuNombre").textContent = usuario.nombre.split(" ")[0];
+}
+
+mostrarUsuarioEnMenu();
