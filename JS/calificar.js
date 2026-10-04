@@ -24,12 +24,30 @@ function prepararPagina() {
   document.getElementById("ruta").textContent = viaje.desde + " → " + viaje.hasta;
   document.getElementById("conductor").textContent = "Viaje con " + viaje.conductor;
   document.getElementById("volver").href = "reservado.html?id=" + viaje.id;
-  document.getElementById("volverAbajo").href = "reservado.html?id=" + viaje.id;
 
   if (reserva.calificacion !== undefined) {
     error.textContent = "Ya calificaste este viaje con " + reserva.calificacion + " estrellas.";
     boton.disabled = true;
+    pintarEstrellas(reserva.calificacion);
   }
+}
+
+/**
+ * Pinta de dorado las estrellas hasta la elegida y muestra qué significa.
+ * @method pintarEstrellas
+ * @param {number} cantidad - Estrellas elegidas (1 a 5)
+ */
+function pintarEstrellas(cantidad) {
+  const textos = ["", "Malo", "Regular", "Bueno", "Muy bueno", "Excelente"];
+  const estrellas = document.querySelectorAll(".estrella");
+  estrellas.forEach((estrella, posicion) => {
+    if (posicion < cantidad) {
+      estrella.classList.add("elegida");
+    } else {
+      estrella.classList.remove("elegida");
+    }
+  });
+  document.getElementById("textoPuntaje").textContent = textos[cantidad];
 }
 
 /**
@@ -55,8 +73,9 @@ function calificar() {
   }
   guardarViajes(viajes);
 
-  alert("¡Gracias! Tu calificación ayuda a que todos viajen mejor.");
-  window.location.href = "index.html";
+  avisar("¡Gracias por calificar!", "Tu opinión ayuda a que todos viajen mejor.", () => {
+    window.location.href = "index.html";
+  });
   return false;
 }
 

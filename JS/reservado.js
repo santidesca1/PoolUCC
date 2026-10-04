@@ -41,18 +41,18 @@ function mostrarReserva() {
  * @method cancelarReserva
  */
 function cancelarReserva() {
-  if (!confirm("¿Seguro que querés cancelar la reserva?")) {
-    return;
-  }
-  const posicion = reservas.indexOf(reserva);
-  reservas.splice(posicion, 1);
-  guardarReservas(reservas);
+  confirmar("¿Cancelar la reserva?", "Tu lugar queda libre para otro compañero.", "Sí, cancelar", () => {
+    const posicion = reservas.indexOf(reserva);
+    reservas.splice(posicion, 1);
+    guardarReservas(reservas);
 
-  viaje.plazas = viaje.plazas + reserva.plazas;
-  guardarViajes(viajes);
+    viaje.plazas = viaje.plazas + reserva.plazas;
+    guardarViajes(viajes);
 
-  alert("Reserva cancelada. Le avisamos a " + viaje.conductor + ".");
-  window.location.href = "index.html";
+    avisar("Reserva cancelada", "Le avisamos a " + viaje.conductor + ".", () => {
+      window.location.href = "index.html";
+    });
+  });
 }
 
 mostrarReserva();

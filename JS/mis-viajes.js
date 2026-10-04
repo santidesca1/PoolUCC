@@ -64,6 +64,12 @@ function mostrarMisViajes() {
     html += tarjetaMiViaje(v);
   });
   document.getElementById("lista").innerHTML = html;
+
+  // El mapa muestra de dónde sale el primer viaje que tenga coordenadas
+  const conPunto = mios.find(v => v.lat !== null);
+  if (conPunto !== undefined) {
+    document.getElementById("mapa").src = urlMapa(conPunto.lat, conPunto.lon);
+  }
 }
 
 /**
@@ -72,14 +78,13 @@ function mostrarMisViajes() {
  * @param {number} id - Id del viaje a borrar
  */
 function eliminarViaje(id) {
-  if (!confirm("¿Eliminar este viaje? Los pasajeros que reservaron van a recibir un aviso.")) {
-    return;
-  }
-  const viajes = obtenerViajes();
-  const posicion = viajes.findIndex(v => v.id === id);
-  viajes.splice(posicion, 1);
-  guardarViajes(viajes);
-  mostrarMisViajes();
+  confirmar("¿Eliminar este viaje?", "Los pasajeros que reservaron van a recibir un aviso.", "Sí, eliminar", () => {
+    const viajes = obtenerViajes();
+    const posicion = viajes.findIndex(v => v.id === id);
+    viajes.splice(posicion, 1);
+    guardarViajes(viajes);
+    mostrarMisViajes();
+  });
 }
 
 mostrarMisViajes();
