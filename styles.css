@@ -341,6 +341,7 @@ legend {
 .boton-borde:hover { background-color: var(--color-fondo); }
 
 .boton-chico { display: inline-block; width: auto; padding: 0.5rem 1rem; font-size: 0.875rem; }
+.campo .boton-chico { align-self: flex-start; }   /* que no ocupe todo el ancho del campo */
 
 /* Acciones que borran algo (cancelar reserva, eliminar viaje) */
 .boton-peligro { color: var(--color-error); background-color: var(--color-blanco); border-color: var(--color-error); }
