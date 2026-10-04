@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="JS/datos.js" defer></script>
   <script src="JS/comun.js" defer></script>
+  <script src="JS/mis-viajes-realizados.js" defer></script>
 </head>
 <body>
 
@@ -27,40 +28,27 @@
 
       <div class="columna">
         <div class="pestanas">
-          <a href="mis-viajes.html">Próximos (2)</a>
+          <a id="pestanaProximos" href="mis-viajes.html">Próximos (2)</a>
           <a class="activa" id="pestanaRealizados" href="mis-viajes-realizados.html">Realizados (1)</a>
         </div>
 
-        <article class="tarjeta">
-          <div class="viaje-cabecera">
-            <p class="viaje-conductor"><strong>Viernes pasado</strong></p>
-            <span class="etiqueta etiqueta-gris">Realizado</span>
-          </div>
-          <ul class="recorrido">
-            <li><span>Barrio Jardín</span></li>
-            <li><span>Campus UCC</span></li>
-          </ul>
-          <div class="viaje-cabecera">
-            <p class="viaje-conductor plazas">1 plaza libre</p>
-            <p class="texto-suave">2 pasajeros</p>
-          </div>
-        </article>
+        <div id="listaRealizados"></div>
 
         <!-- Estadísticas: el dorado (acento) se usa solo para lo que se ahorró o ganó -->
         <div class="tarjeta tarjeta-oscura estadisticas">
           <div>
             <p>Viajes totales</p>
-            <p class="cifra cifra-blanca">1</p>
+            <p class="cifra cifra-blanca" id="viajesTotales">1</p>
           </div>
           <div>
             <p>Total generado</p>
-            <p class="cifra cifra-acento">$4.000</p>
+            <p class="cifra cifra-acento" id="totalGenerado">$4.000</p>
           </div>
         </div>
       </div>
 
       <!-- Mapa del Campus UCC, a donde fue el viaje realizado -->
-      <iframe class="mapa mapa-iframe mapa-solo-escritorio mapa-alto" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2587%2C-31.4966%2C-64.2287%2C-31.4766&layer=mapnik&marker=-31.4866%2C-64.2437" title="Mapa del Campus UCC" loading="lazy"></iframe>
+      <iframe class="mapa mapa-iframe mapa-solo-escritorio mapa-alto" id="mapa" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2587%2C-31.4966%2C-64.2287%2C-31.4766&layer=mapnik&marker=-31.4866%2C-64.2437" title="Mapa del Campus UCC" loading="lazy"></iframe>
 
     </section>
   </main>
