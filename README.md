@@ -77,12 +77,16 @@ que los navegadores que ya tenían datos guardados los vuelvan a cargar.
 |------|-------|
 | Etiquetas semánticas (header, main, nav, section, article, footer) | todas las páginas |
 | Formularios: input, select, textarea, radio, checkbox, datalist, fieldset/legend, label for | `login`, `index`, `resultados`, `publicar`, `calificar`, `solicitudes`, `chat` |
-| `<iframe>` (mapa de OpenStreetMap) | `index`, `viaje` |
+| `<iframe>` (mapa de OpenStreetMap) | `index`, `resultados`, `viaje`, `mis-viajes` |
+| `<dialog>` (ventana de aviso / confirmación) | `reservado`, `mis-viajes`, `publicar`, `solicitudes`, `calificar`, `perfil` |
 | Hoja de estilo externa, selectores por etiqueta, clase y descendiente | `styles.css` |
-| Variables (`:root` y `var()`) | colores de la marca |
-| Modelo de cajas, `box-sizing`, unidades `rem` | `styles.css` |
-| Pseudo-clases (`:hover`, `:focus`, `:disabled`, `:first-child`) y `::before` | botones, menú, recorrido |
-| `transition`, `position: fixed` | botones, menú |
+| Variables (`:root` y `var()`) | colores de la marca y sombras |
+| Modelo de cajas, `box-sizing`, unidades `rem` y `vh`, `calc()` | `styles.css` |
+| Fondos con gradiente (`linear-gradient`) y colores `rgba` | cabeceras azules, sombras, fondo del diálogo |
+| Pseudo-clases (`:hover`, `:focus`, `:active`, `:disabled`, `:focus-within`) y pseudo-elementos (`::before`, `::backdrop`) | botones, tarjetas, estrellas, recorrido, diálogo |
+| `transition` y `transform` (`translateY`, `scale`) | tarjetas que "suben", botones que se "hunden", estrellas |
+| `position: fixed` | menú y barra de "Reservar" en el celular |
+| `float` | títulos de los grupos en Publicar |
 | Flexbox | casi todos los componentes |
 | Grid y media query (`min-width: 900px`) | dos columnas y barra superior en escritorio |
 
@@ -102,6 +106,9 @@ que los navegadores que ya tenían datos guardados los vuelvan a cargar.
 | `localStorage` (`setItem`, `getItem`, `removeItem`) y JSON | `comun.js` |
 | `Intl.NumberFormat` (precio como `$2.500`) | `comun.js` |
 | Callbacks: `setTimeout` | respuesta automática del chat |
+| Callbacks propios: `avisar()` y `confirmar()` reciben la función a ejecutar después | todas las confirmaciones |
+| Mostrar / ocultar con `style.display` | fecha o día en Publicar, vista pasajero/conductor en Perfil |
+| Cambiar clases con `classList` (`add`, `remove`, `toggle`) | estrellas de Calificar, filtros de Resultados en el celular |
 | `Math.cos`, `Math.sqrt`, `Math.PI` | distancia en km para ordenar por cercanía (`comun.js`) |
 | Geolocalización del navegador (`navigator.geolocation`, con callbacks) — no está en las filminas | botón "Usar mi ubicación" |
 | Documentación con JSDoc | todas las funciones |
@@ -131,7 +138,8 @@ que los navegadores que ya tenían datos guardados los vuelvan a cargar.
 
 - Los datos viven en el navegador de cada uno: si abrís la página en otra compu, empieza de cero.
 - El login no tiene contraseña ni verifica que el correo exista; solo revisa el dominio.
-- El chat responde siempre lo mismo y los mapas de resultados y Mis viajes son recuadros.
+- El chat responde siempre lo mismo.
+- Los mapas muestran un solo punto (OpenStreetMap embebido no permite dibujar rutas).
 - La ubicación se usa como coordenadas: no se muestra el nombre de la calle (eso necesita
   un servicio externo). Si la salida se escribe a mano y no es un barrio conocido, ese viaje
   no tiene distancia y queda al final al ordenar por cercanía.
