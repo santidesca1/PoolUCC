@@ -29,36 +29,8 @@
          Cada cambio recalcula los lugares (onchange) y al confirmar se guardan. -->
     <form class="contenido" action="mis-viajes.html" method="get" onchange="actualizarLugares()" onsubmit="return confirmarSolicitudes()">
 
-      <article class="tarjeta">
-        <div class="viaje-cabecera">
-          <span class="avatar">SM</span>
-          <div class="viaje-conductor">
-            <h2>Sofía Martín</h2>
-            <p>★ 4,6 · Ingeniería Informática · 2.º</p>
-          </div>
-          <span class="etiqueta">1 plaza</span>
-        </div>
-        <div class="opciones">
-          <label><input type="radio" name="sofia" value="rechazar" required> Rechazar</label>
-          <label><input type="radio" name="sofia" value="aceptar"> Aceptar</label>
-        </div>
-      </article>
 
-      <article class="tarjeta">
-        <div class="viaje-cabecera">
-          <span class="avatar">DS</span>
-          <div class="viaje-conductor">
-            <h2>Diego Salas</h2>
-            <p>★ 4,9 · Derecho · 1.º</p>
-          </div>
-          <span class="etiqueta">1 plaza</span>
-        </div>
-        <div class="opciones">
-          <label><input type="radio" name="diego" value="rechazar" required> Rechazar</label>
-          <label><input type="radio" name="diego" value="aceptar"> Aceptar</label>
-        </div>
-      </article>
-
+      <div id="listaSolicitudes"></div>
       <p class="tarjeta tarjeta-fila">
         <span class="texto-suave">Lugares disponibles</span>
         <strong id="lugares">3</strong>

@@ -146,6 +146,11 @@ const viajesIniciales = [
     plazas: 3,
     preferencias: [],
     mio: true,
-    solicitudes: 2
+    solicitudes: 2,
+    // agrego solicitantes acá para que se peudan dibujar las tarjetas de cada solicitante en la vista del conductor
+    solicitantes: [
+      { nombre: "Sofía Martín", iniciales: "SM", puntaje: 4.6, carrera: "Ingeniería Informática", curso: "2.°", plazas:1},
+      { nombre: "Diego Salas", iniciales: "DS", puntaje: 4.9, carrera: "Derecho", curso: "1.°", plazas:1}
+    ]
   }
 ];
