@@ -33,12 +33,19 @@
         <form class="tarjeta" action="resultados.html" method="get" onsubmit="return buscar()">
           <div class="campo">
             <label for="desde">Desde</label>
-            <input type="text" id="desde" name="desde" list="lugares" value="Campus Norte" placeholder="¿Desde dónde salís?" required>
+            <input type="text" id="desde" name="desde" list="salidas" placeholder="Tu barrio o una sede" required>
+            <button class="boton boton-borde boton-chico" type="button" onclick="usarMiUbicacion()">Usar mi ubicación</button>
+            <small class="ayuda" id="estadoUbicacion"></small>
           </div>
 
+          <!-- La llegada siempre es una sede de la UCC -->
           <div class="campo">
-            <label for="hasta">Hasta</label>
-            <input type="text" id="hasta" name="hasta" list="lugares" value="Plaza España" placeholder="¿A dónde vas?" required>
+            <label for="hasta">Hasta (sede)</label>
+            <select id="hasta" name="hasta">
+              <option value="Campus UCC">Campus UCC</option>
+              <option value="Sede Centro (Obispo Trejo)">Sede Centro (Obispo Trejo)</option>
+              <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+            </select>
           </div>
 
           <div class="fila">
@@ -72,12 +79,18 @@
           <button class="boton" type="submit">Buscar</button>
         </form>
 
-        <!-- Lugares sugeridos para los campos de texto (atributo list) -->
-        <datalist id="lugares">
-          <option value="Campus Norte">
-          <option value="Plaza España">
-          <option value="Estación Sur">
-          <option value="Residencia Oeste">
+        <!-- Salidas sugeridas para el campo "Desde" (atributo list): sedes y barrios -->
+        <datalist id="salidas">
+          <option value="Campus UCC">
+          <option value="Sede Centro (Obispo Trejo)">
+          <option value="Ciencias de la Salud">
+          <option value="Nueva Córdoba">
+          <option value="Güemes">
+          <option value="Barrio Jardín">
+          <option value="General Paz">
+          <option value="Alta Córdoba">
+          <option value="Villa Cabrera">
+          <option value="Cerro de las Rosas">
         </datalist>
       </div>
 
@@ -89,7 +102,8 @@
           <h2>¿Manejás vos?</h2>
           <p class="texto-suave">Publicá tu ruta en un minuto</p>
         </a>
-        <iframe class="mapa mapa-iframe mapa-solo-escritorio" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2100%2C-31.4450%2C-64.1650%2C-31.3950&layer=mapnik" title="Mapa de tu ubicación" loading="lazy"></iframe>
+        <!-- Si el usuario comparte su ubicación, JavaScript centra el mapa en él -->
+        <iframe class="mapa mapa-iframe mapa-solo-escritorio" id="mapa" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2100%2C-31.4450%2C-64.1650%2C-31.3950&layer=mapnik" title="Mapa de tu ubicación" loading="lazy"></iframe>
       </div>
 
     </section>
