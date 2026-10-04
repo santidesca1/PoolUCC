@@ -46,7 +46,7 @@ function tarjetaMiViaje(v) {
  * @method mostrarMisViajes
  */
 function mostrarMisViajes() {
-  const mios = obtenerViajes().filter(v => v.mio);
+  const mios = obtenerViajes().filter(v => v.mio && !v.realizado);
   document.getElementById("pestanaProximos").textContent = "Próximos (" + mios.length + ")";
 
   if (mios.length === 0) {

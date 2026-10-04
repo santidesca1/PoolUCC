@@ -3,3 +3,9 @@
 *.iml
 .DS_Store
 Thumbs.db
+
+# Docs generados por JSDoc
+docs/
+
+# Dependencias de npm
+node_modules/

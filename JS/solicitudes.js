@@ -39,6 +39,7 @@ function tarjetaSolicitante(s, indice){
       </div>
     </article>`;
 }
+
 /**
  * Dibuja la lista de solicitantes del viaje, o un aviso si no hay ninguno.
  * @method mostrarSolicitudes
