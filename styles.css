@@ -424,6 +424,9 @@ fieldset.tarjeta legend {
 
 .mapa-solo-escritorio { display: none; }   /* en el celular no se muestra */
 
+/* Mapa del inicio: en el celular va debajo del formulario de búsqueda */
+.area-mapa { height: 15rem; }
+
 
 /* ---------- 10. PANTALLAS PUNTUALES ---------- */
 /* Confirmación (reservado) */
@@ -659,6 +662,23 @@ footer {
     gap: 1.5rem;
     align-items: start;
   }
+
+  /* Inicio en escritorio: el formulario ocupa toda la columna izquierda; a la
+     derecha van las tarjetas arriba y el mapa abajo, estirado hasta el final */
+  .inicio-grilla {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "buscar lateral"
+      "buscar mapa";
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .area-buscar { grid-area: buscar; }
+  .area-lateral { grid-area: lateral; }
+  .area-mapa { grid-area: mapa; height: 100%; min-height: 14rem; }
 
   .mapa-solo-escritorio { display: flex; }
   .mapa-iframe.mapa-solo-escritorio { display: block; }

@@ -26,9 +26,12 @@
       <h1 id="saludo">Hola, Nacho</h1>
     </header>
 
-    <section class="contenido dos-columnas">
+    <!-- En el celular las tres partes van una abajo de la otra (buscar, mapa, tarjetas).
+         En escritorio, grid-template-areas las acomoda: buscar a la izquierda y
+         tarjetas + mapa a la derecha (ver .inicio-grilla en styles.css). -->
+    <section class="contenido inicio-grilla">
 
-      <div class="columna">
+      <div class="columna area-buscar">
         <!-- buscar() valida y guarda la búsqueda; si está todo bien, va a resultados.html -->
         <form class="tarjeta" action="resultados.html" method="get" onsubmit="return buscar()">
           <div class="campo">
@@ -96,7 +99,10 @@
         </datalist>
       </div>
 
-      <div class="columna">
+      <!-- Si el usuario comparte su ubicación, JavaScript centra el mapa en él -->
+      <iframe class="mapa mapa-iframe area-mapa" id="mapa" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2100%2C-31.4450%2C-64.1650%2C-31.3950&layer=mapnik" title="Mapa de tu ubicación" loading="lazy"></iframe>
+
+      <div class="columna area-lateral">
         <!-- Si el usuario tiene una reserva, index.js la muestra acá -->
         <div id="proximo"></div>
 
@@ -104,8 +110,6 @@
           <h2>¿Manejás vos?</h2>
           <p class="texto-suave">Publicá tu ruta en un minuto</p>
         </a>
-        <!-- Si el usuario comparte su ubicación, JavaScript centra el mapa en él -->
-        <iframe class="mapa mapa-iframe mapa-solo-escritorio" id="mapa" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.2100%2C-31.4450%2C-64.1650%2C-31.3950&layer=mapnik" title="Mapa de tu ubicación" loading="lazy"></iframe>
       </div>
 
     </section>
