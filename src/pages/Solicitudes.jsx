@@ -11,7 +11,7 @@ import { formatearPuntaje, textoPlazas } from "../utils/formato";
 // Tarjeta de un pasajero (pedido pendiente o ya confirmado)
 function TarjetaPasajero({ reserva, idViaje, children }) {
   return (
-    <article className="tarjeta">
+    <article className="tarjeta tarjeta-sutil">
       <div className="viaje-cabecera">
         <span className="avatar">{reserva.iniciales}</span>
         <div className="viaje-conductor">

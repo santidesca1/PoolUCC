@@ -4,6 +4,8 @@ import { useDatos } from "../hooks/useDatos";
 import { useUbicacion } from "../hooks/useUbicacion";
 import BarraTitulo from "../components/BarraTitulo";
 import CampoSalida from "../components/CampoSalida";
+import CampoHora from "../components/CampoHora";
+import Selector from "../components/Selector";
 import Dialogo from "../components/Dialogo";
 import { sedes, MI_UBICACION } from "../data/datos";
 import { coordenadasDeSalida } from "../utils/geo";
@@ -84,9 +86,8 @@ export default function Publicar() {
           />
           <div className="campo">
             <label htmlFor="hasta">Llegada (sede)</label>
-            <select id="hasta" name="hasta" value={form.hasta} onChange={cambiar}>
-              {sedes.map(s => <option key={s.nombre} value={s.nombre}>{s.nombre}</option>)}
-            </select>
+            <Selector id="hasta" valor={form.hasta} onCambiar={valor => setForm({ ...form, hasta: valor })}
+              opciones={sedes.map(s => ({ valor: s.nombre, texto: s.nombre }))} />
           </div>
 
           <div className="opciones">
@@ -104,14 +105,13 @@ export default function Publicar() {
             ) : (
               <div className="campo">
                 <label htmlFor="diaSemana">Todos los</label>
-                <select id="diaSemana" name="diaSemana" value={form.diaSemana} onChange={cambiar}>
-                  {DIAS.map(d => <option key={d} value={d}>{d}</option>)}
-                </select>
+                <Selector id="diaSemana" valor={form.diaSemana} onCambiar={valor => setForm({ ...form, diaSemana: valor })}
+                  opciones={DIAS.map(d => ({ valor: d, texto: d }))} />
               </div>
             )}
             <div className="campo">
               <label htmlFor="hora">Horario</label>
-              <input type="time" id="hora" name="hora" value={form.hora} onChange={cambiar} required />
+              <CampoHora id="hora" valor={form.hora} onCambiar={valor => setForm({ ...form, hora: valor })} />
             </div>
           </div>
         </fieldset>

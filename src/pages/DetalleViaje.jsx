@@ -7,6 +7,7 @@ import BarraTitulo from "../components/BarraTitulo";
 import Recorrido from "../components/Recorrido";
 import ListaVacia from "../components/ListaVacia";
 import Mapa from "../components/Mapa";
+import Selector from "../components/Selector";
 import { buscarLugar } from "../utils/geo";
 import { formatearPrecio, formatearPuntaje, textoPlazas } from "../utils/formato";
 
@@ -110,9 +111,8 @@ export default function DetalleViaje() {
             <div className="fila">
               <div className="campo">
                 <label htmlFor="cantidad">Lugares a reservar</label>
-                <select id="cantidad" value={cantidad} onChange={e => setCantidad(Number(e.target.value))}>
-                  {Array.from({ length: viaje.plazas }, (_, i) => i + 1).map(n => <option key={n} value={n}>{n}</option>)}
-                </select>
+                <Selector id="cantidad" valor={cantidad} onCambiar={setCantidad}
+                  opciones={Array.from({ length: viaje.plazas }, (_, i) => ({ valor: i + 1, texto: String(i + 1) }))} />
               </div>
               <div className="campo">
                 <p className="ayuda">Total</p>

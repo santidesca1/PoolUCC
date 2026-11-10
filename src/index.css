@@ -63,6 +63,9 @@
   --color-barra: #0B1F36;
   --color-barra-texto: #FFFFFF;
 
+  --color-menu: #0B1F36;              /* fondo de las listas desplegables */
+  --color-menu-texto: #FFFFFF;
+
   --radio: 0.75rem;                   /* 12px: botones, campos y filas */
   --altura-menu: 3.5rem;
 }
@@ -91,6 +94,7 @@
   --color-error-fondo: #451C20;
   --color-barra: #0F2338;
   --color-barra-texto: #EAF2F8;
+  --color-menu: #1D3B5C;
   color-scheme: dark;
 }
 
@@ -303,8 +307,8 @@ h3 { font-size: 1rem; font-weight: 700; }
   border-bottom: 1px solid var(--color-borde);
 }
 
-.contenido > .tarjeta:last-child:not(.tarjeta-acento):not(.tarjeta-oscura),
-.columna > .tarjeta:last-child:not(.tarjeta-acento):not(.tarjeta-oscura) { border-bottom: 0; padding-bottom: 0; }
+.contenido > .tarjeta:last-child:not(.tarjeta-acento):not(.tarjeta-oscura):not(.tarjeta-sutil),
+.columna > .tarjeta:last-child:not(.tarjeta-acento):not(.tarjeta-oscura):not(.tarjeta-sutil) { border-bottom: 0; padding-bottom: 0; }
 
 /* Bloques que son un link entero: se comportan como una fila */
 .tarjeta-enlace { transition: background-color 0.2s; }
@@ -1038,4 +1042,151 @@ footer {
 
 @media (min-width: 900px) {
   .mapa-leaflet.mapa-alto { height: 26rem; }
+}
+
+
+/* ---------- 13. DESPLEGABLES PROPIOS, RECUADROS SUTILES Y AVISO DEL PRÓXIMO VIAJE ---------- */
+
+/* Desplegable: botón con el aspecto de un campo y lista oscura con esquinas redondeadas */
+.selector, .combo { position: relative; flex: 1; min-width: 0; }
+
+.selector-boton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  color: var(--color-tinta);
+  background-color: var(--color-gris-fondo);
+  border: 2px solid transparent;
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.selector-boton[aria-expanded="true"],
+.selector-boton:focus-visible {
+  background-color: var(--color-superficie);
+  border-color: var(--color-tinta);
+  outline: 3px solid color-mix(in srgb, var(--color-primario) 35%, transparent);
+  outline-offset: 0;
+}
+
+.selector-boton:disabled { color: var(--color-texto-suave); cursor: not-allowed; }
+.selector-boton span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.selector-boton svg { flex: none; color: var(--color-texto-suave); transition: transform 0.2s; }
+.selector-boton[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.lista-opciones {
+  position: absolute;
+  top: calc(100% + 0.375rem);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  max-height: 16rem;
+  overflow-y: auto;
+  padding: 0.375rem;
+  color: var(--color-menu-texto);
+  background-color: var(--color-menu);
+  border-radius: var(--radio);
+  box-shadow: 0 12px 32px rgba(11, 31, 54, 0.35);
+}
+
+.lista-opciones.arriba { top: auto; bottom: calc(100% + 0.375rem); }
+
+.lista-opciones li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.lista-opciones li.activa { background-color: rgba(255, 255, 255, 0.14); }
+.lista-opciones li[aria-selected="true"] { font-weight: 800; }
+.lista-opciones li.deshabilitada { opacity: 0.4; cursor: not-allowed; }
+
+/* Horario: hora y minutos, cada uno con su desplegable */
+.fila-hora { display: flex; align-items: center; gap: 0.375rem; }
+.fila-hora > span { font-weight: 800; color: var(--color-texto-suave); }
+
+/* Recuadro muy sutil que agrupa la info de un item de lista (reserva, viaje, pasajero) */
+.tarjeta-sutil {
+  padding: 1rem;
+  background-color: var(--color-gris-50);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+.tarjeta-sutil h3 { font-size: 1.0625rem; }
+
+/* Pie del recuadro: separado por una línea, con el precio a la izquierda y los botones a la derecha */
+.tarjeta-sutil > .acciones { padding-top: 0.75rem; border-top: 1px solid var(--color-borde); }
+.acciones-pie { align-items: center; }
+.acciones-pie .precio-texto { margin-right: auto; font-size: 1.125rem; }
+
+.tarjeta-oscura .cifra-acento { color: var(--color-acento); }
+
+/* Aviso del próximo viaje: rectángulo pegado al menú de abajo; al tocarlo lleva a la reserva */
+.barra-proximo {
+  position: fixed;
+  bottom: calc(var(--altura-menu) + env(safe-area-inset-bottom, 0px));
+  left: 0;
+  right: 0;
+  max-width: 30rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--color-boton-texto);
+  background-color: var(--color-boton);
+  border-radius: var(--radio) var(--radio) 0 0;
+  z-index: 9;
+  animation: subir 0.25s ease-out;
+}
+
+.barra-proximo-icono {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+
+:root[data-theme="dark"] .barra-proximo-icono { background-color: rgba(11, 27, 46, 0.14); }
+
+.barra-proximo-texto { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.barra-proximo-texto small { font-size: 0.75rem; font-weight: 600; opacity: 0.8; }
+.barra-proximo-texto b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.875rem; }
+
+/* El contenido deja lugar para el aviso */
+body:has(.barra-proximo) { padding-bottom: calc(var(--altura-menu) + 5rem + env(safe-area-inset-bottom, 0px)); }
+
+@keyframes subir {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barra-proximo { animation: none; }
+}
+
+/* En el detalle del viaje manda la barra de "Pedir lugar" */
+@media (max-width: 899px) {
+  body:has(.barra-reservar) .barra-proximo { display: none; }
+}
+
+@media (min-width: 900px) {
+  .barra-proximo { bottom: 1rem; left: 1rem; right: auto; width: 26rem; margin: 0; border-radius: var(--radio); box-shadow: 0 8px 24px rgba(11, 31, 54, 0.3); }
+  body:has(.barra-proximo) { padding-bottom: 5rem; }
 }

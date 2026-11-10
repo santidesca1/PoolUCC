@@ -8,6 +8,7 @@ import BarraTitulo from "../components/BarraTitulo";
 import TarjetaViaje from "../components/TarjetaViaje";
 import ListaVacia from "../components/ListaVacia";
 import Mapa from "../components/Mapa";
+import Selector from "../components/Selector";
 import { sedes } from "../data/datos";
 import { coordenadasDeSalida, distanciaKm, buscarLugar } from "../utils/geo";
 import { textoPlazas } from "../utils/formato";
@@ -109,10 +110,8 @@ export default function Resultados() {
           <form className={"filtros columna" + (filtrosAbiertos ? " abierto" : "")} onSubmit={e => e.preventDefault()}>
             <div className="campo">
               <label htmlFor="filtroSede">Sede de llegada</label>
-              <select id="filtroSede" value={sede} onChange={e => setSede(e.target.value)}>
-                <option value="Todas">Todas las sedes</option>
-                {sedes.map(s => <option key={s.nombre} value={s.nombre}>{s.nombre}</option>)}
-              </select>
+              <Selector id="filtroSede" valor={sede} onCambiar={setSede}
+                opciones={[{ valor: "Todas", texto: "Todas las sedes" }, ...sedes.map(s => ({ valor: s.nombre, texto: s.nombre }))]} />
             </div>
             <div className="fila">
               <div className="campo">
@@ -121,9 +120,8 @@ export default function Resultados() {
               </div>
               <div className="campo">
                 <label htmlFor="tipo">Mostrar</label>
-                <select id="tipo" value={tipo} onChange={e => setTipo(e.target.value)}>
-                  {["Todos", "Hoy", "Mañana", "Mi grado", "Recurrentes"].map(t => <option key={t} value={t}>{t}</option>)}
-                </select>
+                <Selector id="tipo" valor={tipo} onCambiar={setTipo}
+                  opciones={["Todos", "Hoy", "Mañana", "Mi grado", "Recurrentes"].map(t => ({ valor: t, texto: t }))} />
               </div>
             </div>
             <div className="opciones">

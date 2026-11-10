@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import Logo from "../components/Logo";
+import Selector from "../components/Selector";
 import Pie from "../components/Pie";
 
 const CARRERAS = ["Ingeniería Informática", "Abogacía", "Arquitectura", "Ciencias Económicas", "Medicina", "Psicología"];
@@ -48,9 +49,8 @@ export default function Registro() {
             </div>
             <div className="campo">
               <label htmlFor="carrera">Carrera</label>
-              <select id="carrera" name="carrera" value={form.carrera} onChange={cambiar}>
-                {CARRERAS.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
+              <Selector id="carrera" valor={form.carrera} onCambiar={valor => setForm({ ...form, carrera: valor })}
+                opciones={CARRERAS.map(c => ({ valor: c, texto: c }))} />
             </div>
             <div className="fila">
               <div className="campo">

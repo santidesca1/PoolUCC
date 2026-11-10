@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Building2, Check, ChevronRight, Car } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
-import { useDatos } from "../hooks/useDatos";
 import { useUbicacion } from "../hooks/useUbicacion";
 import CampoSalida from "../components/CampoSalida";
 import CampanaAvisos from "../components/CampanaAvisos";
-import ChipEstado from "../components/ChipEstado";
+import CampoHora from "../components/CampoHora";
 import Logo from "../components/Logo";
 import Mapa from "../components/Mapa";
+import Selector from "../components/Selector";
 import { sedes, MI_UBICACION } from "../data/datos";
 import { coordenadasDeSalida, buscarLugar } from "../utils/geo";
 
@@ -16,7 +16,6 @@ const FILTROS = ["Hoy", "Mañana", "Mi grado", "Recurrentes"];
 
 export default function Buscar() {
   const { user } = useAuth();
-  const { misReservas, buscarViaje } = useDatos();
   const { ubicacion, estado, pedirUbicacion } = useUbicacion();
   const navigate = useNavigate();
 
@@ -29,10 +28,6 @@ export default function Buscar() {
 
   // La fecha de hoy se calcula una sola vez (no en cada render)
   const [hoy] = useState(() => new Intl.DateTimeFormat("es-AR", { weekday: "long", day: "numeric", month: "long" }).format(new Date()));
-
-  // Próximo viaje: la primera reserva pendiente o confirmada
-  const proxima = misReservas.find(r => r.estado === "pendiente" || r.estado === "confirmada");
-  const viajeProximo = proxima ? buscarViaje(proxima.idViaje) : null;
 
   // Puntos del mapa: desde dónde salgo y la sede elegida
   const puntos = [];
@@ -102,13 +97,12 @@ export default function Buscar() {
             <div className="fila">
               <div className="campo">
                 <label htmlFor="hora">Salir desde las</label>
-                <input type="time" id="hora" value={hora} onChange={e => setHora(e.target.value)} />
+                <CampoHora id="hora" valor={hora} onCambiar={setHora} opcional />
               </div>
               <div className="campo">
                 <label htmlFor="plazas">Lugares</label>
-                <select id="plazas" value={plazas} onChange={e => setPlazas(e.target.value)}>
-                  {["1", "2", "3", "4"].map(n => <option key={n} value={n}>{n}</option>)}
-                </select>
+                <Selector id="plazas" valor={plazas} onCambiar={setPlazas}
+                  opciones={["1", "2", "3", "4"].map(n => ({ valor: n, texto: n }))} />
               </div>
             </div>
           </details>
@@ -116,17 +110,6 @@ export default function Buscar() {
           {error && <p className="mensaje-error">{error}</p>}
           <button className="boton" type="submit">Buscar viajes</button>
         </form>
-
-        {viajeProximo && (
-          <Link className="tarjeta tarjeta-oscura" to={`/reserva/${proxima.id}`}>
-            <div className="fila-titulo">
-              <p>Tu próximo viaje</p>
-              <ChipEstado estado={proxima.estado} />
-            </div>
-            <h2>{viajeProximo.desde} → {viajeProximo.hasta}</h2>
-            <p>{viajeProximo.dia} · {viajeProximo.salida} · con {viajeProximo.conductor}</p>
-          </Link>
-        )}
 
         <Link className="fila-viaje" to="/publicar">
           <span className="sede-icono"><Car size={18} aria-hidden="true" /></span>

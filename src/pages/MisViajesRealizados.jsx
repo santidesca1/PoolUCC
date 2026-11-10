@@ -40,7 +40,7 @@ export default function MisViajesRealizados() {
           ) : (
             <>
               {filas.map(({ viaje, pasajeros }) => (
-                <article className="tarjeta" key={viaje.id}>
+                <article className="tarjeta tarjeta-sutil" key={viaje.id}>
                   <div className="viaje-cabecera">
                     <p className="viaje-conductor"><strong>{viaje.dia}</strong></p>
                     <span className="etiqueta etiqueta-gris">Realizado</span>
