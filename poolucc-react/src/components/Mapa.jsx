@@ -4,6 +4,18 @@ import "leaflet/dist/leaflet.css";
 
 const CORDOBA = [-31.42, -64.19];
 
+// Si el contenedor cambia de tamaño (girar el celular, agrandar la ventana), Leaflet no se entera
+// solo y el mapa queda gris: le avisamos con un ResizeObserver para que recalcule.
+function RecalcularTamano() {
+  const map = useMap();
+  useEffect(() => {
+    const observador = new ResizeObserver(() => map.invalidateSize());
+    observador.observe(map.getContainer());
+    return () => observador.disconnect();
+  }, [map]);
+  return null;
+}
+
 // Mueve el mapa para que entren todos los puntos (MapContainer no se actualiza solo)
 function AjustarVista({ puntos }) {
   const map = useMap();
@@ -49,6 +61,7 @@ export default function Mapa({ puntos = [], linea = null, className = "", titulo
             {p.etiqueta && <Tooltip>{p.etiqueta}</Tooltip>}
           </CircleMarker>
         ))}
+        <RecalcularTamano />
         <AjustarVista puntos={puntos} />
       </MapContainer>
     </div>

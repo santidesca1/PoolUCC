@@ -3,6 +3,7 @@ import { DatosContext } from "../context/DatosContext";
 import { useAuth } from "../hooks/useAuth";
 import { viajesIniciales, reservasIniciales } from "../data/datos";
 import { textoPlazas } from "../utils/formato";
+import { etiquetaDia } from "../utils/fechas";
 
 const CLAVE = "poolucc-datos";
 // Si cambian los datos de ejemplo, se sube la versión y los navegadores los vuelven a cargar
@@ -44,7 +45,21 @@ export function DatosProvider({ children }) {
     localStorage.setItem(CLAVE, JSON.stringify(datos));
   }, [datos]);
 
-  const { viajes, reservas, avisos, chats } = datos;
+  // Si el usuario tiene la app abierta en dos pestañas (por ejemplo, el pasajero en una y el
+  // conductor en otra), el evento "storage" avisa cuando la OTRA pestaña guardó algo.
+  // Sin esto, la pestaña con datos viejos los volvería a guardar y borraría el cambio de la otra.
+  useEffect(() => {
+    const alCambiarOtraPestana = e => {
+      if (e.key === CLAVE) setDatos(leerDatos());
+    };
+    window.addEventListener("storage", alCambiarOtraPestana);
+    return () => window.removeEventListener("storage", alCambiarOtraPestana);
+  }, []);
+
+  const { reservas, avisos, chats } = datos;
+  // "Hoy", "Mañana" o "30/10" se calcula cada vez a partir de la fecha real del viaje,
+  // así un viaje publicado ayer para hoy no queda diciendo "Hoy" para siempre
+  const viajes = datos.viajes.map(v => (v.fecha ? { ...v, dia: etiquetaDia(v.fecha) } : v));
 
   // ---------- Consultas ----------
   const buscarViaje = id => viajes.find(v => v.id === Number(id));

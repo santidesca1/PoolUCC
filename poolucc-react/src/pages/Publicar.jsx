@@ -7,6 +7,7 @@ import CampoSalida from "../components/CampoSalida";
 import Dialogo from "../components/Dialogo";
 import { sedes, MI_UBICACION } from "../data/datos";
 import { coordenadasDeSalida } from "../utils/geo";
+import { fechaLocalISO, etiquetaDia } from "../utils/fechas";
 
 const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
@@ -32,34 +33,40 @@ export default function Publicar() {
     e.preventDefault();
     const plazas = Number(form.plazas);
     let precio = Number(form.precio);
-    const hoy = new Date().toISOString().slice(0, 10);
+    // Fecha y hora de ahora en hora local (no UTC): "2026-11-10" y "23:15"
+    const ahora = new Date();
+    const hoy = fechaLocalISO(ahora);
+    const horaActual = String(ahora.getHours()).padStart(2, "0") + ":" + String(ahora.getMinutes()).padStart(2, "0");
 
     if (form.desde.trim().toLowerCase() === form.hasta.toLowerCase()) return setError("La salida y la llegada no pueden ser la misma sede.");
     if (!(precio > 0)) return setError("Poné un precio mayor a $0.");
     if (precio > 50000) return setError("El precio es solo para cubrir gastos: máximo $50.000.");
     if (form.modo === "dia" && form.fecha === "") return setError("Elegí la fecha del viaje.");
     if (form.modo === "dia" && form.fecha < hoy) return setError("Elegí una fecha que todavía no pasó.");
+    if (form.modo === "dia" && form.fecha === hoy && form.hora <= horaActual) return setError("Esa hora ya pasó. Elegí un horario más tarde.");
 
     // Si cobra "por viaje", lo dividimos entre las plazas para mostrar el precio por persona
     if (form.cobro === "viaje") precio = Math.round(precio / plazas);
 
-    // "2026-10-30" -> "30/10"
-    const partes = form.fecha.split("-");
-    const dia = form.modo === "dia" ? partes[2] + "/" + partes[1] : "Cada " + form.diaSemana.toLowerCase();
-
+    const semanal = form.modo === "semana";
     const punto = coordenadasDeSalida(form.desde, ubicacion);
     publicarViaje({
       desde: form.desde === MI_UBICACION ? "Ubicación del conductor" : form.desde.trim(),
       hasta: form.hasta,
       lat: punto ? punto.lat : null,
       lon: punto ? punto.lon : null,
-      dia,
+      // Se guarda la fecha real; "Hoy", "Mañana" o "30/10" se calcula al mostrarla (ver DatosProvider)
+      fecha: semanal ? null : form.fecha,
+      semanal,
+      diaSemana: semanal ? form.diaSemana : null,
+      dia: semanal ? "Cada " + form.diaSemana.toLowerCase() : etiquetaDia(form.fecha),
       salida: form.hora,
       plazas,
       precio,
       preferencias: form.sinFumar ? ["Sin fumar"] : [],
       autoAceptar: form.autoAceptar
     });
+    setError("");
     setPublicado(true);
   };
 
@@ -92,7 +99,7 @@ export default function Publicar() {
             {form.modo === "dia" ? (
               <div className="campo">
                 <label htmlFor="fecha">Fecha</label>
-                <input type="date" id="fecha" name="fecha" value={form.fecha} onChange={cambiar} />
+                <input type="date" id="fecha" name="fecha" min={fechaLocalISO()} value={form.fecha} onChange={cambiar} />
               </div>
             ) : (
               <div className="campo">
