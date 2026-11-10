@@ -29,7 +29,7 @@ export default function Login() {
         <header className="hero">
           <Logo />
           <h1>Llegá a la UCC, sin vueltas</h1>
-          <p>Solo para estudiantes con correo de la UCC</p>
+          <p>De estudiantes para estudiantes</p>
         </header>
 
         <form className="contenido" onSubmit={handleSubmit}>
