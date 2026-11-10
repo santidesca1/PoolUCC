@@ -16,17 +16,32 @@ function leer(clave, valorInicial) {
 // Demo: las contraseñas se guardan tal cual en el navegador.
 export function AuthProvider({ children }) {
   const [usuarios, setUsuarios] = useState(() => leer(CLAVE_USUARIOS, usuariosIniciales));
-  const [emailSesion, setEmailSesion] = useState(() => leer(CLAVE_SESION, null));
+  // La sesión se guarda en sessionStorage (una por pestaña, vista en clase) y las cuentas en
+  // localStorage (compartidas). Así se pueden tener dos cuentas abiertas a la vez, una en cada
+  // pestaña, para mostrar el circuito pasajero-conductor. Al cerrar la pestaña hay que volver a entrar.
+  const [emailSesion, setEmailSesion] = useState(() => {
+    const guardado = sessionStorage.getItem(CLAVE_SESION);
+    return guardado ? JSON.parse(guardado) : null;
+  });
 
   useEffect(() => {
     localStorage.setItem(CLAVE_USUARIOS, JSON.stringify(usuarios));
   }, [usuarios]);
 
+  // Si otra pestaña crea una cuenta o reinicia la demo, esta se entera
+  useEffect(() => {
+    const alCambiarOtraPestana = e => {
+      if (e.key === CLAVE_USUARIOS) setUsuarios(leer(CLAVE_USUARIOS, usuariosIniciales));
+    };
+    window.addEventListener("storage", alCambiarOtraPestana);
+    return () => window.removeEventListener("storage", alCambiarOtraPestana);
+  }, []);
+
   useEffect(() => {
     if (emailSesion === null) {
-      localStorage.removeItem(CLAVE_SESION);
+      sessionStorage.removeItem(CLAVE_SESION);
     } else {
-      localStorage.setItem(CLAVE_SESION, JSON.stringify(emailSesion));
+      sessionStorage.setItem(CLAVE_SESION, JSON.stringify(emailSesion));
     }
   }, [emailSesion]);
 

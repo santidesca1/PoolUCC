@@ -103,7 +103,7 @@ input, button, textarea, select { font: inherit; }
 input { accent-color: var(--color-terciario); }   /* radios y checkboxes con el color de la marca */
 ul { list-style: none; }
 a { color: inherit; text-decoration: none; }
-fieldset { border: 0; }
+fieldset { border: 0; min-width: 0; }   /* min-width: 0 evita que un fieldset ancho agrande la página */
 legend { padding: 0; }
 
 
@@ -332,7 +332,6 @@ h3 { font-size: 1rem; color: var(--color-tinta); }
 .etiqueta-verde { color: var(--color-exito); background-color: var(--color-exito-fondo); }
 .etiqueta-amarilla { color: var(--color-acento-oscuro); background-color: var(--color-acento-fondo); }
 .etiqueta-gris { color: var(--color-texto); background-color: var(--color-gris-fondo); }
-.etiqueta-blanca { color: var(--color-terciario); background-color: var(--color-blanco); }
 
 
 /* ---------- 8. FORMULARIOS Y BOTONES ---------- */
@@ -409,9 +408,6 @@ fieldset.tarjeta legend {
 .boton:hover { background-color: var(--color-boton-hover); }
 .boton:active { transform: scale(0.98); }   /* se "hunde" un poco al tocarlo */
 
-.boton-oscuro { color: var(--color-boton-texto); background-color: var(--color-boton); }
-.boton-oscuro:hover { background-color: var(--color-boton-hover); }
-
 .boton-borde { color: var(--color-tinta); background-color: var(--color-superficie); border-color: var(--color-borde); }
 .boton-borde:hover { background-color: var(--color-fondo); }
 
@@ -428,42 +424,21 @@ fieldset.tarjeta legend {
 /* Botón que JavaScript desactiva (por ejemplo, un viaje completo) */
 .boton:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-/* Campo de texto con un botón al lado (Desde + "Mi ubicación") */
+/* Campo de texto con un botón al lado (Desde + "Mi ubicación").
+   min-width: 0 deja que el campo se achique en vez de empujar la tarjeta. */
 .campo-con-boton { display: flex; gap: 0.5rem; }
-.campo-con-boton input { flex: 1; }
+.campo-con-boton input { flex: 1; min-width: 0; }
 .campo-con-boton .boton-chico { flex: none; }
+
+/* En pantallas angostas el botón de ubicación queda solo con el ícono */
+@media (max-width: 480px) {
+  .campo-con-boton .texto-boton { display: none; }
+}
 
 
 /* ---------- 9. MAPA ----------
-   Los mapas son <iframe> de OpenStreetMap. El estilo .mapa solo con texto
-   queda para cuando no se conoce el punto de salida de un viaje. */
-.mapa {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 12rem;
-  padding: 1rem;
-  text-align: center;
-  color: var(--color-etiqueta-texto);
-  background-color: var(--color-secundario);
-  border: 1px dashed var(--color-primario-fuerte);
-  border-radius: 1rem;
-}
-
-/* Mapa real (iframe de OpenStreetMap): mismo tamaño que el placeholder,
-   pero sin el centrado de texto ni el borde punteado */
-.mapa-iframe {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 1px solid var(--color-borde);
-  overflow: hidden;
-  box-shadow: var(--sombra);
-}
-
-.mapa-solo-escritorio { display: none; }   /* en el celular no se muestra */
-
-/* Mapa del inicio: en el celular va debajo del formulario de búsqueda */
+   Los mapas son de react-leaflet (ver .mapa-leaflet en la sección 13).
+   El del inicio, en el celular, va debajo del formulario de búsqueda. */
 .area-mapa { height: 15rem; }
 
 
@@ -604,9 +579,6 @@ fieldset.tarjeta legend {
 .barra-reservar .cifra { font-size: 1.375rem; }
 .con-barra-reservar { padding-bottom: 10rem; }   /* para que la barra no tape el final */
 
-/* Perfil: vista de pasajero o de conductor (JavaScript muestra una u otra) */
-.vista-conductor { display: none; }
-
 
 /* ---------- 11. PIE DE PÁGINA Y UTILIDADES ---------- */
 footer {
@@ -720,9 +692,6 @@ footer {
   .area-buscar { grid-area: buscar; }
   .area-lateral { grid-area: lateral; }
   .area-mapa { grid-area: mapa; height: 100%; min-height: 14rem; }
-
-  .mapa-solo-escritorio { display: flex; }
-  .mapa-iframe.mapa-solo-escritorio { display: block; }
 }
 
 

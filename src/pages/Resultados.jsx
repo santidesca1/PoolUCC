@@ -11,14 +11,16 @@ import Mapa from "../components/Mapa";
 import { sedes } from "../data/datos";
 import { coordenadasDeSalida, distanciaKm, buscarLugar } from "../utils/geo";
 import { textoPlazas } from "../utils/formato";
+import { fechaLocalISO, nombreDia } from "../utils/fechas";
 
-/** Dice si un viaje corresponde al tipo elegido en "Mostrar". */
+/** Dice si un viaje corresponde al tipo elegido en "Mostrar". Los semanales cuentan en su día. */
 function cumpleTipo(v, tipo) {
+  const diaSemanal = v.semanal ? v.diaSemana.toLowerCase() : "";
   switch (tipo) {
-    case "Hoy": return v.dia === "Hoy";
-    case "Mañana": return v.dia === "Mañana";
+    case "Hoy": return v.dia === "Hoy" || diaSemanal === nombreDia(0);
+    case "Mañana": return v.dia === "Mañana" || diaSemanal === nombreDia(1);
     case "Mi grado": return v.etiqueta === "Mismo grado";
-    case "Recurrentes": return v.etiqueta === "Recurrente";
+    case "Recurrentes": return v.etiqueta === "Recurrente" || v.semanal === true;
     default: return true;
   }
 }
@@ -44,8 +46,11 @@ export default function Resultados() {
 
   const distanciaDe = v => (origen === null || v.lat === null ? Infinity : distanciaKm(origen, v));
 
-  // Los viajes del usuario, cancelados o ya hechos no aparecen
-  let resultado = viajes.filter(v => v.conductorEmail !== user.email && !v.cancelado && !v.realizado);
+  // No aparecen: los viajes del usuario, los cancelados, los ya hechos ni los de una fecha que ya pasó
+  const hoy = fechaLocalISO();
+  let resultado = viajes.filter(v =>
+    v.conductorEmail !== user.email && !v.cancelado && !v.realizado && !(v.fecha && v.fecha < hoy)
+  );
   if (sede !== "Todas") resultado = resultado.filter(v => v.hasta === sede);
   if (precioMaximo !== "") resultado = resultado.filter(v => v.precio <= Number(precioMaximo));
   if (hora !== "") resultado = resultado.filter(v => v.salida >= hora);

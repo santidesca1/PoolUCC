@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useTituloDePagina } from "./hooks/useTituloDePagina";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
@@ -18,6 +19,8 @@ import Avisos from "./pages/Avisos";
 import Perfil from "./pages/Perfil";
 
 export default function App() {
+  useTituloDePagina();
+
   return (
     <Routes>
       {/* Sin sesión */}
