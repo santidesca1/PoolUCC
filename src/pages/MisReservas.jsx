@@ -4,7 +4,7 @@ import BarraTitulo from "../components/BarraTitulo";
 import ChipEstado from "../components/ChipEstado";
 import Recorrido from "../components/Recorrido";
 import ListaVacia from "../components/ListaVacia";
-import { formatearPrecio } from "../utils/formato";
+import { formatearPrecio, textoPlazas } from "../utils/formato";
 
 // Grupos en los que se muestran las reservas, en este orden
 const GRUPOS = [
@@ -37,14 +37,17 @@ export default function MisReservas() {
                 const viaje = buscarViaje(r.idViaje);
                 const paraCalificar = r.estado === "realizada" && r.calificacion === undefined;
                 return (
-                  <article className="tarjeta" key={r.id}>
+                  <article className="tarjeta tarjeta-sutil" key={r.id}>
                     <div className="viaje-cabecera">
-                      <p className="viaje-conductor"><strong>{viaje.dia} · {viaje.salida}</strong> · con {viaje.conductor}</p>
+                      <div className="viaje-conductor">
+                        <h3>{viaje.dia} · {viaje.salida}</h3>
+                        <p>con {viaje.conductor} · {textoPlazas(r.plazas)}</p>
+                      </div>
                       <ChipEstado estado={r.estado} />
                     </div>
                     <Recorrido desde={viaje.desde} hasta={viaje.hasta} />
-                    <div className="viaje-cabecera">
-                      <p className="viaje-conductor precio-texto">{formatearPrecio(r.total)}</p>
+                    <div className="acciones acciones-pie">
+                      <p className="precio-texto">{formatearPrecio(r.total)}</p>
                       {paraCalificar && <Link className="boton boton-chico" to={`/calificar/${r.id}`}>Calificar</Link>}
                       <Link className="boton boton-borde boton-chico" to={`/reserva/${r.id}`}>Ver</Link>
                     </div>

@@ -59,7 +59,7 @@ export default function MisViajes() {
             else if (v.plazas === 0) estado = <span className="etiqueta etiqueta-verde">Completo</span>;
 
             return (
-              <article className="tarjeta" key={v.id}>
+              <article className="tarjeta tarjeta-sutil" key={v.id}>
                 <div className="viaje-cabecera">
                   <p className="viaje-conductor"><strong>{v.dia} · {v.salida}</strong></p>
                   {v.autoAceptar && <span className="etiqueta">Acepta solo</span>}

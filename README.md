@@ -19,6 +19,8 @@ Qué se suma en la segunda entrega, además de pasar las 12 pantallas a componen
   confirmaba sola y las solicitudes eran datos escritos a mano).
 - Registro y login con contraseña, **Mis reservas**, **Avisos** con contador y **Finalizar viaje**.
 - Mapas interactivos (un punto por viaje y el recorrido), íconos y modo oscuro.
+- **Rediseño mobile first**: inicio con mapa y hoja inferior, resultados como lista, botón de pedir lugar fijo,
+  pasos de la reserva y un solo color de marca (azul noche con celeste).
 - Las dos puntas del negocio se pueden ver a la vez, con dos cuentas en dos pestañas.
 
 ## Cómo correrlo
@@ -118,7 +120,7 @@ src/
   components/        piezas reutilizables: Menu, TarjetaViaje, Recorrido, Dialogo, Mapa, Estrellas...
   data/datos.js      sedes, barrios, viajes, reservas y cuentas de ejemplo
   utils/             formato (precios, puntajes), geo (distancias) y fechas
-  index.css          hoja de estilos con la paleta de la marca y modo oscuro
+  index.css          hoja de estilos (tipografía Manrope, azul noche y celeste, modo oscuro)
 ```
 
 `DatosProvider` concentra todo el acceso a los datos: si más adelante hay un backend real (por ejemplo

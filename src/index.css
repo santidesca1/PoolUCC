@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PoolUCC - Hoja de estilo externa
+   PoolUCC - Hoja de estilo
 
    Se escribe "mobile first": primero los estilos del celular y, al final,
    una media query que reacomoda todo para pantallas grandes.
@@ -8,14 +8,18 @@
     2. Reset
     3. Base
     4. Menú de navegación
-    5. Cabeceras
-    6. Contenido y tarjetas
-    7. Viajes (recorrido, avatar, etiquetas)
-    8. Formularios y botones
-    9. Mapa
-   10. Pantallas puntuales (chat, pestañas, listas, confirmación)
+    5. Cabeceras y barra de título
+    6. Contenido y bloques
+    7. Viajes (filas, recorrido, avatar, etiquetas)
+    8. Formularios, chips y botones
+    9. Mapa y pantallas con hoja inferior
+   10. Pantallas puntuales (chat, pestañas, listas, reserva)
    11. Pie de página y utilidades
    12. Pantallas grandes (media query)
+
+   Sistema: fondo blanco, tinta azul noche y un solo acento (celeste).
+   Sin sombras en los bloques: se separan con líneas de 1px.
+   Todo lo que se toca mide al menos 44px de alto.
    ========================================================================== */
 
 
@@ -23,68 +27,74 @@
    Se definen una sola vez y se usan con var(--nombre). Si cambia un color
    de la marca, se cambia acá y se actualiza en todo el sitio. */
 :root {
-  /* Colores de la marca */
-  --color-primario: #66CCFF;          /* celeste: botones y acentos */
-  --color-primario-hover: #99DEFF;
-  --color-primario-fuerte: #146F9E;   /* celeste oscuro: links y textos */
-  --color-secundario: #D2EFFF;        /* celeste "lavado": fondos suaves */
-  --color-terciario: #112A46;         /* azul oscuro: títulos, menú, tinta */
-  --color-terciario-claro: #2A4E74;
+  /* Marca */
+  --color-tinta: #0B1F36;             /* azul noche: textos fuertes y botón principal */
+  --color-primario: #2EB5F5;          /* celeste: único acento (ruta, activo, puntos) */
+  --color-enlace: #0F6FA0;            /* celeste oscuro: links (contraste AA sobre blanco) */
 
-  /* Acento: solo para ahorro, recompensas y estrellas (nunca en botones) */
-  --color-acento: #FFC24D;
-  --color-acento-oscuro: #8A5700;
-  --color-acento-fondo: #FFF1D9;
+  /* Dinero y estrellas: nunca en botones */
+  --color-acento: #F5B93A;
+  --color-acento-oscuro: #7A5200;
+  --color-acento-fondo: #FFF3D6;
 
-  /* Neutros y estados */
-  --color-fondo: #F1F8FC;
-  --color-blanco: #FFFFFF;
-  --color-borde: #CDDCE5;
-  --color-texto: #2E4152;
-  --color-texto-suave: #4F6B7D;
-  --color-exito: #14703F;
-  --color-exito-fondo: #DEF7EA;
-  --color-error: #B3272C;
+  /* Superficies y líneas */
+  --color-fondo: #FFFFFF;
+  --color-superficie: #FFFFFF;
+  --color-gris-50: #F6F8FA;
+  --color-gris-fondo: #EEF1F4;        /* campos y botón secundario */
+  --color-borde: #E3E8EE;
 
-  /* Sombras: rgba con el azul de la marca, muy transparente */
-  --sombra: 0 2px 8px rgba(17, 42, 70, 0.07);
-  --sombra-hover: 0 8px 20px rgba(17, 42, 70, 0.14);
+  /* Textos */
+  --color-texto: #26394D;
+  --color-texto-suave: #5B6B7B;
 
-  /* Roles separados para que el modo oscuro pueda cambiarlos por separado */
-  --color-superficie: #FFFFFF;        /* fondo de tarjetas, barras y campos */
-  --color-tinta: #112A46;             /* títulos y textos fuertes */
-  --color-boton: #112A46;
+  /* Botones */
+  --color-boton: #0B1F36;
   --color-boton-texto: #FFFFFF;
-  --color-boton-hover: #2A4E74;
-  --color-menu-texto: #D2EFFF;        /* textos claros sobre el azul oscuro */
-  --color-etiqueta-texto: #0E4E6E;
-  --color-gris-fondo: #E2EDF3;
+  --color-boton-hover: #1D3A58;
+
+  /* Estados */
+  --color-exito: #0E7A4B;
+  --color-exito-fondo: #E3F5EC;
+  --color-error: #C0262D;
   --color-error-fondo: #FBE9EA;
+
+  /* Menú de escritorio (barra superior oscura) */
+  --color-barra: #0B1F36;
+  --color-barra-texto: #FFFFFF;
+
+  --color-menu: #0B1F36;              /* fondo de las listas desplegables */
+  --color-menu-texto: #FFFFFF;
+
+  --radio: 0.75rem;                   /* 12px: botones, campos y filas */
+  --altura-menu: 3.5rem;
 }
 
 /* Modo oscuro: se activa desde Perfil (React pone data-theme="dark" en <html>) */
 :root[data-theme="dark"] {
+  --color-tinta: #EAF2F8;
+  --color-primario: #5CC8FF;
+  --color-enlace: #5CC8FF;
+  --color-acento: #F5B93A;
+  --color-acento-oscuro: #F5B93A;
+  --color-acento-fondo: #3B2C0E;
   --color-fondo: #0B1B2E;
-  --color-superficie: #132C47;
-  --color-borde: #2A4E74;
+  --color-superficie: #0B1B2E;
+  --color-gris-50: #0F2338;
+  --color-gris-fondo: #17304B;
+  --color-borde: #24405C;
   --color-texto: #CFE0EC;
-  --color-texto-suave: #9DB5C6;
-  --color-tinta: #EAF5FC;
-  --color-secundario: #173A5E;
-  --color-primario-fuerte: #66CCFF;
-  --color-boton: #66CCFF;
+  --color-texto-suave: #9DB1C3;
+  --color-boton: #EAF2F8;             /* en oscuro el botón principal es claro */
   --color-boton-texto: #0B1B2E;
-  --color-boton-hover: #99DEFF;
-  --color-etiqueta-texto: #BFE6FF;
-  --color-gris-fondo: #22405F;
+  --color-boton-hover: #FFFFFF;
   --color-exito: #6FD9A3;
   --color-exito-fondo: #12382A;
-  --color-acento-oscuro: #FFC24D;
-  --color-acento-fondo: #3B2C0E;
   --color-error: #FF8F93;
   --color-error-fondo: #451C20;
-  --sombra: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --sombra-hover: 0 8px 20px rgba(0, 0, 0, 0.45);
+  --color-barra: #0F2338;
+  --color-barra-texto: #EAF2F8;
+  --color-menu: #1D3B5C;
   color-scheme: dark;
 }
 
@@ -100,24 +110,29 @@
 
 img, svg { display: block; max-width: 100%; }
 input, button, textarea, select { font: inherit; }
-input { accent-color: var(--color-terciario); }   /* radios y checkboxes con el color de la marca */
-ul { list-style: none; }
+input { accent-color: var(--color-tinta); }   /* radios y checkboxes con el color de la marca */
+ul, ol { list-style: none; }
 a { color: inherit; text-decoration: none; }
 fieldset { border: 0; min-width: 0; }   /* min-width: 0 evita que un fieldset ancho agrande la página */
 legend { padding: 0; }
 
+:focus-visible { outline: 3px solid var(--color-primario); outline-offset: 2px; }
+
 
 /* ---------- 3. BASE ---------- */
+html { background-color: var(--color-fondo); }
+
 body {
-  font-family: "Public Sans", Arial, sans-serif;
+  font-family: "Manrope", "Segoe UI", system-ui, sans-serif;
+  font-weight: 500;
   line-height: 1.5;
   color: var(--color-texto);
   background-color: var(--color-fondo);
   max-width: 30rem;         /* en el celular: una columna de hasta 480px */
   margin: 0 auto;
-  padding-bottom: 5rem;     /* lugar para el menú fijo de abajo */
+  padding-bottom: calc(var(--altura-menu) + 1rem + env(safe-area-inset-bottom, 0px));   /* lugar para el menú fijo */
 
-  /* Columna que ocupa al menos toda la pantalla: así el pie queda siempre abajo */
+  /* Columna que ocupa al menos toda la pantalla */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -126,15 +141,17 @@ body {
 #root { flex: 1; display: flex; flex-direction: column; }
 main { flex: 1; width: 100%; }
 
-h1 { font-size: 1.5rem; line-height: 1.2; color: var(--color-tinta); }
-h2 { font-size: 1.125rem; color: var(--color-tinta); }
-h3 { font-size: 1rem; color: var(--color-tinta); }
+h1, h2, h3 { color: var(--color-tinta); letter-spacing: -0.02em; text-wrap: balance; }
+h1 { font-size: 1.75rem; font-weight: 800; line-height: 1.12; }
+h2 { font-size: 1.125rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; }
+h3 { font-size: 1rem; font-weight: 700; }
 
 .texto-suave { font-size: 0.875rem; color: var(--color-texto-suave); }
 
 
 /* ---------- 4. MENÚ DE NAVEGACIÓN ----------
-   En el celular queda fijo abajo; en pantallas grandes pasa a ser lateral. */
+   En el celular: cuatro pestañas fijas abajo (ícono + texto, sin relleno).
+   En pantallas grandes pasa a ser una barra superior (ver media query). */
 .menu {
   position: fixed;
   bottom: 0;
@@ -142,95 +159,135 @@ h3 { font-size: 1rem; color: var(--color-tinta); }
   right: 0;
   max-width: 30rem;
   margin: 0 auto;
-  display: flex;
-  gap: 0.25rem;
-  padding: 0.5rem;
-  background-color: var(--color-terciario);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: calc(var(--altura-menu) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-color: var(--color-superficie);
+  border-top: 1px solid var(--color-borde);
   z-index: 10;
 }
 
 .menu a {
-  flex: 1;
-  padding: 0.75rem 0.5rem;
-  text-align: center;
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--color-menu-texto);
-  border-radius: 999px;
-  transition: background-color 0.2s;
-}
-
-.menu a:hover { background-color: var(--color-terciario-claro); }
-
-.menu a.activo {
-  background-color: var(--color-primario);
-  color: var(--color-terciario);
-}
-
-/* Logo dentro del menú: solo se ve en pantallas grandes (ver media query) */
-.menu-logo {
-  display: none;
-  color: var(--color-blanco);
-}
-
-/* Avatar y nombre del usuario a la derecha de la barra (solo en escritorio) */
-.menu a.menu-usuario { display: none; }
-
-.avatar-chico { width: 2rem; height: 2rem; font-size: 0.8125rem; }
-
-
-/* ---------- 5. CABECERAS ---------- */
-/* Cabecera azul (inicio, perfil, reservado) */
-.hero {
-  padding: 1.5rem 1rem;
-  background-color: var(--color-terciario);   /* por si el navegador no muestra el gradiente */
-  background-image: linear-gradient(135deg, var(--color-terciario), var(--color-terciario-claro));
-  color: var(--color-blanco);
-  border-radius: 0 0 1.5rem 1.5rem;
-}
-
-.hero h1 { color: var(--color-blanco); font-size: 1.75rem; }
-
-.hero-fila {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
+  justify-content: center;
+  gap: 0.125rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-texto-suave);
+  transition: color 0.2s;
 }
 
-.hero-fecha { color: var(--color-menu-texto); font-size: 0.875rem; }
-.hero .etiquetas { margin-top: 1rem; }
-.hero-centrado { text-align: center; padding: 2.5rem 1rem; }
-.hero-centrado p { color: var(--color-menu-texto); }
+.menu a:hover { color: var(--color-tinta); }
 
-/* Logo hecho con texto: "Pool" + "UCC" en otro color */
-.logo { font-size: 1.25rem; font-weight: 700; }
-.logo span { color: var(--color-primario); }
+/* El activo se marca con tinta y una línea arriba, sin relleno */
+.menu a.activo { color: var(--color-tinta); font-weight: 800; }
 
-/* Barra blanca con botón "Volver" (resto de las pantallas) */
+.menu a.activo::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  width: 1.5rem;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background-color: var(--color-tinta);
+}
+
+/* Solo se ven en pantallas grandes (ver media query) */
+.menu-logo, .menu a.menu-campana, .menu a.menu-usuario { display: none; }
+
+.menu-icono { position: relative; display: inline-flex; }
+
+.contador {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.7rem;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  padding: 0 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  line-height: 1.1rem;
+  text-align: center;
+  color: #0B1F36;
+  background-color: var(--color-primario);
+  border-radius: 999px;
+}
+
+/* Campana de avisos del celular: botón redondo arriba a la derecha */
+.campana {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-tinta);
+  background-color: var(--color-gris-fondo);
+  border-radius: 50%;
+}
+
+.campana .contador { top: -0.15rem; right: -0.15rem; }
+
+/* Logo: palabra en minúscula con un punto de ruta celeste */
+.logo { display: inline-flex; align-items: baseline; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.04em; color: var(--color-tinta); }
+.logo-punto { width: 0.38em; height: 0.38em; margin-left: 0.08em; background-color: var(--color-primario); border-radius: 50%; }
+
+.avatar-chico { width: 2rem; height: 2rem; font-size: 0.75rem; }
+
+
+/* ---------- 5. CABECERAS Y BARRA DE TÍTULO ---------- */
+/* Cabecera simple (login, registro, perfil): sin fondo ni adornos */
+.hero { padding: 2rem 1rem 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.hero h1 { font-size: 2rem; }
+.hero p { color: var(--color-texto-suave); }
+.hero .logo { color: var(--color-tinta); margin-bottom: 1.25rem; }
+.hero-fecha { font-size: 0.875rem; }
+.hero .etiquetas { margin-top: 0.5rem; }
+
+/* Barra con botón redondo "volver" y el título */
 .barra {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   padding: 0.75rem 1rem;
   background-color: var(--color-superficie);
-  border-bottom: 1px solid var(--color-borde);
 }
 
-.barra h1 { font-size: 1.125rem; }
-.barra div { flex: 1; }
+.barra h1 { font-size: 1.375rem; }
+.barra div { flex: 1; min-width: 0; }
 .barra p { font-size: 0.875rem; color: var(--color-texto-suave); }
 
-.volver { font-weight: 700; color: var(--color-primario-fuerte); }
-.volver:hover { text-decoration: underline; }
+.boton-volver, .fab {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-tinta);
+  background-color: var(--color-gris-fondo);
+  border-radius: 50%;
+}
+
+.boton-volver:hover { background-color: var(--color-borde); }
+
+/* Botones redondos blancos que flotan sobre el mapa */
+.fab { position: relative; background-color: #FFFFFF; color: #0B1F36; box-shadow: 0 2px 8px rgba(11, 31, 54, 0.22); }
+.fab .contador { top: -0.15rem; right: -0.15rem; }
+
+/* Link de texto (dentro de frases) */
+.volver { font-weight: 700; color: var(--color-enlace); text-decoration: underline; text-underline-offset: 3px; }
 
 
-/* ---------- 6. CONTENIDO Y TARJETAS ---------- */
+/* ---------- 6. CONTENIDO Y BLOQUES ---------- */
 .contenido {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 1.25rem;
+  padding: 0.5rem 1rem 1rem;
 }
 
 /* Grupo de elementos apilados dentro de una columna */
@@ -240,28 +297,42 @@ h3 { font-size: 1rem; color: var(--color-tinta); }
   gap: 1rem;
 }
 
+/* "tarjeta" ahora es un bloque plano: sin caja, separado del siguiente por una línea */
 .tarjeta {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 0 0 1.25rem;
+  background-color: transparent;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.contenido > .tarjeta:last-child:not(.tarjeta-acento):not(.tarjeta-oscura):not(.tarjeta-sutil),
+.columna > .tarjeta:last-child:not(.tarjeta-acento):not(.tarjeta-oscura):not(.tarjeta-sutil) { border-bottom: 0; padding-bottom: 0; }
+
+/* Bloques que son un link entero: se comportan como una fila */
+.tarjeta-enlace { transition: background-color 0.2s; }
+.tarjeta-enlace:hover { background-color: var(--color-gris-50); }
+
+/* Bloque destacado con relleno gris suave (totales, avisos importantes) */
+.tarjeta-acento {
   padding: 1rem;
-  background-color: var(--color-superficie);
-  border: 1px solid var(--color-borde);
-  border-radius: 1rem;
-  box-shadow: var(--sombra);
+  background-color: var(--color-gris-fondo);
+  border: 0;
+  border-radius: var(--radio);
 }
 
-/* Tarjetas que son un link entero: al pasar el mouse "suben" un poco */
-.tarjeta-enlace { transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
-.tarjeta-enlace:hover {
-  border-color: var(--color-primario);
-  box-shadow: var(--sombra-hover);
-  transform: translateY(-2px);
+/* Bloque destacado en tinta (tu próximo viaje) */
+.tarjeta-oscura {
+  padding: 1rem;
+  color: var(--color-boton-texto);
+  background-color: var(--color-boton);
+  border: 0;
+  border-radius: var(--radio);
 }
 
-.tarjeta-acento { background-color: var(--color-secundario); border-color: var(--color-secundario); }
-.tarjeta-oscura { background-color: var(--color-terciario); border-color: var(--color-terciario); color: var(--color-blanco); }
-.tarjeta-completa { opacity: 0.6; box-shadow: none; }   /* viaje sin lugares */
+.tarjeta-oscura h2, .tarjeta-oscura p { color: inherit; }
+.tarjeta-completa { opacity: 0.55; }   /* viaje sin lugares */
 
 .tarjeta-centrada { align-items: center; text-align: center; }
 
@@ -279,70 +350,112 @@ h3 { font-size: 1rem; color: var(--color-tinta); }
   gap: 0.75rem;
 }
 
-.viaje-conductor { flex: 1; }
+.viaje-conductor { flex: 1; min-width: 0; }
 .viaje-conductor p { font-size: 0.875rem; color: var(--color-texto-suave); }
 
-.precio {
-  padding: 0.25rem 0.75rem;
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--color-tinta);
-  background-color: var(--color-fondo);
-  border-radius: 0.5rem;
+/* Fila de un viaje en Resultados: conductor a la izquierda, precio grande a la derecha */
+.fila-viaje {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 0.75rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--color-borde);
+  transition: background-color 0.2s;
 }
 
-/* Recorrido origen -> destino. El punto se agrega con ::before */
-.recorrido { display: flex; flex-direction: column; gap: 0.5rem; }
-.recorrido li { display: flex; gap: 0.5rem; }
-.recorrido li::before { content: "●"; color: var(--color-primario-fuerte); }
-.recorrido li:first-child::before { color: var(--color-tinta); }
-.recorrido span { flex: 1; font-weight: 600; color: var(--color-tinta); }
-.recorrido time { font-weight: 700; color: var(--color-texto-suave); }
+a.fila-viaje:hover { background-color: var(--color-gris-50); }
+.fila-viaje-completa { opacity: 0.55; }
+.fila-viaje-info { min-width: 0; }
+.fila-viaje-info h2 { font-size: 1rem; }
+.fila-viaje-info p { font-size: 0.8125rem; font-weight: 600; color: var(--color-texto-suave); }
+.fila-viaje-info .fila-viaje-ruta { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fila-viaje-precio { text-align: right; }
 
-.plazas { font-size: 0.875rem; font-weight: 700; color: var(--color-tinta); }
+.precio {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-tinta);
+}
+
+.plazas { font-size: 0.8125rem; font-weight: 600; color: var(--color-texto-suave); }
 .plazas-completo { color: var(--color-error); }
 
+/* Recorrido origen -> destino como línea de tiempo vertical */
+.recorrido { position: relative; display: flex; flex-direction: column; gap: 0.875rem; padding-left: 1.5rem; }
+
+.recorrido::before {
+  content: "";
+  position: absolute;
+  left: 0.3125rem;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  width: 2px;
+  background-color: var(--color-borde);
+}
+
+.recorrido li { position: relative; display: flex; gap: 0.5rem; }
+
+.recorrido li::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 0.4rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: var(--color-primario);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--color-fondo);
+}
+
+.recorrido li:last-child::before { background-color: var(--color-tinta); border-radius: 3px; }
+.recorrido span { flex: 1; font-weight: 700; color: var(--color-tinta); }
+.recorrido time { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--color-texto-suave); }
+
 .avatar {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  font-weight: 700;
-  color: var(--color-terciario);
-  background-color: var(--color-primario);
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--color-boton-texto);
+  background-color: var(--color-boton);
   border-radius: 50%;
 }
 
-.avatar-grande { width: 4rem; height: 4rem; font-size: 1.25rem; }
+.avatar-grande { width: 3.5rem; height: 3.5rem; font-size: 1.125rem; }
 
 /* Etiquetas redondeadas (verificado, estado, preferencias) */
 .etiquetas { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
 .etiqueta {
   display: inline-block;
-  padding: 0.125rem 0.625rem;
-  font-size: 0.75rem;
+  padding: 0.1875rem 0.625rem;
+  font-size: 0.8125rem;
   font-weight: 700;
-  color: var(--color-etiqueta-texto);
-  background-color: var(--color-secundario);
+  color: var(--color-tinta);
+  background-color: var(--color-gris-fondo);
   border-radius: 999px;
 }
 
 .etiqueta-verde { color: var(--color-exito); background-color: var(--color-exito-fondo); }
 .etiqueta-amarilla { color: var(--color-acento-oscuro); background-color: var(--color-acento-fondo); }
-.etiqueta-gris { color: var(--color-texto); background-color: var(--color-gris-fondo); }
+.etiqueta-gris { color: var(--color-texto-suave); background-color: var(--color-gris-fondo); }
+.etiqueta-roja { color: var(--color-error); background-color: var(--color-error-fondo); }
+.boton-icono, .etiqueta-icono { display: inline-flex; align-items: center; gap: 0.375rem; }
 
 
-/* ---------- 8. FORMULARIOS Y BOTONES ---------- */
-.campo { display: flex; flex-direction: column; gap: 0.25rem; }
+/* ---------- 8. FORMULARIOS, CHIPS Y BOTONES ---------- */
+.campo { display: flex; flex-direction: column; gap: 0.375rem; }
 
 .campo label,
 legend {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   color: var(--color-texto-suave);
 }
 
@@ -350,57 +463,90 @@ legend {
 .campo select,
 .campo textarea {
   width: 100%;
-  padding: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
   color: var(--color-tinta);
-  background-color: var(--color-superficie);
-  border: 2px solid var(--color-borde);
-  border-radius: 0.75rem;
+  background-color: var(--color-gris-fondo);
+  border: 2px solid transparent;
+  border-radius: var(--radio);
 }
 
 .campo textarea { resize: vertical; }
 
-/* Título de un fieldset que es una tarjeta (publicar). Con float, el <legend>
+/* Título de un fieldset que es un bloque (publicar). Con float, el <legend>
    deja de quedar montado sobre el borde de arriba y se ubica adentro. */
 fieldset.tarjeta legend {
   float: left;
   width: 100%;
-  font-size: 0.875rem;
+  font-size: 1rem;
+  font-weight: 800;
   color: var(--color-tinta);
 }
 
 .campo input:focus,
 .campo select:focus,
 .campo textarea:focus {
-  border-color: var(--color-primario);
-  outline: 3px solid var(--color-secundario);
+  background-color: var(--color-superficie);
+  border-color: var(--color-tinta);
+  outline: 3px solid color-mix(in srgb, var(--color-primario) 35%, transparent);
+  outline-offset: 0;
 }
 
 .fila { display: flex; gap: 0.75rem; }
-.fila .campo { flex: 1; }
+.fila .campo { flex: 1; min-width: 0; }
 
 /* Grupos de radios y checkboxes */
 .opciones { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 0.5rem; }
-.opciones label { display: flex; align-items: center; gap: 0.375rem; cursor: pointer; }
+.opciones label { display: flex; align-items: center; gap: 0.5rem; min-height: 2.25rem; cursor: pointer; }
 .opciones-columna { flex-direction: column; }
+.opciones input { width: 1.25rem; height: 1.25rem; }
 
 .ayuda { font-size: 0.8125rem; color: var(--color-texto-suave); }
 
 /* Mensajes que escribe JavaScript cuando algo del formulario está mal */
 .mensaje-error { font-size: 0.875rem; font-weight: 700; color: var(--color-error); }
 
+/* Chips: opciones elegibles de a una (filtros, orden). Pueden ser <label> con radio o <button> */
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2.5rem;
+  padding: 0 0.8125rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-tinta);
+  background-color: var(--color-gris-fondo);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.chip:hover { background-color: var(--color-borde); }
+.chip.elegido { color: var(--color-boton-texto); background-color: var(--color-boton); }
+.chip input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: pointer; }
+.chip:focus-within { outline: 3px solid var(--color-primario); outline-offset: 2px; }
+
 /* Botones: sirven para <button> y para <a>.
-   El botón principal es azul oscuro (la acción más importante de cada pantalla);
-   el celeste queda para lo que está activo o elegido. */
+   Tres niveles: principal (tinta), secundario (gris) y de texto/peligro. */
 .boton {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   width: 100%;
-  padding: 0.875rem 1.25rem;
+  min-height: 3.25rem;
+  padding: 0 1.25rem;
   font-weight: 700;
   text-align: center;
   color: var(--color-boton-texto);
   background-color: var(--color-boton);
-  border: 2px solid transparent;
-  border-radius: 999px;
+  border: 0;
+  border-radius: var(--radio);
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
 }
@@ -408,68 +554,200 @@ fieldset.tarjeta legend {
 .boton:hover { background-color: var(--color-boton-hover); }
 .boton:active { transform: scale(0.98); }   /* se "hunde" un poco al tocarlo */
 
-.boton-borde { color: var(--color-tinta); background-color: var(--color-superficie); border-color: var(--color-borde); }
-.boton-borde:hover { background-color: var(--color-fondo); }
+/* Secundario: gris suave */
+.boton-borde { color: var(--color-tinta); background-color: var(--color-gris-fondo); }
+.boton-borde:hover { background-color: var(--color-borde); }
 
-/* Botón que no ocupa todo el ancho dentro de una tarjeta */
+/* Botón que no ocupa todo el ancho dentro de un bloque */
 .boton-ajustado { align-self: flex-start; }
 
-.boton-chico { display: inline-block; width: auto; padding: 0.5rem 1rem; font-size: 0.875rem; }
+.boton-chico {
+  display: inline-flex;
+  width: auto;
+  min-height: 2.75rem;
+  padding: 0 1.125rem;
+  font-size: 0.875rem;
+  border-radius: 999px;
+}
+
 .campo .boton-chico { align-self: flex-start; }   /* que no ocupe todo el ancho del campo */
 
-/* Acciones que borran algo (cancelar reserva, eliminar viaje) */
-.boton-peligro { color: var(--color-error); background-color: var(--color-superficie); border-color: var(--color-error); }
+/* Acciones que borran algo (cancelar reserva, eliminar viaje): texto rojo, sin relleno */
+.boton-peligro { color: var(--color-error); background-color: transparent; }
 .boton-peligro:hover { background-color: var(--color-error-fondo); }
 
-/* Botón que JavaScript desactiva (por ejemplo, un viaje completo) */
-.boton:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+/* Botón que desactiva React (por ejemplo, un viaje completo) */
+.boton:disabled { color: var(--color-texto-suave); background-color: var(--color-gris-fondo); cursor: not-allowed; transform: none; }
 
 /* Campo de texto con un botón al lado (Desde + "Mi ubicación").
-   min-width: 0 deja que el campo se achique en vez de empujar la tarjeta. */
+   min-width: 0 deja que el campo se achique en vez de empujar el bloque. */
 .campo-con-boton { display: flex; gap: 0.5rem; }
 .campo-con-boton input { flex: 1; min-width: 0; }
-.campo-con-boton .boton-chico { flex: none; }
+.campo-con-boton .boton-chico { flex: none; min-height: 3.25rem; }
 
 /* En pantallas angostas el botón de ubicación queda solo con el ícono */
 @media (max-width: 480px) {
   .campo-con-boton .texto-boton { display: none; }
 }
 
+/* Lista de sedes: filas elegibles con un radio escondido */
+.lista-sedes { display: flex; flex-direction: column; margin-top: 0.25rem; }
 
-/* ---------- 9. MAPA ----------
-   Los mapas son de react-leaflet (ver .mapa-leaflet en la sección 13).
-   El del inicio, en el celular, va debajo del formulario de búsqueda. */
-.area-mapa { height: 15rem; }
-
-
-/* ---------- 10. PANTALLAS PUNTUALES ---------- */
-/* Confirmación (reservado) */
-.marca-exito {
+.sede-fila {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  margin: 0 auto 1rem;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--color-terciario);
-  background-color: var(--color-primario);
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--color-borde);
+  cursor: pointer;
+}
+
+.sede-fila input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: pointer; }
+.sede-fila:focus-within { outline: 3px solid var(--color-primario); outline-offset: -3px; border-radius: var(--radio); }
+
+.sede-icono {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--color-tinta);
+  background-color: var(--color-gris-fondo);
   border-radius: 50%;
 }
 
+.sede-nombre { flex: 1; font-weight: 700; color: var(--color-tinta); }
+.sede-fila .sede-check { visibility: hidden; color: var(--color-tinta); }
+.sede-fila.elegida .sede-check { visibility: visible; }
+.sede-fila.elegida .sede-icono { color: var(--color-boton-texto); background-color: var(--color-boton); }
+
+/* Opciones extra plegadas (hora y plazas) */
+.mas-opciones summary {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 700;
+  color: var(--color-enlace);
+  cursor: pointer;
+}
+
+.mas-opciones[open] summary { margin-bottom: 0.5rem; }
+
+
+/* ---------- 9. MAPA Y PANTALLAS CON HOJA INFERIOR ----------
+   Inicio y detalle del viaje: el mapa va arriba y una "hoja" blanca con
+   esquinas redondeadas sube sobre él. Los mapas son de react-leaflet. */
+.mapa-leaflet {
+  height: 15rem;
+  overflow: hidden;
+  isolation: isolate;       /* encierra los z-index de Leaflet acá adentro */
+  background-color: var(--color-gris-fondo);
+  border-radius: var(--radio);
+}
+
+.leaflet-container { font-family: inherit; }
+.leaflet-tile-pane { filter: saturate(0.55) contrast(0.95); }   /* mapa más calmo: lo protagonista es la ruta */
+:root[data-theme="dark"] .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.85) saturate(0.45); }
+
+.zona-mapa {
+  position: relative;
+  height: clamp(13rem, 36dvh, 20rem);
+}
+
+.zona-mapa .mapa-leaflet { height: 100%; border-radius: 0; }
+
+/* Controles que flotan sobre el mapa */
+.flotante-izq, .flotante-der { position: absolute; top: 0.75rem; z-index: 5; }
+.flotante-izq { left: 1rem; }
+.flotante-der { right: 1rem; }
+
+.logo-flotante {
+  display: inline-flex;
+  align-items: center;
+  height: 2.5rem;
+  padding: 0 1rem;
+  background-color: #FFFFFF;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(11, 31, 54, 0.22);
+}
+
+.logo-flotante .logo { color: #0B1F36; font-size: 1.125rem; }
+
+.hoja {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: -1.5rem;
+  padding: 1.5rem 1rem 1.5rem;
+  background-color: var(--color-superficie);
+  border-radius: 1.5rem 1.5rem 0 0;
+  box-shadow: 0 -8px 24px rgba(11, 31, 54, 0.12);
+}
+
+/* Asa de la hoja */
+.hoja::before {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  width: 2.25rem;
+  height: 4px;
+  margin-left: -1.125rem;
+  background-color: var(--color-borde);
+  border-radius: 4px;
+}
+
+.hoja-saludo { margin-bottom: -0.75rem; }
+
+/* Mapa suelto (Resultados): franja en el celular */
+.mapa-franja { height: 8rem; }
+
+
+/* ---------- 10. PANTALLAS PUNTUALES ---------- */
+/* Reserva: título grande y pasos */
+.reserva-titulo { display: flex; flex-direction: column; gap: 0.625rem; align-items: flex-start; }
+.reserva-titulo h1 { font-size: 1.75rem; }
+
+.pasos { display: flex; flex-direction: column; gap: 1.125rem; }
+.paso { display: flex; gap: 0.75rem; align-items: flex-start; }
+
+.paso-punto {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.0625rem;
+  color: var(--color-texto-suave);
+  background-color: var(--color-gris-fondo);
+  border-radius: 50%;
+}
+
+.paso.hecho .paso-punto { color: var(--color-boton-texto); background-color: var(--color-boton); }
+.paso.ahora .paso-punto { background-color: var(--color-superficie); box-shadow: inset 0 0 0 2px var(--color-tinta); }
+.paso.ahora .paso-punto::after { content: ""; width: 0.5rem; height: 0.5rem; background-color: var(--color-tinta); border-radius: 50%; }
+.paso.cancelado .paso-punto { color: var(--color-error); background-color: var(--color-error-fondo); }
+.paso b { display: block; line-height: 1.3; color: var(--color-tinta); }
+.paso span { font-size: 0.875rem; color: var(--color-texto-suave); }
+.paso.futuro b { color: var(--color-texto-suave); }
+
 /* Chat: los mensajes van en una caja de alto fijo que se desplaza sola
-   (overflow), y el campo para escribir queda abajo, dentro de la misma tarjeta */
-.chat-caja { padding: 0; gap: 0; overflow: hidden; }
+   (overflow), y el campo para escribir queda abajo, dentro del mismo bloque */
+.chat-caja { padding: 0; gap: 0; overflow: hidden; border: 1px solid var(--color-borde); border-radius: var(--radio); }
+.contenido > .chat-caja:last-child { padding-bottom: 0; border-bottom: 1px solid var(--color-borde); }
 
 .chat {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
   height: 55vh;
   overflow-y: auto;
   padding: 1rem;
-  background-color: var(--color-fondo);
+  background-color: var(--color-gris-50);
 }
 
 .chat-dia { align-self: center; }
@@ -483,42 +761,43 @@ fieldset.tarjeta legend {
 .mensaje {
   max-width: 80%;
   padding: 0.625rem 0.875rem;
-  border-radius: 1rem;
+  border-radius: 1.125rem;
 }
 
-.mensaje-recibido { align-self: flex-start; background-color: var(--color-superficie); border: 1px solid var(--color-borde); }
-.mensaje-enviado { align-self: flex-end; color: var(--color-terciario); background-color: var(--color-primario); }
+.mensaje-recibido { align-self: flex-start; color: var(--color-tinta); background-color: var(--color-gris-fondo); border-bottom-left-radius: 0.25rem; }
+.mensaje-enviado { align-self: flex-end; color: var(--color-boton-texto); background-color: var(--color-boton); border-bottom-right-radius: 0.25rem; }
 
 /* Pestañas (próximos / realizados) */
 .pestanas { display: flex; gap: 1.5rem; border-bottom: 1px solid var(--color-borde); }
 
 .pestanas a {
-  padding: 0.625rem 0;
+  padding: 0.75rem 0;
   font-weight: 700;
   color: var(--color-texto-suave);
   border-bottom: 3px solid transparent;
 }
 
 .pestanas a:hover { color: var(--color-tinta); }
-.pestanas a.activa { color: var(--color-tinta); border-bottom-color: var(--color-primario); }
+.pestanas a.activa { color: var(--color-tinta); border-bottom-color: var(--color-tinta); }
 
 /* Filas "dato - valor" (perfil) */
 .datos li {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--color-fondo);
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--color-borde);
 }
 
 .datos li:last-child { border-bottom: 0; }
-.datos span:last-child { color: var(--color-texto-suave); text-align: right; }
+.datos span:last-child { color: var(--color-texto-suave); text-align: right; overflow-wrap: anywhere; }
 
 /* Números destacados (ahorro, estadísticas) */
-.cifra { display: block; font-size: 1.75rem; font-weight: 700; color: var(--color-tinta); }
-.cifra-blanca { color: var(--color-blanco); }
-.cifra-acento { color: var(--color-acento); }
+.cifra { display: block; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--color-tinta); }
+.cifra-blanca { color: inherit; }
 .estadisticas { flex-direction: row; justify-content: space-around; text-align: center; }
+.estadisticas > div { flex: 1; }
+.estadisticas > div + div { border-left: 1px solid var(--color-borde); }
 
 /* Ventana de aviso / confirmación (<dialog>), reemplaza a alert() y confirm() */
 .dialogo {
@@ -529,12 +808,12 @@ fieldset.tarjeta legend {
   color: var(--color-texto);
   background-color: var(--color-superficie);
   border: 0;
-  border-radius: 1rem;
-  box-shadow: var(--sombra-hover);
+  border-radius: 1.25rem;
+  box-shadow: 0 16px 40px rgba(11, 31, 54, 0.3);
 }
 
-.dialogo::backdrop { background-color: rgba(17, 42, 70, 0.55); }   /* fondo oscuro detrás */
-.dialogo h2 { margin-bottom: 0.5rem; }
+.dialogo::backdrop { background-color: rgba(11, 31, 54, 0.55); }   /* fondo oscuro detrás */
+.dialogo h2 { margin-bottom: 0.5rem; font-size: 1.25rem; }
 .dialogo-botones { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.25rem; }
 
 /* Resultados: en el celular los filtros arrancan ocultos y se abren con un botón */
@@ -542,7 +821,7 @@ fieldset.tarjeta legend {
 .filtros { display: none; }
 .filtros.abierto { display: flex; }
 
-/* Calificar: cinco estrellas grandes; JavaScript pinta las elegidas */
+/* Calificar: cinco estrellas grandes; React pinta las elegidas */
 .estrellas-elegir { display: flex; gap: 0.25rem; }
 
 .estrella {
@@ -555,38 +834,68 @@ fieldset.tarjeta legend {
 
 .estrella:hover { transform: scale(1.15); }
 .estrella.elegida { color: var(--color-acento); }
-.estrella:focus-within { outline: 3px solid var(--color-secundario); border-radius: 0.25rem; }
+.estrella:focus-within { outline: 3px solid var(--color-primario); border-radius: 0.25rem; }
 
-/* Detalle del viaje en el celular: total y botón "Reservar" fijos abajo, sobre el menú */
+/* Detalle del viaje en el celular: precio y botón "Pedir lugar" fijos abajo, sobre el menú */
 .barra-reservar {
   position: fixed;
-  bottom: 3.8rem;           /* justo arriba del menú de abajo */
+  bottom: calc(var(--altura-menu) + env(safe-area-inset-bottom, 0px));
   left: 0;
   right: 0;
   max-width: 30rem;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
   padding: 0.75rem 1rem;
   background-color: var(--color-superficie);
   border-top: 1px solid var(--color-borde);
-  box-shadow: 0 -4px 12px rgba(17, 42, 70, 0.08);
   z-index: 10;
 }
 
-.barra-reservar .cifra { font-size: 1.375rem; }
-.con-barra-reservar { padding-bottom: 10rem; }   /* para que la barra no tape el final */
+.barra-reservar .cifra { font-size: 1.375rem; line-height: 1.1; }
+.barra-reservar .boton { flex: 1; min-height: 3rem; border-radius: var(--radio); }
+.con-barra-reservar { padding-bottom: 5rem; }   /* para que la barra no tape el final */
+
+/* Avisos */
+.aviso { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.875rem 0.5rem; border-bottom: 1px solid var(--color-borde); }
+.aviso p { flex: 1; }
+.aviso time { display: block; font-size: 0.8125rem; color: var(--color-texto-suave); }
+.aviso-nuevo { background-color: var(--color-gris-50); }
+.punto-nuevo { width: 0.625rem; height: 0.625rem; margin-top: 0.4rem; border-radius: 50%; background-color: var(--color-primario); flex: none; }
+
+/* Títulos de los grupos de una lista (Mis reservas) */
+.titulo-grupo { font-size: 0.8125rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-texto-suave); }
+
+/* Fila de botones al pie de un bloque */
+.acciones { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: flex-end; }
+
+/* Interruptor de modo oscuro (Perfil) */
+.interruptor { flex-direction: row; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; }
+.interruptor input { width: 1.5rem; height: 1.5rem; }
+
+/* Precio suelto dentro de un bloque (Mis reservas) */
+.precio-texto { font-weight: 800; color: var(--color-tinta); }
+
+/* Colores de los puntos y la ruta del mapa: van por CSS para respetar el modo oscuro */
+.pin-usuario { fill: var(--color-primario); stroke: #FFFFFF; }
+.pin-viaje { fill: var(--color-tinta); stroke: #FFFFFF; }
+.pin-sede { fill: var(--color-tinta); stroke: #FFFFFF; }
+.linea-recorrido { stroke: var(--color-tinta); stroke-linecap: round; stroke-linejoin: round; fill: none; }
+:root[data-theme="dark"] .pin-viaje, :root[data-theme="dark"] .pin-sede { fill: #EAF2F8; stroke: #0B1B2E; }
+:root[data-theme="dark"] .linea-recorrido { stroke: #5CC8FF; }
 
 
 /* ---------- 11. PIE DE PÁGINA Y UTILIDADES ---------- */
 footer {
   padding: 1rem;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   text-align: center;
   color: var(--color-texto-suave);
 }
+
+/* En el celular el pie no se muestra dentro de la app (queda el menú) */
+.pie-escritorio { display: none; }
 
 .texto-centrado { text-align: center; }
 
@@ -599,15 +908,21 @@ footer {
   clip-path: inset(50%);
 }
 
+.solo-escritorio { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
 
 /* ---------- 12. PANTALLAS GRANDES ----------
-   Desde 900px de ancho: el menú pasa a una barra fija arriba (con el logo a
-   la izquierda), el contenido se ordena en dos columnas (grid) y aparece el
-   mapa en la pantalla de búsqueda. */
+   Desde 900px de ancho: el menú pasa a una barra superior oscura (con el logo
+   a la izquierda), el inicio y el detalle se parten en panel + mapa, y el
+   resto del contenido se ordena en dos columnas (grid). */
 @media (min-width: 900px) {
   body {
     max-width: none;
-    padding: 4.5rem 0 0;    /* deja lugar a la barra superior fija */
+    padding: var(--altura-menu) 0 0;    /* deja lugar a la barra superior fija */
   }
 
   .menu {
@@ -616,58 +931,69 @@ footer {
     left: 0;
     right: 0;
     max-width: none;
+    height: var(--altura-menu);
     margin: 0;
-    flex-direction: row;
+    display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 0.5rem;
-    padding: 0.75rem 2rem;
+    gap: 0.25rem;
+    padding: 0 2rem;
+    background-color: var(--color-barra);
+    border-top: 0;
   }
 
-  .menu-logo { display: block; margin-right: 1.5rem; }
+  .menu .logo { color: var(--color-barra-texto); }
+  .menu-logo { display: inline-flex; margin-right: 1.5rem; }
 
-  .menu a { flex: none; padding: 0.5rem 1rem; }
+  .menu a {
+    flex: none;
+    flex-direction: row;
+    gap: 0.4rem;
+    height: 100%;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    color: var(--color-barra-texto);
+    opacity: 0.72;
+  }
 
-  /* En escritorio el perfil se abre desde el avatar de la derecha */
+  .menu a:hover { color: var(--color-barra-texto); opacity: 1; }
+  .menu a.activo { color: var(--color-barra-texto); opacity: 1; }
+  .menu a.activo::before { top: auto; bottom: 0; width: calc(100% - 2rem); height: 3px; border-radius: 3px 3px 0 0; background-color: var(--color-primario); }
+
+  /* En escritorio el perfil se abre desde el avatar de la derecha y los avisos desde la campana */
   .menu a.menu-perfil { display: none; }
+  .menu a.menu-campana { display: flex; margin-left: auto; }
 
   .menu a.menu-usuario {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-left: auto;          /* lo empuja al extremo derecho */
-    padding: 0.25rem 1rem 0.25rem 0.25rem;
+    padding: 0 0.5rem;
   }
 
-  /* El logo ya está en la barra superior: no hace falta repetirlo */
-  .hero .logo { display: none; }
-  .hero .logo-login { display: block; }   /* el login no tiene barra superior */
+  .menu .avatar { color: #0B1F36; background-color: #FFFFFF; }
+  .campana, .logo-flotante, .fab-campana { display: none; }
+
+  .pie-escritorio { display: block; }
 
   main { max-width: 64rem; margin: 0 auto; }
   main.estrecho { max-width: 36rem; }
+  main.pantalla-mapa { max-width: none; }
 
-  /* Cabeceras como tarjetas separadas de la barra superior */
-  .hero { margin: 1.5rem 1rem 0; border-radius: 1.5rem; padding: 2rem; }
-  .hero-centrado { padding: 2.5rem 2rem; }
+  .hero { padding: 2.5rem 1.5rem 0.5rem; }
 
-  .barra {
-    margin: 1.5rem 1rem 0;
-    border: 1px solid var(--color-borde);
-    border-radius: 1rem;
-    box-shadow: var(--sombra);
-  }
+  .barra { padding: 1.25rem 1rem 0.5rem; }
 
   /* En escritorio los filtros siempre se ven y el botón para abrirlos sobra */
   .filtros { display: flex; }
   .boton-filtros { display: none; }
 
-  /* En escritorio "Reservar" está en su tarjeta: la barra fija no hace falta */
+  /* En escritorio "Pedir lugar" está en su bloque: la barra fija no hace falta */
   .barra-reservar { display: none; }
   .con-barra-reservar { padding-bottom: 0; }
+  .solo-escritorio { display: flex; }
 
   .chat { height: 60vh; }
-
-  .mapa-alto { min-height: 24rem; }   /* mapa más grande al lado de columnas largas */
 
   .dos-columnas {
     display: grid;
@@ -676,97 +1002,191 @@ footer {
     align-items: start;
   }
 
-  /* Inicio en escritorio: el formulario ocupa toda la columna izquierda; a la
-     derecha van las tarjetas arriba y el mapa abajo, estirado hasta el final */
-  .inicio-grilla {
+  /* Mapa de resultados: alto y pegado arriba mientras se baja por la lista */
+  .mapa-franja { position: sticky; top: calc(var(--altura-menu) + 1rem); order: 0; height: calc(100vh - var(--altura-menu) - 2rem); }
+
+  /* Inicio y detalle: panel a la izquierda, mapa ocupando el resto */
+  .pantalla-mapa {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-      "buscar lateral"
-      "buscar mapa";
-    gap: 1.5rem;
-    align-items: start;
+    grid-template-columns: minmax(24rem, 28rem) 1fr;
+    grid-template-areas: "hoja mapa";
+    min-height: calc(100vh - var(--altura-menu));
   }
 
-  .area-buscar { grid-area: buscar; }
-  .area-lateral { grid-area: lateral; }
-  .area-mapa { grid-area: mapa; height: 100%; min-height: 14rem; }
+  .pantalla-mapa .hoja {
+    grid-area: hoja;
+    margin: 0;
+    padding: 1.75rem 1.5rem;
+    border-radius: 0;
+    border-right: 1px solid var(--color-borde);
+    box-shadow: none;
+  }
+
+  .pantalla-mapa .hoja::before { display: none; }
+
+  .pantalla-mapa .zona-mapa {
+    grid-area: mapa;
+    position: sticky;
+    top: var(--altura-menu);
+    height: calc(100vh - var(--altura-menu));
+  }
 }
 
-
-/* ---------- 13. AGREGADOS DE LA VERSIÓN REACT ---------- */
-
-/* Menú: ícono arriba y texto abajo en el celular */
-.menu a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.125rem;
-  font-size: 0.75rem;
-}
-.menu-icono { position: relative; display: inline-flex; }
-.contador {
-  position: absolute;
-  top: -0.4rem;
-  right: -0.7rem;
-  min-width: 1.1rem;
-  height: 1.1rem;
-  padding: 0 0.25rem;
-  font-size: 0.6875rem;
-  line-height: 1.1rem;
-  text-align: center;
-  color: var(--color-terciario);
-  background-color: var(--color-acento);
-  border-radius: 999px;
+@media (max-width: 899px) {
+  /* En el celular, la franja de mapa va arriba de la lista de resultados */
+  .dos-columnas .mapa-franja { order: -1; }
 }
 
-/* Íconos dentro de botones, links y etiquetas */
-.boton-icono, .volver, .etiqueta-icono { display: inline-flex; align-items: center; gap: 0.375rem; }
-.boton.boton-icono { justify-content: center; }
-.etiqueta-roja { color: var(--color-error); background-color: var(--color-error-fondo); }
-
-/* Mapa interactivo (react-leaflet). "isolation" encierra los z-index de Leaflet acá adentro */
-.mapa-leaflet {
-  height: 15rem;
-  overflow: hidden;
-  isolation: isolate;
-  border: 1px solid var(--color-borde);
-  border-radius: 1rem;
-  box-shadow: var(--sombra);
-}
-.leaflet-container { font-family: inherit; }
-.solo-escritorio { display: none; }
-
-/* Colores de los puntos del mapa: van por CSS para respetar el modo oscuro */
-.pin-usuario { fill: var(--color-primario); stroke: var(--color-terciario); }
-.pin-viaje { fill: var(--color-acento); stroke: var(--color-terciario); }
-.pin-sede { fill: var(--color-terciario); stroke: var(--color-blanco); }
-.linea-recorrido { stroke: var(--color-primario-fuerte); stroke-dasharray: 8 6; fill: none; }
-
-/* Avisos */
-.aviso { display: flex; gap: 0.75rem; align-items: flex-start; }
-.aviso p { flex: 1; }
-.aviso time { display: block; font-size: 0.75rem; color: var(--color-texto-suave); }
-.aviso-nuevo { border-color: var(--color-primario); background-color: var(--color-secundario); }
-.punto-nuevo { width: 0.6rem; height: 0.6rem; margin-top: 0.45rem; border-radius: 50%; background-color: var(--color-primario-fuerte); flex: none; }
-
-/* Títulos de los grupos de una lista (Mis reservas) */
-.titulo-grupo { font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-texto-suave); }
-
-/* Fila de botones al pie de una tarjeta */
-.acciones { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: flex-end; }
-
-/* Interruptor de modo oscuro (Perfil) */
-.interruptor { display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; }
-.interruptor input { width: 1.25rem; height: 1.25rem; }
+/* Chip de orden sin datos suficientes (por ejemplo "Más cerca" sin ubicación) */
+.chip:disabled { opacity: 0.45; cursor: not-allowed; }
 
 @media (min-width: 900px) {
-  .menu a { flex-direction: row; gap: 0.4rem; font-size: 0.875rem; }
-  .solo-escritorio { display: block; }
   .mapa-leaflet.mapa-alto { height: 26rem; }
-  .area-mapa.mapa-leaflet { height: 100%; min-height: 16rem; }
 }
 
-/* Precio suelto dentro de una tarjeta (Mis reservas) */
-.precio-texto { font-weight: 700; color: var(--color-tinta); }
+
+/* ---------- 13. DESPLEGABLES PROPIOS, RECUADROS SUTILES Y AVISO DEL PRÓXIMO VIAJE ---------- */
+
+/* Desplegable: botón con el aspecto de un campo y lista oscura con esquinas redondeadas */
+.selector, .combo { position: relative; flex: 1; min-width: 0; }
+
+.selector-boton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  color: var(--color-tinta);
+  background-color: var(--color-gris-fondo);
+  border: 2px solid transparent;
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.selector-boton[aria-expanded="true"],
+.selector-boton:focus-visible {
+  background-color: var(--color-superficie);
+  border-color: var(--color-tinta);
+  outline: 3px solid color-mix(in srgb, var(--color-primario) 35%, transparent);
+  outline-offset: 0;
+}
+
+.selector-boton:disabled { color: var(--color-texto-suave); cursor: not-allowed; }
+.selector-boton span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.selector-boton svg { flex: none; color: var(--color-texto-suave); transition: transform 0.2s; }
+.selector-boton[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.lista-opciones {
+  position: absolute;
+  top: calc(100% + 0.375rem);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  max-height: 16rem;
+  overflow-y: auto;
+  padding: 0.375rem;
+  color: var(--color-menu-texto);
+  background-color: var(--color-menu);
+  border-radius: var(--radio);
+  box-shadow: 0 12px 32px rgba(11, 31, 54, 0.35);
+}
+
+.lista-opciones.arriba { top: auto; bottom: calc(100% + 0.375rem); }
+
+.lista-opciones li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.lista-opciones li.activa { background-color: rgba(255, 255, 255, 0.14); }
+.lista-opciones li[aria-selected="true"] { font-weight: 800; }
+.lista-opciones li.deshabilitada { opacity: 0.4; cursor: not-allowed; }
+
+/* Horario: hora y minutos, cada uno con su desplegable */
+.fila-hora { display: flex; align-items: center; gap: 0.375rem; }
+.fila-hora > span { font-weight: 800; color: var(--color-texto-suave); }
+
+/* Recuadro muy sutil que agrupa la info de un item de lista (reserva, viaje, pasajero) */
+.tarjeta-sutil {
+  padding: 1rem;
+  background-color: var(--color-gris-50);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+.tarjeta-sutil h3 { font-size: 1.0625rem; }
+
+/* Pie del recuadro: separado por una línea, con el precio a la izquierda y los botones a la derecha */
+.tarjeta-sutil > .acciones { padding-top: 0.75rem; border-top: 1px solid var(--color-borde); }
+.acciones-pie { align-items: center; }
+.acciones-pie .precio-texto { margin-right: auto; font-size: 1.125rem; }
+
+.tarjeta-oscura .cifra-acento { color: var(--color-acento); }
+
+/* Aviso del próximo viaje: rectángulo pegado al menú de abajo; al tocarlo lleva a la reserva */
+.barra-proximo {
+  position: fixed;
+  bottom: calc(var(--altura-menu) + env(safe-area-inset-bottom, 0px));
+  left: 0;
+  right: 0;
+  max-width: 30rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--color-boton-texto);
+  background-color: var(--color-boton);
+  border-radius: var(--radio) var(--radio) 0 0;
+  z-index: 9;
+  animation: subir 0.25s ease-out;
+}
+
+.barra-proximo-icono {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+
+:root[data-theme="dark"] .barra-proximo-icono { background-color: rgba(11, 27, 46, 0.14); }
+
+.barra-proximo-texto { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.barra-proximo-texto small { font-size: 0.75rem; font-weight: 600; opacity: 0.8; }
+.barra-proximo-texto b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.875rem; }
+
+/* El contenido deja lugar para el aviso */
+body:has(.barra-proximo) { padding-bottom: calc(var(--altura-menu) + 5rem + env(safe-area-inset-bottom, 0px)); }
+
+@keyframes subir {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barra-proximo { animation: none; }
+}
+
+/* En el detalle del viaje manda la barra de "Pedir lugar" */
+@media (max-width: 899px) {
+  body:has(.barra-reservar) .barra-proximo { display: none; }
+}
+
+@media (min-width: 900px) {
+  .barra-proximo { bottom: 1rem; left: 1rem; right: auto; width: 26rem; margin: 0; border-radius: var(--radio); box-shadow: 0 8px 24px rgba(11, 31, 54, 0.3); }
+  body:has(.barra-proximo) { padding-bottom: 5rem; }
+}

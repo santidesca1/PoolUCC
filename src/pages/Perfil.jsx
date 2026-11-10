@@ -4,6 +4,7 @@ import { Moon, LogOut } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useDatos } from "../hooks/useDatos";
 import { useTema } from "../hooks/useTema";
+import BarraTitulo from "../components/BarraTitulo";
 import Dialogo from "../components/Dialogo";
 import { formatearPrecio } from "../utils/formato";
 
@@ -42,16 +43,14 @@ export default function Perfil() {
 
   return (
     <main className="estrecho">
-      <header className="hero">
-        <div className="hero-fila">
-          <p className="logo">Pool<span>UCC</span></p>
-          <p className="hero-fecha">Perfil</p>
-        </div>
+      <BarraTitulo titulo="Perfil" />
+
+      <header className="contenido">
         <div className="viaje-cabecera">
           <span className="avatar avatar-grande">{user.iniciales}</span>
           <div>
-            <h1>{user.nombre}</h1>
-            <p className="hero-fecha">{user.carrera}</p>
+            <h2>{user.nombre}</h2>
+            <p className="texto-suave">{user.carrera}</p>
           </div>
         </div>
         <ul className="etiquetas">
@@ -70,9 +69,9 @@ export default function Perfil() {
 
         {vista === "pasajero" ? (
           <>
-            <div className="tarjeta tarjeta-oscura estadisticas">
-              <div><p>Reservas</p><p className="cifra cifra-blanca">{misReservas.length}</p></div>
-              <div><p>Viajes hechos</p><p className="cifra cifra-blanca">{realizadas.length}</p></div>
+            <div className="tarjeta estadisticas">
+              <div><p className="texto-suave">Reservas</p><p className="cifra">{misReservas.length}</p></div>
+              <div><p className="texto-suave">Viajes hechos</p><p className="cifra">{realizadas.length}</p></div>
             </div>
             <div className="tarjeta tarjeta-acento">
               <p className="texto-suave">Pagaste en total</p>
@@ -82,9 +81,9 @@ export default function Perfil() {
           </>
         ) : (
           <>
-            <div className="tarjeta tarjeta-oscura estadisticas">
-              <div><p>Viajes publicados</p><p className="cifra cifra-blanca">{publicados.length}</p></div>
-              <div><p>Lugares libres</p><p className="cifra cifra-blanca">{lugaresLibres}</p></div>
+            <div className="tarjeta estadisticas">
+              <div><p className="texto-suave">Viajes publicados</p><p className="cifra">{publicados.length}</p></div>
+              <div><p className="texto-suave">Lugares libres</p><p className="cifra">{lugaresLibres}</p></div>
             </div>
             <div className="tarjeta tarjeta-acento">
               <p className="texto-suave">Generaste en total</p>

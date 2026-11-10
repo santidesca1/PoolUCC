@@ -1,24 +1,47 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Check, Clock, X, Flag, MessageCircle } from "lucide-react";
+import { Check, X, MessageCircle } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useDatos } from "../hooks/useDatos";
+import BarraTitulo from "../components/BarraTitulo";
 import ChipEstado from "../components/ChipEstado";
 import Dialogo from "../components/Dialogo";
 import ListaVacia from "../components/ListaVacia";
 import { formatearPrecio, textoPlazas } from "../utils/formato";
 
-// Título e ícono de la cabecera según el estado de la reserva
-function cabecera(reserva, viaje) {
+// Título grande según el estado de la reserva
+function titulo(reserva, viaje) {
   switch (reserva.estado) {
-    case "pendiente": return { Icono: Clock, titulo: "Pedido enviado", texto: `Esperando que ${viaje.conductor} lo acepte` };
-    case "confirmada": return { Icono: Check, titulo: "Viaje reservado", texto: "Tu lugar está confirmado" };
-    case "rechazada": return { Icono: X, titulo: "Pedido no aceptado", texto: "El conductor no puede llevarte en este viaje" };
+    case "pendiente": return `Esperando que ${viaje.conductor.split(" ")[0]} acepte tu pedido`;
+    case "confirmada": return "Tu lugar está confirmado";
+    case "rechazada": return "El conductor no pudo llevarte en este viaje";
     case "cancelada":
-      return reserva.motivo === "conductor"
-        ? { Icono: X, titulo: "Viaje cancelado", texto: `${viaje.conductor} canceló este viaje` }
-        : { Icono: X, titulo: "Reserva cancelada", texto: "Cancelaste esta reserva" };
-    default: return { Icono: Flag, titulo: "Viaje realizado", texto: "¡Gracias por compartir el viaje!" };
+      return reserva.motivo === "conductor" ? `${viaje.conductor.split(" ")[0]} canceló este viaje` : "Cancelaste esta reserva";
+    default: return "Viaje realizado. ¡Gracias por compartirlo!";
+  }
+}
+
+// Línea de pasos: cada uno está hecho, es el que está pasando ahora, o falta
+function pasos(reserva, viaje) {
+  const enviado = { titulo: "Pedido enviado", detalle: "El conductor ya lo recibió", estado: "hecho" };
+  const viajeHoy = `${viaje.dia} · ${viaje.salida}`;
+  switch (reserva.estado) {
+    case "pendiente":
+      return [enviado,
+        { titulo: "Respuesta del conductor", detalle: "Te avisamos en cuanto responda", estado: "ahora" },
+        { titulo: "Viaje · " + viajeHoy, detalle: `${viaje.desde} → ${viaje.hasta}`, estado: "futuro" }];
+    case "confirmada":
+      return [enviado,
+        { titulo: "Pedido aceptado", detalle: "Tu lugar está reservado", estado: "hecho" },
+        { titulo: "Viaje · " + viajeHoy, detalle: `${viaje.desde} → ${viaje.hasta}`, estado: "ahora" }];
+    case "realizada":
+      return [enviado,
+        { titulo: "Pedido aceptado", detalle: "Tu lugar estaba reservado", estado: "hecho" },
+        { titulo: "Viaje realizado", detalle: `${viaje.desde} → ${viaje.hasta}`, estado: "hecho" }];
+    case "rechazada":
+      return [enviado, { titulo: "Pedido no aceptado", detalle: "No hubo lugar para vos", estado: "cancelado" }];
+    default:
+      return [enviado, { titulo: "Reserva cancelada", detalle: "Los lugares volvieron al viaje", estado: "cancelado" }];
   }
 }
 
@@ -33,6 +56,7 @@ export default function Reserva() {
   if (!reserva || reserva.emailPasajero !== user.email) {
     return (
       <main className="estrecho">
+        <BarraTitulo volverA="/mis-reservas" textoVolver="Volver a mis reservas" titulo="Mi reserva" />
         <section className="contenido">
           <ListaVacia titulo="No encontramos esta reserva">
             <Link className="boton" to="/mis-reservas">Ver mis reservas</Link>
@@ -43,42 +67,46 @@ export default function Reserva() {
   }
 
   const viaje = buscarViaje(reserva.idViaje);
-  const { Icono, titulo, texto } = cabecera(reserva, viaje);
   const activa = reserva.estado === "pendiente" || reserva.estado === "confirmada";
 
   return (
     <main className="estrecho">
-      <header className="hero hero-centrado">
-        <div className="marca-exito"><Icono size={32} aria-hidden="true" /></div>
-        <h1>{titulo}</h1>
-        <p>{texto}</p>
-        <p>{viaje.desde} → {viaje.hasta} · {viaje.dia} {viaje.salida}</p>
-      </header>
+      <BarraTitulo volverA="/mis-reservas" textoVolver="Volver a mis reservas" titulo="Mi reserva" />
 
       <section className="contenido">
-        <div className="tarjeta tarjeta-fila">
-          <span className="avatar avatar-grande">{viaje.iniciales}</span>
-          <div className="viaje-conductor">
-            <h2>{viaje.conductor}</h2>
-            <p className="texto-suave">{viaje.auto}</p>
-          </div>
-          {activa && (
-            <Link className="boton boton-borde boton-chico boton-icono" to={`/chat/${viaje.id}`}>
-              <MessageCircle size={16} aria-hidden="true" /> Escribir
-            </Link>
-          )}
+        <div className="reserva-titulo">
+          <ChipEstado estado={reserva.estado} />
+          <h1>{titulo(reserva, viaje)}</h1>
         </div>
 
-        <div className="tarjeta tarjeta-acento tarjeta-fila">
-          <div>
-            <p className="texto-suave">{reserva.estado === "realizada" ? "Pagaste" : "Pagás al subir"}</p>
-            <p className="cifra">{formatearPrecio(reserva.total)}</p>
+        <ol className="pasos" aria-label="Estado del pedido">
+          {pasos(reserva, viaje).map(p => (
+            <li key={p.titulo} className={"paso " + p.estado}>
+              <span className="paso-punto" aria-hidden="true">
+                {p.estado === "hecho" && <Check size={14} strokeWidth={3} />}
+                {p.estado === "cancelado" && <X size={14} strokeWidth={3} />}
+              </span>
+              <div>
+                <b>{p.titulo}</b>
+                <span>{p.detalle}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div className="tarjeta tarjeta-fila">
+          <div className="viaje-cabecera">
+            <span className="avatar">{viaje.iniciales}</span>
+            <div className="viaje-conductor">
+              <h2>{viaje.conductor}</h2>
+              <p>{viaje.auto}</p>
+            </div>
           </div>
-          <div className="columna" style={{ alignItems: "flex-end", gap: "0.375rem" }}>
-            <ChipEstado estado={reserva.estado} />
-            <p className="texto-suave">{textoPlazas(reserva.plazas)}</p>
-          </div>
+          <p className="precio">{formatearPrecio(reserva.total)}</p>
         </div>
+        <p className="texto-suave">
+          {textoPlazas(reserva.plazas)} · {reserva.estado === "realizada" ? "Pagaste en efectivo o transferencia" : "Pagás al subir"}
+        </p>
 
         {reserva.estado === "realizada" && reserva.calificacion === undefined && (
           <Link className="boton" to={`/calificar/${reserva.id}`}>Calificar el viaje</Link>
@@ -88,6 +116,11 @@ export default function Reserva() {
         )}
         {(reserva.estado === "rechazada" || reserva.estado === "cancelada") && (
           <Link className="boton" to="/">Buscar otro viaje</Link>
+        )}
+        {activa && (
+          <Link className="boton boton-borde boton-icono" to={`/chat/${viaje.id}`}>
+            <MessageCircle size={18} aria-hidden="true" /> Escribirle a {viaje.conductor.split(" ")[0]}
+          </Link>
         )}
         {activa && (
           <button className="boton boton-peligro" type="button" onClick={() => setConfirmando(true)}>Cancelar reserva</button>

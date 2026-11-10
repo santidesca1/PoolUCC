@@ -5,7 +5,7 @@ const ESTADOS = {
   pendiente: { texto: "Pendiente", clase: "etiqueta-amarilla", Icono: Clock },
   confirmada: { texto: "Confirmada", clase: "etiqueta-verde", Icono: CheckCircle2 },
   rechazada: { texto: "Rechazada", clase: "etiqueta-roja", Icono: XCircle },
-  cancelada: { texto: "Cancelada", clase: "etiqueta-roja", Icono: Ban },
+  cancelada: { texto: "Cancelada", clase: "etiqueta-gris", Icono: Ban },
   realizada: { texto: "Realizada", clase: "etiqueta-gris", Icono: Flag }
 };
 

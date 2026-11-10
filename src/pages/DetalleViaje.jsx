@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { MessageCircle } from "lucide-react";
+import { ArrowLeft, MessageCircle, BadgeCheck } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useDatos } from "../hooks/useDatos";
 import BarraTitulo from "../components/BarraTitulo";
 import Recorrido from "../components/Recorrido";
 import ListaVacia from "../components/ListaVacia";
 import Mapa from "../components/Mapa";
+import Selector from "../components/Selector";
 import { buscarLugar } from "../utils/geo";
 import { formatearPrecio, formatearPuntaje, textoPlazas } from "../utils/formato";
 
@@ -62,88 +63,88 @@ export default function DetalleViaje() {
   else if (viaje.realizado) aviso = "Este viaje ya se hizo.";
 
   return (
-    <main className="con-barra-reservar">
-      <BarraTitulo volverA="/resultados" textoVolver="Volver a resultados" titulo="Detalle del viaje" />
+    <main className="pantalla-mapa con-barra-reservar">
+      <div className="zona-mapa">
+        <Mapa puntos={puntos} linea={linea} titulo="Recorrido del viaje" />
+        <Link className="fab flotante-izq" to="/resultados" aria-label="Volver a resultados" title="Volver a resultados">
+          <ArrowLeft size={20} aria-hidden="true" />
+        </Link>
+      </div>
 
-      <section className="contenido dos-columnas">
-        <Mapa className="mapa-alto" puntos={puntos} linea={linea} titulo="Recorrido del viaje" />
-
-        <div className="columna">
-          <section className="tarjeta">
-            <h2>{viaje.dia} · sale {viaje.salida}</h2>
-            <Recorrido desde={viaje.desde} hasta={viaje.hasta} salida={viaje.salida} llegada={viaje.llegada} />
-            {viaje.preferencias.length > 0 && (
-              <ul className="etiquetas">
-                {viaje.preferencias.map(p => <li key={p} className="etiqueta etiqueta-gris">{p}</li>)}
-              </ul>
-            )}
-          </section>
-
-          <section className="tarjeta">
-            <div className="viaje-cabecera">
-              <span className="avatar avatar-grande">{viaje.iniciales}</span>
-              <div className="viaje-conductor">
-                <h2>{viaje.conductor}</h2>
-                <p>★ {formatearPuntaje(viaje.puntaje)} · {viaje.carrera}</p>
-              </div>
-            </div>
+      <div className="hoja">
+        <section className="columna">
+          <h1>{viaje.dia} · sale {viaje.salida}</h1>
+          <Recorrido desde={viaje.desde} hasta={viaje.hasta} salida={viaje.salida} llegada={viaje.llegada} />
+          {viaje.preferencias.length > 0 && (
             <ul className="etiquetas">
-              <li className="etiqueta etiqueta-verde">✓ Verificado</li>
-              <li className="etiqueta etiqueta-gris">{viaje.auto}</li>
-              {viaje.etiqueta && <li className="etiqueta">{viaje.etiqueta}</li>}
+              {viaje.preferencias.map(p => <li key={p} className="etiqueta etiqueta-gris">{p}</li>)}
             </ul>
+          )}
+        </section>
+
+        <section className="tarjeta">
+          <div className="viaje-cabecera">
+            <span className="avatar avatar-grande">{viaje.iniciales}</span>
+            <div className="viaje-conductor">
+              <h2>{viaje.conductor}</h2>
+              <p>★ {formatearPuntaje(viaje.puntaje)} · {viaje.carrera}</p>
+            </div>
             {!esMio && (
-              <Link className="boton boton-borde boton-chico boton-ajustado boton-icono" to={`/chat/${viaje.id}`}>
-                <MessageCircle size={16} aria-hidden="true" /> Escribirle a {viaje.conductor.split(" ")[0]}
+              <Link className="campana" to={`/chat/${viaje.id}`} aria-label={`Escribirle a ${viaje.conductor.split(" ")[0]}`} title="Escribirle al conductor">
+                <MessageCircle size={20} aria-hidden="true" />
               </Link>
             )}
-          </section>
-
-          <div className="tarjeta">
-            <div className="fila-titulo">
-              <h2>Tu reserva</h2>
-              <p className="precio">{formatearPrecio(viaje.precio)} <small className="ayuda">por plaza</small></p>
-            </div>
-            {sePuedeReservar && (
-              <div className="fila">
-                <div className="campo">
-                  <label htmlFor="cantidad">Plazas a reservar</label>
-                  <select id="cantidad" value={cantidad} onChange={e => setCantidad(Number(e.target.value))}>
-                    {Array.from({ length: viaje.plazas }, (_, i) => i + 1).map(n => <option key={n} value={n}>{n}</option>)}
-                  </select>
-                </div>
-                <div className="campo">
-                  <p className="ayuda">Total</p>
-                  <p className="cifra">{formatearPrecio(total)}</p>
-                </div>
-              </div>
-            )}
-            <p className="texto-suave">
-              {completo ? "Este viaje está completo." : textoPlazas(viaje.plazas) + (viaje.plazas === 1 ? " libre" : " libres") + " · Efectivo o transferencia"}
-            </p>
-            {sePuedeReservar && (
-              <p className="ayuda">
-                {viaje.autoAceptar ? "Este conductor acepta las reservas al instante." : "El conductor tiene que aceptar tu pedido. Te avisamos cuando responda."}
-              </p>
-            )}
-            {aviso && (
-              <p className="mensaje-error">
-                {aviso} {yaReservada && <Link className="volver" to={`/reserva/${yaReservada.id}`}>Ver mi reserva</Link>}
-              </p>
-            )}
-            {error && <p className="mensaje-error">{error}</p>}
-            <button className="boton" type="button" onClick={reservar} disabled={!sePuedeReservar}>{textoBoton}</button>
           </div>
-        </div>
-      </section>
+          <ul className="etiquetas">
+            <li className="etiqueta etiqueta-verde etiqueta-icono"><BadgeCheck size={14} aria-hidden="true" /> Verificado</li>
+            <li className="etiqueta etiqueta-gris">{viaje.auto}</li>
+            {viaje.etiqueta && <li className="etiqueta">{viaje.etiqueta}</li>}
+          </ul>
+        </section>
 
-      {/* Solo en el celular: total y botón siempre a mano */}
+        <section className="tarjeta">
+          <div className="fila-titulo">
+            <h2>Tu reserva</h2>
+            <p className="precio">{formatearPrecio(viaje.precio)} <small className="ayuda">por plaza</small></p>
+          </div>
+          {sePuedeReservar && (
+            <div className="fila">
+              <div className="campo">
+                <label htmlFor="cantidad">Lugares a reservar</label>
+                <Selector id="cantidad" valor={cantidad} onCambiar={setCantidad}
+                  opciones={Array.from({ length: viaje.plazas }, (_, i) => ({ valor: i + 1, texto: String(i + 1) }))} />
+              </div>
+              <div className="campo">
+                <p className="ayuda">Total</p>
+                <p className="cifra">{formatearPrecio(total)}</p>
+              </div>
+            </div>
+          )}
+          <p className="texto-suave">
+            {completo ? "Este viaje está completo." : textoPlazas(viaje.plazas) + (viaje.plazas === 1 ? " libre" : " libres") + " · Efectivo o transferencia"}
+          </p>
+          {sePuedeReservar && (
+            <p className="ayuda">
+              {viaje.autoAceptar ? "Este conductor acepta las reservas al instante." : "El conductor tiene que aceptar tu pedido. Te avisamos cuando responda."}
+            </p>
+          )}
+          {aviso && (
+            <p className="mensaje-error">
+              {aviso} {yaReservada && <Link className="volver" to={`/reserva/${yaReservada.id}`}>Ver mi reserva</Link>}
+            </p>
+          )}
+          {error && <p className="mensaje-error">{error}</p>}
+          <button className="boton solo-escritorio" type="button" onClick={reservar} disabled={!sePuedeReservar}>{textoBoton}</button>
+        </section>
+      </div>
+
+      {/* Solo en el celular: precio y botón siempre a mano */}
       <div className="barra-reservar">
         <div>
           <p className="ayuda">Total</p>
           <p className="cifra">{formatearPrecio(total)}</p>
         </div>
-        <button className="boton boton-chico" type="button" onClick={reservar} disabled={!sePuedeReservar}>
+        <button className="boton" type="button" onClick={reservar} disabled={!sePuedeReservar}>
           {sePuedeReservar ? textoBoton : yaReservada ? "Ya reservado" : "No disponible"}
         </button>
       </div>
