@@ -8,7 +8,7 @@ const sedes = [
   { nombre: "Ciencias de la Salud", lat: -31.4118, lon: -64.1680 }
 ];
 
-// Barrios conocidos para sugerir como salida (coordenadas aproximadas)
+// Barrios conocidos para sugerir como salida
 const barrios = [
   { nombre: "Nueva Córdoba", lat: -31.4275, lon: -64.1855 },
   { nombre: "Güemes", lat: -31.4300, lon: -64.1960 },

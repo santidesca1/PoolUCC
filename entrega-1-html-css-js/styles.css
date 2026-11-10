@@ -1,37 +1,15 @@
-/* ==========================================================================
-   PoolUCC - Hoja de estilo externa
 
-   Se escribe "mobile first": primero los estilos del celular y, al final,
-   una media query que reacomoda todo para pantallas grandes.
-
-    1. Variables
-    2. Reset
-    3. Base
-    4. Menú de navegación
-    5. Cabeceras
-    6. Contenido y tarjetas
-    7. Viajes (recorrido, avatar, etiquetas)
-    8. Formularios y botones
-    9. Mapa
-   10. Pantallas puntuales (chat, pestañas, listas, confirmación)
-   11. Pie de página y utilidades
-   12. Pantallas grandes (media query)
-   ========================================================================== */
-
-
-/* ---------- 1. VARIABLES ----------
-   Se definen una sola vez y se usan con var(--nombre). Si cambia un color
-   de la marca, se cambia acá y se actualiza en todo el sitio. */
+/* VARIABLES */
 :root {
   /* Colores de la marca */
   --color-primario: #66CCFF;          /* celeste: botones y acentos */
   --color-primario-hover: #99DEFF;
   --color-primario-fuerte: #146F9E;   /* celeste oscuro: links y textos */
-  --color-secundario: #D2EFFF;        /* celeste "lavado": fondos suaves */
+  --color-secundario: #D2EFFF;        /* celeste lavado: fondos suaves */
   --color-terciario: #112A46;         /* azul oscuro: títulos, menú, tinta */
   --color-terciario-claro: #2A4E74;
 
-  /* Acento: solo para ahorro, recompensas y estrellas (nunca en botones) */
+  /* Acento: solo para ahorro, recompensas y estrellas */
   --color-acento: #FFC24D;
   --color-acento-oscuro: #8A5700;
   --color-acento-fondo: #FFF1D9;
