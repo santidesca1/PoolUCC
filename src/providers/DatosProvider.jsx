@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { viajesIniciales, reservasIniciales } from "../data/datos";
 import { textoPlazas } from "../utils/formato";
 import { etiquetaDia } from "../utils/fechas";
+import { leerGuardado, guardar } from "../utils/almacenamiento";
 
 const CLAVE = "poolucc-datos";
 // Si cambian los datos de ejemplo, se sube la versión y los navegadores los vuelven a cargar
@@ -13,11 +14,14 @@ function datosIniciales() {
   return { version: VERSION, viajes: viajesIniciales, reservas: reservasIniciales, avisos: [], chats: {} };
 }
 
+// Si lo guardado falta, está roto o tiene otra forma, se vuelve a los datos de ejemplo
 function leerDatos() {
-  const guardado = localStorage.getItem(CLAVE);
-  if (!guardado) return datosIniciales();
-  const datos = JSON.parse(guardado);
-  return datos.version === VERSION ? datos : datosIniciales();
+  const datos = leerGuardado(CLAVE, null);
+  const valido =
+    datos !== null && typeof datos === "object" && datos.version === VERSION &&
+    Array.isArray(datos.viajes) && Array.isArray(datos.reservas) && Array.isArray(datos.avisos) &&
+    datos.chats !== null && typeof datos.chats === "object";
+  return valido ? datos : datosIniciales();
 }
 
 let contador = 0;
@@ -42,7 +46,7 @@ export function DatosProvider({ children }) {
   const [datos, setDatos] = useState(leerDatos);
 
   useEffect(() => {
-    localStorage.setItem(CLAVE, JSON.stringify(datos));
+    guardar(CLAVE, datos);
   }, [datos]);
 
   // Si el usuario tiene la app abierta en dos pestañas (por ejemplo, el pasajero en una y el

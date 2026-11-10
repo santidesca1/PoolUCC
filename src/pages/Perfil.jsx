@@ -7,6 +7,7 @@ import { useTema } from "../hooks/useTema";
 import BarraTitulo from "../components/BarraTitulo";
 import Dialogo from "../components/Dialogo";
 import { formatearPrecio } from "../utils/formato";
+import { borrarGuardado } from "../utils/almacenamiento";
 
 export default function Perfil() {
   const { user, logout, reiniciarCuentas } = useAuth();
@@ -36,7 +37,7 @@ export default function Perfil() {
 
   const reiniciarDemo = () => {
     reiniciarDatos();
-    localStorage.removeItem("poolucc-ubicacion");
+    borrarGuardado("poolucc-ubicacion");
     reiniciarCuentas();
     navigate("/login");
   };
