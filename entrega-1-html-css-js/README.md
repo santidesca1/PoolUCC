@@ -1,4 +1,7 @@
-# PoolUCC
+# PoolUCC · Primera entrega (HTML, CSS y JavaScript)
+
+> Esta es la **primera entrega**, hecha con HTML, CSS y JavaScript sin framework.
+> La versión actual, en **React**, está en la [raíz del repositorio](../README.md).
 
 Carpooling para estudiantes de la UCC. Entrás con tu correo institucional, buscás un
 viaje hacia la facu o publicás el tuyo para compartir los lugares libres del auto.
