@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { leerGuardado, guardar } from "../utils/almacenamiento";
 
 const CLAVE = "poolucc-ubicacion";
 
+// Solo sirve si tiene latitud y longitud como números; si no, es como no tener ubicación
 function leerUbicacion() {
-  const guardada = localStorage.getItem(CLAVE);
-  return guardada ? JSON.parse(guardada) : null;
+  const guardada = leerGuardado(CLAVE, null);
+  const valida = guardada !== null && typeof guardada.lat === "number" && typeof guardada.lon === "number";
+  return valida ? guardada : null;
 }
 
 /**
@@ -25,7 +28,7 @@ export function useUbicacion() {
     navigator.geolocation.getCurrentPosition(
       posicion => {
         const nueva = { lat: posicion.coords.latitude, lon: posicion.coords.longitude };
-        localStorage.setItem(CLAVE, JSON.stringify(nueva));
+        guardar(CLAVE, nueva);
         setUbicacion(nueva);
         setEstado("Listo: salís desde donde estás ahora.");
         if (alObtener) alObtener(nueva);
