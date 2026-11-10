@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Building2, Check, ChevronRight, Car } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useDatos } from "../hooks/useDatos";
 import { useUbicacion } from "../hooks/useUbicacion";
 import CampoSalida from "../components/CampoSalida";
+import CampanaAvisos from "../components/CampanaAvisos";
 import ChipEstado from "../components/ChipEstado";
+import Logo from "../components/Logo";
 import Mapa from "../components/Mapa";
 import { sedes, MI_UBICACION } from "../data/datos";
 import { coordenadasDeSalida, buscarLugar } from "../utils/geo";
@@ -49,80 +52,91 @@ export default function Buscar() {
   };
 
   return (
-    <main>
-      <header className="hero">
-        <div className="hero-fila">
-          <p className="logo">Pool<span>UCC</span></p>
-          <Link className="avatar" to="/perfil" title="Ir a mi perfil">{user.iniciales}</Link>
-        </div>
-        <p className="hero-fecha">{hoy[0].toUpperCase() + hoy.slice(1)}</p>
-        <h1>Hola, {user.nombre.split(" ")[0]}</h1>
-      </header>
+    <main className="pantalla-mapa">
+      <div className="zona-mapa">
+        <Mapa puntos={puntos} titulo="Mapa de tu salida y la sede" />
+        <p className="flotante-izq logo-flotante"><Logo /></p>
+        <div className="flotante-der"><CampanaAvisos flotante /></div>
+      </div>
 
-      <section className="contenido inicio-grilla">
-        <div className="columna area-buscar">
-          <form className="tarjeta" onSubmit={buscar}>
-            <CampoSalida
-              id="desde" etiqueta="Desde" valor={desde} onCambiar={setDesde} estado={estado}
-              onPedirUbicacion={() => pedirUbicacion(() => setDesde(MI_UBICACION))}
-            />
+      <div className="hoja">
+        <p className="texto-suave hoja-saludo">
+          Hola, {user.nombre.split(" ")[0]} · {hoy[0].toUpperCase() + hoy.slice(1)}
+        </p>
+        <h1>¿A qué sede vas?</h1>
 
-            <div className="campo">
-              <label htmlFor="hasta">Hasta (sede)</label>
-              <select id="hasta" value={hasta} onChange={e => setHasta(e.target.value)}>
-                {sedes.map(s => <option key={s.nombre} value={s.nombre}>{s.nombre}</option>)}
-              </select>
+        <form className="columna" onSubmit={buscar}>
+          <CampoSalida
+            id="desde" etiqueta="Salgo desde" valor={desde} onCambiar={setDesde} estado={estado}
+            onPedirUbicacion={() => pedirUbicacion(() => setDesde(MI_UBICACION))}
+          />
+
+          <fieldset>
+            <legend>Sede de llegada</legend>
+            <div className="lista-sedes">
+              {sedes.map(s => (
+                <label key={s.nombre} className={"sede-fila" + (hasta === s.nombre ? " elegida" : "")}>
+                  <input type="radio" name="hasta" value={s.nombre} checked={hasta === s.nombre} onChange={() => setHasta(s.nombre)} />
+                  <span className="sede-icono"><Building2 size={18} aria-hidden="true" /></span>
+                  <span className="sede-nombre">{s.nombre}</span>
+                  <Check className="sede-check" size={20} aria-hidden="true" />
+                </label>
+              ))}
             </div>
+          </fieldset>
 
+          <fieldset>
+            <legend className="oculto">Filtrar viajes</legend>
+            <div className="chips">
+              {FILTROS.map(f => (
+                <label key={f} className={"chip" + (filtro === f ? " elegido" : "")}>
+                  <input type="radio" name="filtro" value={f} checked={filtro === f} onChange={() => setFiltro(f)} />
+                  {f}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <details className="mas-opciones">
+            <summary>Hora y cantidad de lugares</summary>
             <div className="fila">
               <div className="campo">
                 <label htmlFor="hora">Salir desde las</label>
                 <input type="time" id="hora" value={hora} onChange={e => setHora(e.target.value)} />
               </div>
               <div className="campo">
-                <label htmlFor="plazas">Plazas</label>
+                <label htmlFor="plazas">Lugares</label>
                 <select id="plazas" value={plazas} onChange={e => setPlazas(e.target.value)}>
                   {["1", "2", "3", "4"].map(n => <option key={n} value={n}>{n}</option>)}
                 </select>
               </div>
             </div>
+          </details>
 
-            <fieldset>
-              <legend>Filtrar viajes</legend>
-              <div className="opciones">
-                {FILTROS.map(f => (
-                  <label key={f}>
-                    <input type="radio" name="filtro" value={f} checked={filtro === f} onChange={() => setFiltro(f)} /> {f}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+          {error && <p className="mensaje-error">{error}</p>}
+          <button className="boton" type="submit">Buscar viajes</button>
+        </form>
 
-            {error && <p className="mensaje-error">{error}</p>}
-            <button className="boton" type="submit">Buscar</button>
-          </form>
-        </div>
-
-        <Mapa className="area-mapa" puntos={puntos} titulo="Mapa de tu salida y la sede" />
-
-        <div className="columna area-lateral">
-          {viajeProximo && (
-            <Link className="tarjeta tarjeta-enlace tarjeta-oscura" to={`/reserva/${proxima.id}`}>
-              <div className="fila-titulo">
-                <p>Tu próximo viaje</p>
-                <ChipEstado estado={proxima.estado} />
-              </div>
-              <h2 className="cifra-blanca">{viajeProximo.desde} → {viajeProximo.hasta}</h2>
-              <p>{viajeProximo.dia} · {viajeProximo.salida} · con {viajeProximo.conductor}</p>
-            </Link>
-          )}
-
-          <Link className="tarjeta tarjeta-enlace tarjeta-acento" to="/publicar">
-            <h2>¿Manejás vos?</h2>
-            <p className="texto-suave">Publicá tu ruta en un minuto</p>
+        {viajeProximo && (
+          <Link className="tarjeta tarjeta-oscura" to={`/reserva/${proxima.id}`}>
+            <div className="fila-titulo">
+              <p>Tu próximo viaje</p>
+              <ChipEstado estado={proxima.estado} />
+            </div>
+            <h2>{viajeProximo.desde} → {viajeProximo.hasta}</h2>
+            <p>{viajeProximo.dia} · {viajeProximo.salida} · con {viajeProximo.conductor}</p>
           </Link>
-        </div>
-      </section>
+        )}
+
+        <Link className="fila-viaje" to="/publicar">
+          <span className="sede-icono"><Car size={18} aria-hidden="true" /></span>
+          <div className="fila-viaje-info">
+            <h2>¿Manejás vos?</h2>
+            <p>Publicá tu ruta en un minuto</p>
+          </div>
+          <ChevronRight size={20} aria-hidden="true" />
+        </Link>
+      </div>
     </main>
   );
 }

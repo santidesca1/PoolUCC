@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import Logo from "../components/Logo";
 import Pie from "../components/Pie";
 
 export default function Login() {
@@ -25,9 +26,9 @@ export default function Login() {
   return (
     <>
       <main className="estrecho">
-        <header className="hero hero-centrado">
-          <p className="logo logo-login">Pool<span>UCC</span></p>
-          <h1>Viajá con tus compañeros</h1>
+        <header className="hero">
+          <Logo />
+          <h1>Llegá a la UCC, sin vueltas</h1>
           <p>Solo para estudiantes con correo de la UCC</p>
         </header>
 

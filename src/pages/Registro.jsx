@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import Logo from "../components/Logo";
 import Pie from "../components/Pie";
 
 const CARRERAS = ["Ingeniería Informática", "Abogacía", "Arquitectura", "Ciencias Económicas", "Medicina", "Psicología"];
@@ -29,8 +30,8 @@ export default function Registro() {
   return (
     <>
       <main className="estrecho">
-        <header className="hero hero-centrado">
-          <p className="logo logo-login">Pool<span>UCC</span></p>
+        <header className="hero">
+          <Logo />
           <h1>Creá tu cuenta</h1>
           <p>Con tu correo de la UCC</p>
         </header>

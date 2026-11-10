@@ -25,6 +25,14 @@ function cumpleTipo(v, tipo) {
   }
 }
 
+// Botones para ordenar la lista (el de cercanía necesita saber desde dónde salís)
+const ORDENES = [
+  { valor: "cercania", texto: "Más cerca" },
+  { valor: "horario", texto: "Horario" },
+  { valor: "precioMenor", texto: "Precio" },
+  { valor: "puntaje", texto: "Puntaje" }
+];
+
 export default function Resultados() {
   const [params] = useSearchParams();
   const { user } = useAuth();
@@ -60,7 +68,6 @@ export default function Resultados() {
   // sort ordena el mismo array; por eso trabajamos sobre la copia que hizo filter
   if (orden === "cercania") resultado.sort((a, b) => distanciaDe(a) - distanciaDe(b));
   else if (orden === "precioMenor") resultado.sort((a, b) => a.precio - b.precio);
-  else if (orden === "precioMayor") resultado.sort((a, b) => b.precio - a.precio);
   else if (orden === "puntaje") resultado.sort((a, b) => b.puntaje - a.puntaje);
   else resultado.sort((a, b) => (a.salida < b.salida ? -1 : 1));
 
@@ -81,6 +88,17 @@ export default function Resultados() {
 
       <section className="contenido dos-columnas">
         <div className="columna">
+          <div className="chips" role="group" aria-label="Ordenar por">
+            {ORDENES.map(o => (
+              <button key={o.valor} type="button" className={"chip" + (orden === o.valor ? " elegido" : "")}
+                aria-pressed={orden === o.valor} disabled={o.valor === "cercania" && origen === null}
+                title={o.valor === "cercania" && origen === null ? "Indicá desde dónde salís para ordenar por cercanía" : undefined}
+                onClick={() => setOrden(o.valor)}>
+                {o.texto}
+              </button>
+            ))}
+          </div>
+
           <div className="fila-titulo">
             <h2>{resultado.length === 0 ? "Sin resultados" : resultado.length + (resultado.length === 1 ? " viaje" : " viajes")}</h2>
             <button className="boton boton-borde boton-chico boton-icono boton-filtros" type="button" onClick={() => setFiltrosAbiertos(!filtrosAbiertos)}>
@@ -88,7 +106,7 @@ export default function Resultados() {
             </button>
           </div>
 
-          <form className={"tarjeta filtros" + (filtrosAbiertos ? " abierto" : "")} onSubmit={e => e.preventDefault()}>
+          <form className={"filtros columna" + (filtrosAbiertos ? " abierto" : "")} onSubmit={e => e.preventDefault()}>
             <div className="campo">
               <label htmlFor="filtroSede">Sede de llegada</label>
               <select id="filtroSede" value={sede} onChange={e => setSede(e.target.value)}>
@@ -108,18 +126,6 @@ export default function Resultados() {
                 </select>
               </div>
             </div>
-            <div className="campo">
-              <label htmlFor="orden">Ordenar por</label>
-              <select id="orden" value={orden} onChange={e => setOrden(e.target.value)}>
-                <option value="cercania" disabled={origen === null}>
-                  {origen === null ? "Más cerca de mí (indicá desde dónde salís)" : "Más cerca de mí"}
-                </option>
-                <option value="horario">Horario de salida</option>
-                <option value="precioMenor">Precio: de menor a mayor</option>
-                <option value="precioMayor">Precio: de mayor a menor</option>
-                <option value="puntaje">Mejor puntaje</option>
-              </select>
-            </div>
             <div className="opciones">
               <label>
                 <input type="checkbox" checked={soloConLugares} onChange={e => setSoloConLugares(e.target.checked)} />
@@ -138,7 +144,7 @@ export default function Resultados() {
           )}
         </div>
 
-        <Mapa className="solo-escritorio mapa-alto" puntos={puntos} titulo="Mapa de los viajes encontrados" />
+        <Mapa className="mapa-franja" puntos={puntos} titulo="Mapa de los viajes encontrados" />
       </section>
     </main>
   );
